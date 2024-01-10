@@ -1,2 +1,1 @@
-# startup
-My startup project for cs260
+Changes from my development environment!
