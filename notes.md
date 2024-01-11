@@ -21,7 +21,7 @@ examine history and state
 - show -> show various types of objects
 - status -> show the working tree status
 
-grow, mark, and tweaj your common history
+grow, mark, and tweak your common history
 - branch -> list, create, or delete branches
 - commit -> record changes to the repository
 - merge -> join two or more development histories together
