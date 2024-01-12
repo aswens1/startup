@@ -34,3 +34,13 @@ collaborate
 - fetch -> download obkects and refs from another repository
 - pull -> fetch from and integrate with another repository or a local branch
 - push -> update remote refs along with associated objects
+
+# startup application
+The different elements of our startup.
+- html -> basic structural and organisational elements
+- css -> style and animation
+- javascript -> interaction
+- service -> remote functions that your application calls on your, or someone els's web server
+- database/login -> persisted app and auth data
+- websocket -> data pushed from server, chat, realtime data from the server
+- react -> web framework
