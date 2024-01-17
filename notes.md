@@ -46,6 +46,6 @@ The different elements of our startup.
 - react -> web framework
 
 # history of the web
-Tim Berners-Lee -> HTTP, HTML, URL
-Håkon Wium Lie -> CSS
-Brendan Eich -> JavaScript
+- Tim Berners-Lee -> HTTP, HTML, URL
+- Håkon Wium Lie -> CSS
+- Brendan Eich -> JavaScript
