@@ -44,3 +44,8 @@ The different elements of our startup.
 - database/login -> persisted app and auth data
 - websocket -> data pushed from server, chat, realtime data from the server
 - react -> web framework
+
+# history of the web
+Tim Berners-Lee -> HTTP, HTML, URL
+Håkon Wium Lie -> CSS
+Brendan Eich -> JavaScript
