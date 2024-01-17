@@ -49,3 +49,7 @@ The different elements of our startup.
 - Tim Berners-Lee -> HTTP, HTML, URL
 - Håkon Wium Lie -> CSS
 - Brendan Eich -> JavaScript
+
+- Web browser -> HTML, CSS, JavaScript
+- Web Server -> Web service
+- Cloud Services -> Devices
