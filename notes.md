@@ -46,10 +46,11 @@ The different elements of our startup.
 - react -> web framework
 
 # history of the web
+Key Players
 - Tim Berners-Lee -> HTTP, HTML, URL
 - Håkon Wium Lie -> CSS
 - Brendan Eich -> JavaScript
-
+What We're Using
 - Web browser -> HTML, CSS, JavaScript
 - Web Server -> Web service
 - Cloud Services -> Devices
