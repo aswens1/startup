@@ -50,6 +50,7 @@ Key Players
 - Tim Berners-Lee -> HTTP, HTML, URL
 - Håkon Wium Lie -> CSS
 - Brendan Eich -> JavaScript
+
 What We're Using
 - Web browser -> HTML, CSS, JavaScript
 - Web Server -> Web service
