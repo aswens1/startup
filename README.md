@@ -9,6 +9,13 @@ Stuck in a reading block? No one wants to hear you talk about the book you just 
 
 ## Design
 All design features are subject to change.
+![login page](https://github.com/aswens1/startup/blob/main/startup%20design%20elements/login_page.jpeg)
+![personal dashboard](https://github.com/aswens1/startup/blob/main/startup%20design%20elements/personal_dashboard.jpeg)
+![create_club](https://github.com/aswens1/startup/blob/main/startup%20design%20elements/create_club.jpeg)
+![join_club](https://github.com/aswens1/startup/blob/main/startup%20design%20elements/join_club.jpeg)
+![club_dashboard](https://github.com/aswens1/startup/blob/main/startup%20design%20elements/club_dashboard.jpeg)
+![public_clubs](https://github.com/aswens1/startup/blob/main/startup%20design%20elements/public_clubs.jpeg)
+![library](https://github.com/aswens1/startup/blob/main/startup%20design%20elements/library.jpeg)
 
 ## Key Features
 - Secure login
