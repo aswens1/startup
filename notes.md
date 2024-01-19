@@ -55,3 +55,6 @@ What We're Using
 - Web browser -> HTML, CSS, JavaScript
 - Web Server -> Web service
 - Cloud Services -> Devices
+
+# Technology Stack, EC2, Route 53
+- React, Caddy2, nodejs, mongoDB
