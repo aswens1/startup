@@ -60,6 +60,7 @@ What We're Using
 - React, Caddy2, nodejs, mongoDB
 
 heres how you access the server from the console
+
 ssh -i [key pair file] ubuntu@[ip address]
 
 # Caddy, HTTPS, TLS, certs
