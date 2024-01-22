@@ -76,3 +76,5 @@ web certificate
 - gets decrypted to verify
 - trusted third party - both sides trust
 - need the public key to verify
+
+use sudo service caddy restart to save the files and restart it so you can see the changes, or the change won't save
