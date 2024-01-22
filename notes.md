@@ -58,3 +58,13 @@ What We're Using
 
 # Technology Stack, EC2, Route 53
 - React, Caddy2, nodejs, mongoDB
+
+heres how you access the server from the console
+ssh -i [key pair file] ubuntu@[ip address]
+
+# Caddy, HTTPS, TLS, certs
+Caddy
+- runs on the webserver
+- handles routing requests
+- web certificates for HTTPS
+- 
