@@ -68,4 +68,11 @@ Caddy
 - runs on the webserver
 - handles routing requests
 - web certificates for HTTPS
-- 
+
+web certificate
+- client wants secure access
+- goes to your server
+- goes to a third party to encrypt
+- gets decrypted to verify
+- trusted third party - both sides trust
+- need the public key to verify
