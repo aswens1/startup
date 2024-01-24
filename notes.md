@@ -78,3 +78,48 @@ web certificate
 - need the public key to verify
 
 use sudo service caddy restart to save the files and restart it so you can see the changes, or the change won't save
+
+# Console and Editors
+terminal allows you to
+- navigate your disk
+- run console applications (ones without graphical user interface/GUI)
+
+common console commands
+- echo -> output the parameters of the command
+- cd -> change directory
+- mkdir -> make directory
+- rmdir -> remove directory
+- rm -> remove file(s)
+- mv -> move file(s)
+- cp -> copy files
+- ls -> list files
+- curl -> command line client URL browser
+- grep -> regular expression search
+- find -> find files
+- top -> view running processess
+- df -> view disk statistics
+- cat -> output file
+- less -> interactive file output
+- wc -> count words
+- ps -> view processess
+- kill -> kill a process
+- sudo -> execute as admin
+- ssh -> remote shell
+- scp -> securely copy files to a remote computer
+- history -> show history of commands
+- ping -> test connection
+- tracert -> trace network
+- dig -> DNS information
+- man -> look in the manual
+
+pipe & redirect
+- printf "hello world" > test.txt
+- ls -l | grep ' Nov ' | wc -l
+- curl -s www.google.com > google.html
+- cat google.html | grep '<a' | wc
+- curl -s www.google.com | wc
+
+control keys
+- CTRL-C -> cancel command
+- CTRL-R -> recall command
+- CTRL-Z -> background command
