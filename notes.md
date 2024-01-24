@@ -123,3 +123,7 @@ control keys
 - CTRL-C -> cancel command
 - CTRL-R -> recall command
 - CTRL-Z -> background command
+
+visual studio code extensions
+- live server
+- GitLens
