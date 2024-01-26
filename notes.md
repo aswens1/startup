@@ -127,3 +127,42 @@ control keys
 visual studio code extensions
 - live server
 - GitLens
+
+# HTML - Hypertext Markup Language
+
+link references
+- absolute
+  - ```<a href="https://cs260.click/profile.png" />```
+- relative
+  - ```<a href="profile.png" />```
+  - ```<a href="../images/profile.png" />```
+ 
+elements
+- html -> the page container
+- head -> header information
+- title -> title of the page
+- body -> the entire content of the page
+- header -> header content
+- main -> main content of the page
+- footer -> footer of the main content
+- section -> a section of main content
+
+structure
+- div -> a block division of content
+- span -> an inline span of content
+- h<1-9> -> text heading. from h1, the highest level, down to h9, the lowest
+- p -> a paragraph of text
+- table -> table
+- ol, ul -> ordered or unordered list
+- a -> anchor the text to a hyperlink
+- img -> graphical image reference
+
+p and div work in similar ways, but you can have more information in a p tag. That way you can separate text. Simply by looking, it doesn't know what div means, but the p tag tells the tools what to do.
+
+characters
+- & -> ```&amp;```
+- '<' -> ```&lt;```
+- '>' -> ```&gt;```
+- " -> ```&quot;```
+- ' -> ```&apos;```
+- 😀 -> ```&#128512;```
