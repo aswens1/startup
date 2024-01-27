@@ -141,23 +141,40 @@ elements
 - html -> the page container
 - head -> header information
 - title -> title of the page
+- meta -> metadata for the page such as character set or viewport settings
+- script -> JavaScript reference. Either external reference, or inline
+- include -> external content reference
 - body -> the entire content of the page
 - header -> header content
-- main -> main content of the page
 - footer -> footer of the main content
+- nav -> navigational inputs
+- main -> main content of the page
 - section -> a section of main content
-
-structure
+- aside -> aside content from the main content
 - div -> a block division of content
 - span -> an inline span of content
 - h<1-9> -> text heading. from h1, the highest level, down to h9, the lowest
 - p -> a paragraph of text
+- b -> bring attention
 - table -> table
+- tr -> table row
+- th -> table header
+- td -> table data
 - ol, ul -> ordered or unordered list
+- li -> list item
 - a -> anchor the text to a hyperlink
 - img -> graphical image reference
+- dialog -> interactive component such as a confirmation
+- form -> a collection of user input
+- input -> user input field
+- adio -> audio content
+- video -> video content
+- svg -> scalable vector graphic content
+- iframe -> inline frame of another HTML page
 
 p and div work in similar ways, but you can have more information in a p tag. That way you can separate text. Simply by looking, it doesn't know what div means, but the p tag tells the tools what to do.
+
+you can include comments by starting text with ```<!--- commented text -->``` -> the text in the comments will be ignored while being rendered
 
 characters
 - & -> ```&amp;```
@@ -166,3 +183,5 @@ characters
 - " -> ```&quot;```
 - ' -> ```&apos;```
 - 😀 -> ```&#128512;```
+
+by default, the browser will display the index.html page if you don't provide a specific file. It is common to name the main HTML file index.html
