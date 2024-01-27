@@ -185,3 +185,50 @@ characters
 - 😀 -> ```&#128512;```
 
 by default, the browser will display the index.html page if you don't provide a specific file. It is common to name the main HTML file index.html
+
+|element|meaning|example|
+|---|---|---|
+|`form`|input container and submission|`<form action="form.html" method="post>`|
+|`fieldset`|labeled input grouping|`<fieldset>...</fieldset>`|
+|`input`|multiple types of user input|`<input type="" />`|
+|`select`|selection dropdown|`<select><option>1</option></select>`|
+|`optgroup`|grouped selection dropdown|`<optgroup><option>1</option></optgroup>`|
+|`option`|selection option|`<option selected>option2</option>`|
+|`textarea`|multiline text input|`<textarea></textarea>`|
+|`label`|individual input label|`<label for="range">Range: </label>`|
+|`output`|output of input|`<output for="range">0</output>`|
+|`meter`|display valye with a known range|`<meter min="0" max="100" value="50"></meter>`|
+
+input elements
+|type|meaning|
+|---|---|
+|text|single line textual value|
+|password|obscured password|
+|email|email address|
+|tel|telephone number|
+|url|URL address|
+|number|numerical value|
+|checkbox|inclusive selection|
+|radio|exclusive selection|
+|range|range limited number|
+|date|year, month, day|
+|datetime-local|date and time|
+|month|year, month|
+|week|week of year|
+|color|colour|
+|file|local file|
+|submit|button to trigger form submission|
+
+to create input you have to specificy the type attribute and any others needed for that specific input.
+
+ex: checked radio button 
+
+`<label for="checkbox1">Check me</label> <input type="checkbox" name="varCheckbox" value="checkbox1 checked />`
+
+most common attributes
+|attribute|meaning|
+|---|---|
+|name|the name of the input. this is submitted as the name of the input if used in a form|
+|disabled|disables the ability for the user to interact with the input|
+|value|the initial value of the input|
+|required|signifies that a valye is required in order to be valid|
