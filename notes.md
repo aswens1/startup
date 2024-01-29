@@ -232,3 +232,9 @@ most common attributes
 |disabled|disables the ability for the user to interact with the input|
 |value|the initial value of the input|
 |required|signifies that a valye is required in order to be valid|
+
+# Simon HTML
+
+default page should be called index.html
+add placeholders for necessary technologies
+
