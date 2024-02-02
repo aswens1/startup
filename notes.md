@@ -238,3 +238,82 @@ most common attributes
 default page should be called index.html
 add placeholders for necessary technologies
 
+# CSS
+
+## Selectors
+
+|selector|meaning|example|description|
+|---|---|---|---|
+|element|all elements of a specific name|`p` `div`|any selection that is a descendent of a body|
+|ID|the element with the given ID|`#root`|the element with the attribute `id='root'`|
+|class|all elements with the given class|`.highlight`|any element with the attribute `class='highlight'`|
+|element class|any elements with the specific name and class|`p.highlight`|any p element with the attribute `class='highlight'`|
+|list|any of the given selectors|`body, section`|body or section elements|
+|descendant|a list of descendants|`body section`|any section that is a descendant of a body|
+|child|a list of direct children|`section>p`|any p that is a direct child of a section|
+|psuedo|state based|`p:hover`|the mouse is hovering over a p element|
+
+## Declarations
+
+|property|value|example|discussion|
+|---|---|---|---|
+|background|colour|`red`|fill the background colour|
+|border|colour width style|`#fad solid medium`|sets the border using shorthand where any or all of the values may be provided|
+|colour|colour|`rgb(128, 0, 0)`|sets the text colour|
+|display|type|`none`|defines how to display the element and its children|
+|font|family size style|`Arial 1.2em bold`|defines the text font using shorthand|
+|margin|unit|`5px 5px 0 0`|sets the margin spacing|
+padding|unit|`1em 2em`|sets the padding spacing|
+
+units
+|unit|description|
+|---|---|
+|px|the number of pixels|
+|pt|the number of points (1/72 of an inch)|
+|%|a percentage of the parent element|
+|em|a multiplier of the width of the letter `m` in the parents font|
+|rem|a multiplier of the width of the letter `m` in the roots font|
+|vw|a percentage of the viewports width|
+|vh|a percentage of the viewports height|
+|vmin|a percentage of the viewports smaller dimension|
+|vmax|a percentage of the viewports larger dimension|
+
+## Fonts
+- san serif -> only major strokes
+- serif -> minor strokes off the major strokes
+- monospace -> all letters have the same size
+- handwriting -> cursive strokes
+use google fonts to browse open source fonts
+
+```@font-face {
+font family: 'Quicksand';
+src: url('https://cs260.click/fonts/quicksand.ttf');
+}
+
+p {
+ font-family: Quicksand;
+}
+
+```
+```
+@import url("https://fonts.googleapis.com/css2?family=Rubik Microbe&display=swap");
+
+p {
+ font-family: "Rubik Microbe";
+}
+```
+using import is just referencing the link and using css
+
+## Unicode and UTF-8
+```
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+   <meta charset="UTF-8" />
+ </head>
+ <body>
+   <p>하나님은 나의 빛이시다</p>
+   <p>😃 &#128521;</p>
+ </body>
+</html>
+```
