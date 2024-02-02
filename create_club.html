@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device=width, initial-scale=1.0" />
+        <title>Create Club</title>
+    </head>
+    <body>
+        <h1>Create Club</h1>
+        <form method="get" action="club_dashboard.html">
+            <div>
+                <label for="name">Club name: </label>
+                <input type="text" id="clubName" name="varClubName" placeholder="club name" required />
+            </div>
+            <div>
+                <div>
+                    <div>
+                        <label for="radio1">Private Club</label>
+                        <input type="radio" id="radio1" name="clubType" value="private" />
+                        <label for="">Club Code: </label>
+                        <div>
+                            Share this code with your friends.
+                        </div>
+                    </div>
+                    <div>
+                        <label for="radio2">Public Club</label>
+                        <input type="radio" id="radio2" name="clubType" value="public" />
+                        </div>
+                </div>
+            </div>
+            <br/>
+            <div>
+                <div>
+                    <label for="name">Title: </label>
+                    <input type="text" id="title" name="varTitle" placeholder="title" required />
+                </div>
+                <div>
+                    <label for="name">Author: </label>
+                    <input type="text" id="author" name="varAuthor" placeholder="author" required />
+                </div>
+                <div>
+                    <label for="name">Genre: </label>
+                    <input type="text" id="genre" name="varGenre" placeholder="genre" required />
+                </div>
+                <div>
+                    <label for="textArea">Summary:</label>
+                    <textarea id="textarea" name="varSummary"></textarea>
+                </div>
+            </div>
+            <button type="submit">Create Club</button>
+        </form>
+    </body>
+    <hr />
+    <footer>
+        <a href="https://github.com/aswens1/startup">GitHub</a>
+    </footer>
+</html>
