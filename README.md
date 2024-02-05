@@ -48,3 +48,22 @@ Fascilitates the discussion posts in the club pages. Questions and answers, and 
 Uses the React web framework.
 
 # HTML Deliverable
+For this deliverable I built out the structure of my startup.
+## Technologies
+#### HTML
+Used HTML to create 8 different pages with structure. There is the login, create account, create club, join clubs, personal dashboard, and club dashboards.
+
+#### Links
+The login page automatically takes you to the personal dashboard. The dashboard has a menu with hyperlinks to creating a club, joining a club, or visiting the dashboards of clubs you are apart of. There is also a link to add a book to your finished book list, and a link to my GitHub repository. The submit buttons on the create club and join club take you to the club dashboards.
+
+#### Text
+I've used text as a placeholder by creating an example club 'Bookworms', as well as fill in information on the personal dashboard. Those will both be able to be user inputed later on by the club creator and users as they track their reading.
+
+#### Images
+I've included an image of the book cover for the first Harry Potter book on the Bookworms dashboard. Once I can connect to a third party server, that information will come from there instead.
+
+#### DB/Login
+The main page is a login page with a placeholder for a username and a password. The joining clubs page, the club dashboard, and the personal dashboard will all contain data pulled from the database.
+
+#### WebSocket
+On the club dashboard is a placeholder for a discussion board that will use realtime posting from other users.
