@@ -48,4 +48,3 @@ Fascilitates the discussion posts in the club pages. Questions and answers, and 
 Uses the React web framework.
 
 # HTML Deliverable
-
