@@ -15,7 +15,6 @@ All design features are subject to change.
 ![join_club](https://github.com/aswens1/startup/blob/main/startup%20design%20elements/join_club.jpeg)
 ![club_dashboard](https://github.com/aswens1/startup/blob/main/startup%20design%20elements/club_dashboard.jpeg)
 ![public_clubs](https://github.com/aswens1/startup/blob/main/startup%20design%20elements/public_clubs.jpeg)
-![library](https://github.com/aswens1/startup/blob/main/startup%20design%20elements/library.jpeg)
 
 ## Key Features
 - Secure login
