@@ -317,3 +317,99 @@ using import is just referencing the link and using css
  </body>
 </html>
 ```
+
+# JavaScript
+
+## Introduction
+```'Hello' + 'world';```
+
+console.log('Hello' + ' ' + 'world'); -> // OUTPUT: Hello world
+
+create your own functions:
+function join(a, b) {
+    return a + ' ' + b;
+}
+
+console.log(join('Hello', 'world')); -> // OUTPUT: Hello world
+
+comments:
+
+// line comments
+
+/*
+block comment
+*/
+
+code delimiters:
+- end JS statements with a semicolon (;)
+- code blocks, and resulting scope, are defined with curly brackets ({})
+
+## JavaScript Console
+The console lets us interact with the JS runtime debugger console. Provides functionality for outputting the value of text and objects, running timers, and counting iterations. These are useful for degbugging.
+This is not the same thing as the computers command line/terminal.
+
+### Log
+Basic usage of the console is to output a log message
+
+console.log('hello'); -> // OUTPUT: Helo 
+
+formatted messages:
+
+console.log('hello %s', 'world'); -> //OUTPUT: hello world
+
+specify CSS declarations to style the log output
+
+console.log('%c JavaScript Demo', 'font-size:1.5em; color:green;'); -> // OUTPUT: JavaScript Demo //in large green text
+
+### Timers
+You can see how long a piece of code is running
+
+console.time('demo time');
+
+// ... some code that takes a long time
+
+console.timeEnd('demo time');
+
+// OUTPUT: demo time: 9762.74 ms
+
+### count
+Tells how many times a block of code is called
+
+console.count('a'); -> // OUTPUT: a: 1
+
+console.count('a'); -> // OUTPUT a: 2
+
+console.count('b'); -> // OUTPUT b: 1
+
+## Adding JavaScript to HTML
+You can add JS to HTML by either directly including it in the HTML within the content of a \<script> element, or by using the src attribute of the script element and referencing an external JS file
+
+if we have a file index.js
+```javascript
+function sayHello() {
+  console.log('hello');
+}
+```
+
+heres how we call it in our html index.html
+```html
+<head>
+  <script src="javascript.js"></script>
+</head>
+<body>
+  <button onclick="sayHello()">Say Hello</button>
+  <button onclick="sayGoodbye()">Say Goodbye</button>
+  <script>
+    function sayGoodbye() {
+      alert('Goodbye');
+    }
+  </script>
+</body>
+```
+
+We call the sayHello and sayGoodbye JS functions in HTML in the onclick attribute of the buttom element. Some special attributes automatically create event listeners for different DOM events that call the code contained in the attribute's value. The code in the attribute can be a simple function call or any JavaScript code.
+
+```html
+<button onclick="let i=1;i++;console.log(i)">press me</button>
+<!-- OUTPUT: 2 -->
+```
