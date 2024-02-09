@@ -413,3 +413,68 @@ We call the sayHello and sayGoodbye JS functions in HTML in the onclick attribut
 <button onclick="let i=1;i++;console.log(i)">press me</button>
 <!-- OUTPUT: 2 -->
 ```
+## JavaScript type and construct
+
+### Declaring Variables
+Variables are declared using either let or const keyword. let allows you to change the value of the varibale while const will always stay the same (you'll get an error if you try to change it)
+
+```javascript
+let x = 1;
+const y = 2;
+```
+
+### Type
+There are several primative types
+
+|type|meaning|
+|---|---|
+|`Null`|the type of a variable that has not been assigned a value|
+|`Undefined`|the type of a variable that has not been defined|
+|`Boolean`|true or false|
+|`Number`|a 64-bit signed number|
+|`BigInt`|a number of arbitrary magnitude|
+|`String`|a textual sequence of characters|
+|`Symbol`|a unique value|
+
+Boolean, Number, and String are the most commonly used when creating variables. But variables also often refer to the Null or Undefined primitive. JavaScript does not enforce the declaration of a variable before you use it, so it could have the type Undefined.
+
+There are also defined objects types.
+
+|type|use|example|
+|---|---|---|
+|`Object`|a collection of properties represented by name-value pairs. values can be any type| `{a:3, b:'fish'`|
+|`Function`|an object that has the ability to be called|`function a() {}`|
+|`Date`|calendar dates and times|`new Date('1995-12-17')`|
+|`Array`|an ordered sequence of any type|`[3, 'fish']`|
+|`Map`|a collection of key-value pairs that support efficient lookups|`new Map()`|
+|`JSON`|a lightweight data-interchange format used to share information across programs|`{"a":3, "b":"fish"}`|
+
+### Common Operators
+When dealing with numbers, there are standard mathematical operators.
+- `+` -> add
+- `-` -> subtract
+- `*` -> multiply
+- `/` -> divide
+- `===` -> equality
+
+For strings:
+- `+` -> concatenation
+- `===` -> equality
+
+### Type Conversions
+JS is a weakly typed function, which means a variable always has a type but it can be changed when the value changes, or the type can be converted based on context. Sometimes the conversions are unexpected if you're used to strongly typed languages.
+
+```javascript
+2 + '3';
+// OUTPUT: '23'
+2 * '3';
+// OUTPUT: 6
+[2] + [3];
+// OUTPUT: '23'
+true + null;
+// OUTPUT: 1
+true + undefined;
+// OUTPUT: NaN
+```
+
+Getting unexpected results is really common with the equality operator.
