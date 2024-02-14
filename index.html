@@ -13,30 +13,31 @@
         <link rel="stylesheet" href="index.css" />
     </head>
     <body>
-        <header>
-            <h1>Cover to Cover</h1>
+        <header class="header">
+            Cover to Cover
         </header>
-
-        <main>
-            <h2>Login</h2>
-            <form method="get" action="personal_dashboard.html">
-                <div>
-                    <label for="username">Username: </label>
-                    <input type="text" id="username" name="varUsername" placeholder="username" /> 
-                </div>
-                <div>
-                    <label for="password">Password: </label>
-                    <input type="password" id="password" name="varPassword" placeholder="password"/>
-                </div>
-                <button type="sumbit">Login</button>
-            </form>
-            <br>
-            <p>Don't have an account? <a href="create_account.html">Create one</p>
-        </main>
+        <div class="wrapper">
+            <main class="container">
+                <h2>Login</h2>
+                    <form class="login" method="get" action="personal_dashboard.html">    
+                        <div>
+                            <label for="username">Username: </label>
+                            <input type="text" id="username" name="varUsername" placeholder="username" /> 
+                        </div>
+                        <div>
+                            <label for="password">Password: </label>
+                            <input type="password" id="password" name="varPassword" placeholder="password"/>
+                        </div>
+                        <button type="button" class="btn btn-outline-dark">Login</button>
+                    </form>
+                    <br>
+                    <p>Don't have an account? <a href="create_account.html">Create one</p>
+            </main>
+        </div>
         
     </body>
     
-    <footer class="sticky-bottom">
+    <footer>
         <nav class="navbar">
           <div class="container-fluid ">
             <a class="text-muted" href="https://github.com/aswens1/startup">GitHub</a></p>
