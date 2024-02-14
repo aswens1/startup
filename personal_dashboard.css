@@ -3,21 +3,12 @@
 body {
     font-family: Libre Baskerville;
     background-color: #FEEFE5;
-    text-align: center;
 }
 
-h1 {
-    font-size: 50pt;
+header {
     background-color: #9EACBB;
 }
 
 footer {
     background-color: #9EACBB;
-}
-
-main {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
