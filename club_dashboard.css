@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap');
+
+body, html {
+    font-family: Libre Baskerville;
+    background-color: #FEEFE5;
+
+    height: 100%;
+    margin: 0;
+}
+
+.past {
+    margin: 1em;
+}
+
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+  
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 15%;
+}
+
+.header {
+    text-align: center;
+    background-color: #9EACBB;
+    padding: 15px 0;
+}
+
+footer {
+    background-color: #9EACBB;
+    width: 100%;
+    bottom: 0;
+}
+
+.book-info {
+    margin: 1em;
+}
+
+.discussion {
+    margin: 1em;
+}
+
+.members {
+    margin: 1em;
+}
