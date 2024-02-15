@@ -67,3 +67,22 @@ The main page is a login page with a placeholder for a username and a password. 
 
 #### WebSocket
 On the club dashboard is a placeholder for a discussion board that will use realtime posting from other users.
+
+# CSS Deliverable
+For this deliverable I used CSS to style the different pages of my startup.
+## Technologies
+#### Header, footer, main content body
+#### Navigational elements
+Every page except for the login page has a navigational header that displays all the various links necessary to navigate my startup. These links no longer have underlines and are styled.
+
+#### Responsive window resizing
+My application looks great on all sizes. I'm particularly proud of the bookshelf and the resizing there.
+
+#### Application elements
+Carefully picked out colours and spaced everything apart so it's easy to read.
+
+#### Application text content
+I used the Libre Baskerville font for all elements of text.
+
+#### Application images
+I have one image on the club dashboard page, and I used CSS to create a bookshelf on the personal dashboard page.
