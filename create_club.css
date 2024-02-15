@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap');
+
+body, html {
+    font-family: Libre Baskerville;
+    background-color: #FEEFE5;
+
+    text-align: center;
+
+    height: 100%;
+    margin: 0;
+}
+
+.header {
+    text-align: center;
+    font-size: 50pt;
+    background-color: #9EACBB;
+    padding: 20px 0;
+}
+
+.container {
+    text-align: center;
+    
+}
+
+.wrapper {
+    min-height: calc(100vh - 100px - 120px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.club-name {
+    padding-bottom: 30px;
+}
+
+.private-club {
+    padding-bottom: 30px;
+}
+
+.i {
+    padding-bottom: 30px;
+}
+
+.btn-outline-dark:hover {
+    background-color: #9EACBB;
+    color: #fff;
+}
+
+footer {
+    background-color: #9EACBB;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
