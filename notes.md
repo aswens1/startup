@@ -478,3 +478,486 @@ true + undefined;
 ```
 
 Getting unexpected results is really common with the equality operator.
+
+```javascript
+1 == '1';
+// OUTPUT: true
+null == undefined;
+// OUTPUT: true
+'' == false;
+// OUTPUT: true
+```
+
+JavaScript uses complex rules for defining equality that depends upon the conversion of a type of boolean value. This is sometimes called falsy and truthy evaluations. To fix this, there is strict equality and equality. The strict operators skip the type conversion when computing equality.
+
+- `===` -> strict equality
+- `!==` -> inequality
+
+```javascript
+1 === '1';
+// OUTPUT: false
+null === undefined;
+// OUTPUT: false
+'' === false;
+// OUTPUT: false
+```
+
+Strict equality is considered more intuitive, and is preferred. 
+
+```javascript
+('b' + 'a' + +'a' + 'a').toLowerCase();
+```
+
+### Conditionals
+Javascript supports many common programming language conditional constructs, including if, else, and if else.
+
+```javascript
+if (a === 1) {
+  //...
+} else if (b === 2) {
+  //...
+} else {
+  //...
+}
+```
+
+There is also the ternary operator, which provides a compact if else representation.
+
+```javascript
+a === 1 ? console.log(1) : console.log('not 1');
+```
+
+You can use boolean operations in the expression to create complex predicates. Common operators are:
+
+- `&&` -> and
+- `||` -> or
+- `!` -> not
+
+```javascript
+if (true && (!false || true)) {
+  //...
+}
+```
+
+### Loops
+JavaScript supports many common looping constructs. This includes, for, for in, for of, while, do while, switch. Here are examples.
+
+#### For Loop
+Introduces common post increment operation `i++` for adding one to a number.
+
+```javascript
+for (let i = 0; i < 2; i++) {
+  console.log(i);
+}
+// OUTPUT: 0 1
+```
+
+#### Do While
+
+```javascriptlet
+i = 0;
+do {
+  console.log(i);
+  i++;
+} while (i < 2);
+// OUTPUT: 0 1
+```
+
+#### While
+
+```javascript
+let i = 0;
+while (i < 2) {
+  console.log(i);
+  i++;
+}
+// OUTPUT: 0 1
+```
+
+#### For in
+Iterates over an objects property names.
+
+```javascript
+const obj = { a: 1, b: 'fish' };
+for (const name in obj) {
+  console.log(name);
+}
+// OUTPUT: a
+// OUTPUT: b
+```
+
+For arrays the objects name is the array index
+
+```javascript
+const arr = ['a', 'b'];
+for (const name in arr) {
+  console.log(name);
+}
+// OUTPUT: 0
+// OUTPUT: 1
+```
+
+#### For of
+Iterates over an iterables (array, map, set, etc) property values
+
+```javascript
+const arr = ['a', 'b'];
+for (const val of arr) {
+  console.log(val);
+}
+// OUTPUT: 'a'
+// OUTPUT: 'b'
+```
+
+#### Break and continue
+All of the examples either use a break or continue statement to abort or advance a loop
+
+```javascript
+let i = 0;
+while (true) {
+  console.log(i);
+  if (i === 0) {
+    i++;
+    continue;
+  } else {
+    break;
+  }
+}
+// OUTPUT: 0 1
+```
+
+## Strings
+``` javascript
+'quoted text'; // " also works
+
+const l = 'literal';
+console.log(`string ${l + (1 + 1)} text`);
+// OUTPUT: string literal2 text
+```
+- primative types
+- can use single quotes, double quotes, or backticks `
+
+### Unicode Support
+Defines a string as a 16-bit unsigned integer that represents UTF-16 strings.
+Lets JavaScript display most languages on the planet. This includes those that are read right to left.
+
+### String functions
+The string object has several interesting functions associated with it. Here are the common ones
+
+|Function|meaning|
+|---|---|
+|length|the number of characters in the string|
+|indexOf()|the starting index of a given substring|
+|split()|split the string into an array on the given delimiter string|
+|startsWith()|true if the string has a given prefix|
+|endsWith()|true if the string has a given suffix|
+|toLowerCase()|converts all characters to lower case|
+
+```javascript
+const s = 'Example:조선글';
+
+console.log(s.length);
+// OUTPUT: 11
+console.log(s.indexOf('조선글'));
+// OUTPUT: 8
+console.log(s.split(':'));
+// OUTPUT: ['Example', '조선글']
+console.log(s.startsWith('Ex'));
+// OUTPUT: true
+console.log(s.endsWith('조선글'));
+// OUTPUT: true
+console.log(s.toLowerCase());
+// OUTPUT: example:조선글
+```
+
+## Functions
+Functions are first class objects. They can be assigned a name, passed as a parameter, returned as a result, and referenced from an object or array like any other variable.
+
+Syntax begins with the function keyword followed by zero or more parameters and a body that may contain zero or more return statements. The return statment may return a single value. There are no type declarations, as the type is always inferred by the assignment of the value to the parameter.
+
+```javascript
+function hello(who) {
+  return 'hello ' + who;
+}
+
+console.log(hello('world'));
+// OUTPUT: hello world
+```
+
+If the function doesn't return a value, it usually is there to produce a side effect like modifying a parameter or interacting with an external program. In the next example the side effect is to output text to the debugger.
+
+```javascript
+function hello(who) {
+  who.count++;
+  console.log('hello ' + who.name);
+}
+
+hello({ name: 'world', count: 0 });
+// OUTPUT: hello world
+```
+
+### Function Parameters
+The one who calls the function decides what parameters to provide. If there are no parameters, the value is undefined when the function executes.
+
+The function can also define a default value. This is done by assigning a value to the parameter in the function declaration.
+
+```javascript
+function labeler(value, title = 'title') {
+  console.log(`${title}=${value}`);
+}
+
+labeler();
+// OUTPUT: title=undefined
+
+labeler('fish');
+// OUTPUT: title=fish
+
+labeler('fish', 'animal');
+// OUTPUT: animal=fish
+```
+
+### Anonymous Functions
+Functions are commonly assigned a variable so that they can be passed as a parameter in other functions or stored as an object property. You can do this easily by define a function anonymously and assign it to a variable.
+
+```javascript
+// Function that takes a function as a parameter
+function doMath(operation, a, b) {
+  return operation(a, b);
+}
+
+// Anonymous function assigned to a variable
+const add = function (a, b) {
+  return a + b;
+};
+
+console.log(doMath(add, 5, 3));
+// OUTPUT: 8
+
+// Anonymous function assigned to a parameter
+console.log(
+  doMath(
+    function (a, b) {
+      return a - b;
+    },
+    5,
+    3
+  )
+);
+// OUTPUT: 2
+```
+
+### Creating, Passing, and Returning Functions
+Example of assigning functions to variables, as well as using a function as parameters and return values.
+
+```javascript
+// Anonymous declaration of the function that is later assigned to a variable
+const add = function (a, b) {
+  return a + b;
+};
+
+// Function that logs as a side effect of its execution
+function labeler(label, value) {
+  console.log(label + '=' + value);
+}
+
+// Function that takes a function as a parameter and then executes the function as a side effect
+function addAndLabel(labeler, label, adder, a, b) {
+  labeler(label, adder(a, b));
+}
+
+// Passing a function to a function
+addAndLabel(labeler, 'a+b', add, 1, 3);
+// OUTPUT: a+b=4
+
+// Function that returns a function
+function labelMaker(label) {
+  return function (value) {
+    console.log(label + '=' + value);
+  };
+}
+
+// Assign a function from the return value of the function
+const nameLabeler = labelMaker('name');
+
+// Calling the returned function
+nameLabeler('value');
+// OUTPUT: name=value
+```
+
+### Inner Functions
+Functions can also be declared inside other functions. This way you can modularise your code without always exposing private details.
+
+```javascript
+function labeler(value) {
+  function stringLabeler(value) {
+    console.log('string=' + value);
+  }
+  function numberLabeler(value) {
+    console.log('number=' + value);
+  }
+
+  if (typeof value == 'string') {
+    stringLabeler(value);
+  } else if (typeof value == 'number') {
+    numberLabeler(value);
+  }
+}
+
+labeler(5);
+// OUTPUT: number=5
+
+labeler('fish');
+// OUTPUT: string=fish
+```
+
+## JavaScript Arrow Function
+These are used to clean up code and make it more compact. This replaces the need for the function keyword with the symbols `=>` places after the parameter declaration. The curly braces around it are optional.
+
+This function takes no parameters and always returns 3.
+```javascript
+() => 3;
+```
+
+The following two are equivalent.
+
+```javascript
+const a = [1, 2, 3, 4];
+
+// standard function syntax
+a.sort(function (v1, v2) {
+  return v1 - v2;
+});
+
+// arrow function syntax
+a.sort((v1, v2) => v1 - v2);
+```
+
+Arrow functions cannot be used for constructors or iterator generators.
+
+### Return Values
+There are special rules for the return keyword. This is optional if no curly braces are provided for the function and it contains a single expression. In that case the result of the function is automatically returned. If curly braces are provided, then the arrow function behaves just like a standard function.
+
+```javascript
+() => 3;
+// RETURNS: 3
+
+() => {
+  3;
+};
+// RETURNS: undefined
+
+() => {
+  return 3;
+};
+// RETURNS: 3
+```
+
+### This pointer
+Arrow functions inherit the this pointer from the scope of where it is created. This makes it a closure. A closure allows a function to continue referencing its creation scope, even after it has passed out of that scope. 
+
+In this example, the function returns an anonymous function using the arrow syntax. The `a` parameter is overridden, a new `b` variable is created, and both `a` and `b` are referenced in the arrow function. They are both part of the closure for the returned function.
+
+```javascript
+function makeClosure(a) {
+  a = 'a2';
+  const b = 'b2';
+  return () => [a, b];
+}
+```
+
+Then we can declare the variables `a` and `b` at the top level scope, and call  `makeClosure` with `a`.
+
+```javascript
+const a = 'a';
+const b = 'b';
+
+const closure = makeClosure(a);
+```
+
+Then when we call closure it will output the values contained in scope where it was created instead of the current values of the variables.
+
+```javascript
+console.log(closure());
+// OUTPUT: ['a2', 'b2']
+
+console.log(a, b);
+// OUTPUT: 'a' 'b'
+```
+
+Closures provide a valuable property when we do things like execute JavaScript within the scope of an HTML page, because it can remember the values of variables when the function was created instead of what they are when they are executed.
+
+### Putting it all together
+
+Test all together by using a debounce function.
+The point of a debounce function is to only execute a specified function once within a given time window. Any requests to execute the debounce function more frequently than this will make the window reset. This is important in cases where a user can trigger expensive events thousands of times per second. Without a debounce the performance can suffer.
+
+This example uses the browsers `window.addEventListener` function to add a callback function that is invoked whenever the user scrolls the browsers web pages. The first parameter specified that it wants to listen for scroll events. The second parameter provides the function to call when a scroll event happends. In this example its debounce.
+
+The debounce takes two parameters, the time window for executing the window function, and the window function to call within that limit. 
+
+```javascript
+window.addEventListener(
+  'scroll',
+  debounce(500, () => {
+    console.log('Executed an expensive calculation');
+  })
+);
+```
+
+The debounce function implements the execution of windowFunc within the restricted time window by creating a closure that contains the current timeout and returning a function that will reset the timeout every time it is called. The returned function is what the scroll event will actually call when the user scrolls the page. However, instead of directly calling the windowFunc it sets a timer based on the value of windowMs. If the debounce function is called again before the window times out then it resets the timeout.
+
+```javascript
+function debounce(windowMs, windowFunc) {
+  let timeout;
+  return function () {
+    console.log('scroll event');
+    clearTimeout(timeout);
+    timeout = setTimeout(() => windowFunc(), windowMs);
+  };
+}
+```
+
+## JavaScript Array
+An array object represents a sequence of other objects and primatives. You can reference the members of the array using a zero based index. You can create an array with the array constructor or using the array literal notation shown below.
+
+```javascript
+const a = [1, 2, 3];
+console.log(a[1]);
+// OUTPUT: 2
+
+console.log(a.length);
+// OUTPUT: 3
+```
+
+### Object Functions
+The array has several interesting static functions associated with it.
+
+|Function|Meaning|Example|
+|---|---|---|
+|push|add an item to the end of an array|`a.push(4)`|
+|pop|remove an item from the end of the array|`x = a.pop()`|
+|slice|returns a sub-array|`a.slice(1,-1)`|
+|sort|run a function to sort an array in place|`a.sort((a,b) => b-a)`|
+|values|creates an iterator for use with a `for of` loop|`for (i of a.values()) {...}`|
+|find|find the first item satisfied by a test function|`a.find(i => i < 2)`|
+|forEach|run a function on each array item|`a.forEach(console.log)`|
+|reduce|run a function to reduce each array item to a single item|`a.reduce((a,c) => a + c)`|
+|map|run a function to map an array to a new array|`a.map(i => i+i)`|
+|filter|run a function to remove items|`a.filter(i => i%2)`|
+|every|run a function to test if all items match|`a.every (i => i < 3)`|
+|some|run a function to test if any items match|`a.some(i => 1 < 1)`|
+
+```javascript
+const a = [1, 2, 3];
+
+console.log(a.map((i) => i + i));
+// OUTPUT: [2,4,6]
+console.log(a.reduce((v1, v2) => v1 + v2));
+// OUTPUT: 6
+console.log(a.sort((v1, v2) => v2 - v1));
+// OUTPUT: [3,2,1]
+
+a.push(4);
+console.log(a.length);
+// OUTPUT: 4
+```
