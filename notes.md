@@ -961,3 +961,53 @@ a.push(4);
 console.log(a.length);
 // OUTPUT: 4
 ```
+## JavaScript Object Notation (JSON)
+Created by Douglas Crockford in 2001 while working at Yahoo. It's pronounced like the name Jason. Officially standardised in 2013 and 2017.
+JSON gives a simple and effective way to share and store data. It's easily convertable to, and from, JS objects, which makes it very convenient when working with web technologies. JSON is one of the worlds most popular data formats.
+
+### Format
+JSON document has one of these data types
+|type|example|
+|---|---|
+|string|`"crockford"`|
+|number|`42`|
+|boolean|`true`|
+|array|`[null,42,"crockford"]`|
+|object|`{"a":1,"b":"crockford"}`|
+|null|`null`|
+
+A JSON document has an object. These contain zero or more key value pairs. A key is always a string, and the value has to be one of the valid JSON data types. Key value pairs are set with commas, curly braces mean an object, square brackets and commas mean arrays, and strings are always made with double quotes.
+
+example:
+```JSON
+{
+  "class": {
+    "title": "web programming",
+    "description": "Amazing"
+  },
+  "enrollment": ["Marco", "Jana", "فَاطِمَة"],
+  "start": "2025-02-01",
+  "end": null
+}
+```
+Always encoded with UTF-8, allowing for the representation of global data.
+
+### Converting to JavaScript
+Convert JSON to and from JS using the `JSON.parse` and `JSON.stringify` functions.
+
+```javascript
+const obj = { a: 2, b: 'crockford', c: undefined };
+const json = JSON.stringify(obj);
+const objFromJson = JSON.parse(json);
+
+console.log(obj, json, objFromJson);
+
+// OUTPUT:
+// {a: 2, b: 'crockford', c: undefined}
+// {"a":2, "b":"crockford"}
+// {a: 2, b: 'crockford'}
+```
+
+In this example, JSON cannot represent JS undefined object so it gets dropped when converting from JS to JSON.
+
+## JavaScript Object and Classes
