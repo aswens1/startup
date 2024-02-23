@@ -182,6 +182,15 @@ There are three distinct phases in the history of the web.
 2) the creation of HTML and HTTP that made it possible to share hyperlinked documents (web 1.0)
 3) the creation of CSS and JavaScript that enabled interactive web applications (web 2.0)
 
+## the internet
+The first step was formation of global communications network that was reliable and publicly available. The US department of defense created ARPANET as a means of sharing info between universities doing related research. ARPANET was created with the goal of withstanding a nuclear attack. The network of connecting computers was set up so two computers communicate by dynamically discovering a path to each other without the help of a central authority.
+
+Functionality was expanded in the 80s by the national science foundation, and commerical enterprises. There was a boom of consumer participation in the early 90s, and another large increase in the 200s as smart phones and appliances were wide spread.
+
+The internet engineering task force (IETF) and the internet corporation for assigned names and numbers (ICANN) manage the internet. IETF defines the technical standards that specify how the physical network communicates. ICANN oversees both the internet protocol (IP) address space, and the domain name system (DNS). These databases make up an address book of the internet. The US transfered control of both of these to a global community of non-profit stake holders in 2016, making the internet a worldwide asset free from any political control.
+
+
+## Hypertext markup language (HTML)
 Key Players
 - Tim Berners-Lee -> HTTP, HTML, URL
 - Håkon Wium Lie -> CSS
