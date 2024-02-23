@@ -189,8 +189,16 @@ Functionality was expanded in the 80s by the national science foundation, and co
 
 The internet engineering task force (IETF) and the internet corporation for assigned names and numbers (ICANN) manage the internet. IETF defines the technical standards that specify how the physical network communicates. ICANN oversees both the internet protocol (IP) address space, and the domain name system (DNS). These databases make up an address book of the internet. The US transfered control of both of these to a global community of non-profit stake holders in 2016, making the internet a worldwide asset free from any political control.
 
-
 ## Hypertext markup language (HTML)
+HTML was created by Tim Berners-Lee. In 1980 he was working at the research lab Cern. His job was to build a system that would let researchers share documents between remote academic institutions. ARPANET already provided the necessary connectivity, so he defined the protocols for document sharing that formed the underpinning of what would be termed the world wide web. He named the format HTML based on inspiration from the digital publishing industry's standard generalised markup language (SGML). One key idea of HTML was hyperlinks, letting documents be interconnected. Hyperlinks allow immediate access to related documents. In the 90s he put it all together and built the worlds first web server.
+
+At first, HTML only had 18 elements. The latest version has over 100. This boom was caused partly by browser vendors wanting to have different functionality for market value. Since 1996, HTML specification has been controlled by W3C.
+
+### HTTP and URL
+Berners-Lee also defined the hypertext transfer protocol (HTTP) and the uniform resource location (URL). These specify how web documents are addressed and transmitted across the internet.
+
+## Cascading Style Sheets (CSS)
+
 Key Players
 - Tim Berners-Lee -> HTTP, HTML, URL
 - Håkon Wium Lie -> CSS
