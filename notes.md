@@ -198,18 +198,23 @@ At first, HTML only had 18 elements. The latest version has over 100. This boom 
 Berners-Lee also defined the hypertext transfer protocol (HTTP) and the uniform resource location (URL). These specify how web documents are addressed and transmitted across the internet.
 
 ## Cascading Style Sheets (CSS)
+First proposed in 1994 by Håkon Wium Lie. He worked with Berners-Lee at Cern, and the goal was to give HTML documents visual styling that was separate from the structure. Before CSS, you had to style HTML with hard coding what you wanted into the elements. 
 
-Key Players
-- Tim Berners-Lee -> HTTP, HTML, URL
-- Håkon Wium Lie -> CSS
-- Brendan Eich -> JavaScript
+By 1996, CSS was a standard and was being implemented on all major browsers. The same problems that HTML had were passed to CSS for the first few years.
 
-What We're Using
-- Web browser -> HTML, CSS, JavaScript
-- Web Server -> Web service
-- Cloud Services -> Devices
+With modern CSS, you can import fonts, animate HTML elements, respond to user actions, and dynamically alter the entire page based on device and orientation.
 
-# Technology Stack, EC2, Route 53
+## JavaScript
+Netscape wanted to add the ability to script web pages in 1995. Initial version was created by Brandon Eich. JS made the web an interactive experience, and made it the pages would change dynamically based on the users. Control of JS was given to ECMA in 1996 in order to standardise it. It's technically called ECMAScript now.
+
+The first decade was difficult because all major browsers wanted to make new features. In 2009, major vendors agreed on ECMAScript 5 standard. In 2015, the last major feature upgrade was released.
+
+### JS outside the browser
+In 2009, Ryan Dahl created Node.js. This was the first application for deploying JS outside of the browser, making it widespread across the technology stack instead of just being used for web design. Another important milestone was JSON in 2013, TypeScript in 2012, and numerous transpilers to convert other languages into compatible ECMAScript.
+
+# Technology Stack
+This is the collection of technologies you use to create/deliver your web application. It's called a stack because the technologies layer atop one another. Generally the web framework is at the top (Angular, React, Vue, Svelte, etc). The framework talks to web services for authentication, business, data, storage. Web service then talked to backend services for things like caching, database, logging, monitering.
+
 - React, Caddy2, nodejs, mongoDB
 
 heres how you access the server from the console
@@ -291,51 +296,55 @@ link references
   - ```<a href="../images/profile.png" />```
  
 elements
-- html -> the page container
-- head -> header information
-- title -> title of the page
-- meta -> metadata for the page such as character set or viewport settings
-- script -> JavaScript reference. Either external reference, or inline
-- include -> external content reference
-- body -> the entire content of the page
-- header -> header content
-- footer -> footer of the main content
-- nav -> navigational inputs
-- main -> main content of the page
-- section -> a section of main content
-- aside -> aside content from the main content
-- div -> a block division of content
-- span -> an inline span of content
-- h<1-9> -> text heading. from h1, the highest level, down to h9, the lowest
-- p -> a paragraph of text
-- b -> bring attention
-- table -> table
-- tr -> table row
-- th -> table header
-- td -> table data
-- ol, ul -> ordered or unordered list
-- li -> list item
-- a -> anchor the text to a hyperlink
-- img -> graphical image reference
-- dialog -> interactive component such as a confirmation
-- form -> a collection of user input
-- input -> user input field
-- adio -> audio content
-- video -> video content
-- svg -> scalable vector graphic content
-- iframe -> inline frame of another HTML page
+|element|meaning|
+|---|---|
+|html|the page container|
+|head|header information|
+|title|title of the page|
+|meta|metadata for the page such as character set or viewport settings|
+|script|JavaScript reference. Either external reference, or inline|
+|include|external content reference|
+|body|the entire content of the page|
+|header|header content|
+|footer|footer of the main content|
+|nav|navigational inputs|
+|main|main content of the page|
+|section|a section of main content|
+|aside|aside content from the main content|
+|div|a block division of content|
+|span|an inline span of content|
+|h<1-9>|text heading. from h1, the highest level, down to h9, the lowest|
+|p|a paragraph of text|
+|b|bring attention|
+|table|table|
+|tr|table row|
+|th|table header|
+|td|table data|
+|ol, ul|ordered or unordered list|
+|li|list item|
+|a|anchor the text to a hyperlink|
+|img|graphical image reference|
+|dialog|interactive component such as a confirmation|
+|form|a collection of user input|
+|input|user input field|
+|audio|audio content|
+|video|video content|
+|svg|scalable vector graphic content|
+|iframe|inline frame of another HTML page|
 
 p and div work in similar ways, but you can have more information in a p tag. That way you can separate text. Simply by looking, it doesn't know what div means, but the p tag tells the tools what to do.
 
 you can include comments by starting text with ```<!--- commented text -->``` -> the text in the comments will be ignored while being rendered
 
-characters
-- & -> ```&amp;```
-- '<' -> ```&lt;```
-- '>' -> ```&gt;```
-- " -> ```&quot;```
-- ' -> ```&apos;```
-- 😀 -> ```&#128512;```
+special characters
+|character|entity|
+|---|---|
+|`&`|```&amp;```|
+|<|```&lt;```|
+|>|```&gt;```|
+|"|```&quot;```|
+|'|```&apos;```|
+|😀|```&#128512;```|
 
 by default, the browser will display the index.html page if you don't provide a specific file. It is common to name the main HTML file index.html
 
@@ -385,11 +394,6 @@ most common attributes
 |disabled|disables the ability for the user to interact with the input|
 |value|the initial value of the input|
 |required|signifies that a valye is required in order to be valid|
-
-# Simon HTML
-
-default page should be called index.html
-add placeholders for necessary technologies
 
 # CSS
 
@@ -470,6 +474,180 @@ using import is just referencing the link and using css
  </body>
 </html>
 ```
+## CSS Animation
+CSS animation uses `animation` properties and defining `keyframes` for what the element needs to look like at different times of the animation. 
+
+For example. We have a paragraph and want it to zoom in until its 20% of the view height.
+```css
+p {
+  text-align: center;
+  font-size: 20vh;
+}
+```
+We need to specify that we are animating this element by adding `animation-name` property with value of demo. This refers to the name of the `keyframes`. The keyframes tell what properties should be applied at different key points. You also add `animation-duration` to specify the lenght.
+```css
+p {
+  text-align: center;
+  font-size: 20vh;
+
+  animation-name: demo;
+  animation-duration: 3s;
+}
+```
+You don't need to define the keyframes for every second of the animation. Instead, just do the key points and CSS will do the rest. For this example, we want it to start invisible and have it zoom into the full final size. We do this with `from` and `to`.
+```css
+@keyframes demo {
+  from {
+    font-size: 0vh;
+  }
+
+  to {
+    font-size: 20vh;
+  }
+}
+```
+The last addition here is to make the paragraph bounce out a little bigger than the final size by adding another keyframe that happens at 95% through.
+```css
+@keyframes demo {
+  from {
+    font-size: 0vh;
+  }
+
+  95% {
+    font-size: 21vh;
+  }
+
+  to {
+    font-size: 20vh;
+  }
+}
+```
+
+## CSS Responsive Design
+Responsive design is the web applications ability to reconfigure the interface based on screen size and orientation. Alot of HTML and CSS is already fluid to respond to a browser being resized.
+
+### Display
+Allows you to change how HTML elements are being displayed. Here are some common options
+
+|value|meaning|
+|---|---|
+|none|dont display this element. the element still exists, but the browser will not render it|
+|block|display this element with a width that fills its parent element. a `p` or `div` element has block display by default|
+|inline|display this element with a width that is only as big as its content. a `b` or `span` element has inline display by default|
+|flex|display this elements children in a flexible orientation|
+|grid|display this elements children in a grid orientation|
+
+```html
+<div class="none">None</div>
+<div class="block">Block</div>
+<div class="inline">Inline1</div>
+<div class="inline">Inline2</div>
+<div class="flex">
+  <div>FlexA</div>
+  <div>FlexB</div>
+  <div>FlexC</div>
+  <div>FlexD</div>
+</div>
+<div class="grid">
+  <div>GridA</div>
+  <div>GridB</div>
+  <div>GridC</div>
+  <div>GridD</div>
+</div>
+```
+This HTML renders like this by default:
+![image](https://github.com/aswens1/startup/assets/156115207/ce0cad37-abed-41ff-99ac-d5a0867622b6)
+
+Modifying it with CSS we can render it differently.
+```css
+.none {
+  display: none;
+}
+
+.block {
+  display: block;
+}
+
+.inline {
+  display: inline;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+```
+![image](https://github.com/aswens1/startup/assets/156115207/79e03b08-4cfa-43d3-927f-b1866ea8c5a1)
+
+### Viewport Meta Tag
+include this in the head of all HTML pages to tell the browser not to scale the page
+
+```html
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+```
+
+### float
+Float moves an element to the left or the right of its container and allows inline elements to wrap around it.
+```css
+aside {
+  float: right;
+  padding: 3em;
+  margin: 0.5em;
+  border: black solid thin;
+}
+```
+
+### media queries
+one of the main features for responsive applications is `@media` selector, which dynamically detects the size and orientation of the device and applies CSS rules to represent the HTML in a way that accomodates the change. We can use this to tell which side of the screen is the longest. Media queries take one or more predicates separated by boolean operators. 
+In this example, we want to know if the screen is in portrait mode of not. If it is, it transforms all the div elements by rotating them 270 degrees.
+```css
+@media (orientation: portrait) {
+  div {
+    transform: rotate(270deg);
+  }
+}
+```
+you can also use these to make entire sections disappear. In this example, we want to hide an aside when the screen is narrow.
+```css
+@media (orientation: portrait) {
+  aside {
+    display: none;
+  }
+}
+```
+
+## CSS grid
+this is useful when you want to display a group of child elements in a responsive grid. start with a container with a bunch of child elements
+```html
+<div class="container">
+  <div class="card"></div>
+  <div class="card"></div>
+  <div class="card"></div>
+  <div class="card"></div>
+  <div class="card"></div>
+  <div class="card"></div>
+  <div class="card"></div>
+  <div class="card"></div>
+  <div class="card"></div>
+</div>
+```
+we turn this response with the display property with the value of grid on the container. `grid-template-columns` specifies the layout of the grid columns.
+```css
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-auto-rows: 300px;
+  grid-gap: 1em;
+}
+```
+
+## CSS flexbox
+This is useful when you want to partition your application into areas that responsively move around as the window resizes or the orientation changes. 
 
 # JavaScript
 
