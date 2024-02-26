@@ -1498,3 +1498,171 @@ const e = new Employee('Eich', 'programmer');
 console.log(e.print());
 // OUTPUT: My name is Eich. I am a programmer
 ```
+
+# The Internet
+When one device wants to talk to another, it needs an IP address. Symbolic names are easier to remember, so people make domain names. Domain names are converted to IP addresses by a lookup in the Domain Name System (DNS). You can look up the IP address for any domain using `dig`.
+
+```
+-> dig byu.edu
+
+byu.edu.		5755	IN	A	128.187.16.184
+```
+
+With the IP address, you connect to the device it represents first by asking for a connection route to the device. A connection route is made through many different hops across the network until it reaches the destination and establishes a connection. Then the transport and application layers start exchanging data.
+
+You can find out all the hops with `traceroute` console utility. Here's an example with byu.
+
+```
+-> traceroute byu.edu
+
+traceroute to byu.edu (128.187.16.184), 64 hops max, 52 byte packets
+ 1  192.168.1.1 (192.168.1.1)  10.942 ms  4.055 ms  4.694 ms
+ 2  * * *
+ 3  * * *
+ 4  192-119-18-212.mci.googlefiber.net (192.119.18.212)  5.369 ms  5.576 ms  6.456 ms
+ 5  216.21.171.197 (216.21.171.197)  6.283 ms  6.767 ms  5.532 ms
+ 6  * * *
+ 7  * * *
+ 8  * * *
+ 9  byu.com (128.187.16.184)  7.544 ms !X *  40.231 ms !X
+```
+
+It might be a bit different if you run it again, as the connections are dynamically calculated and different. The fact that it can find a new route makes it resilient for when a device fails or disappears from the network.
+
+You handle the actual sending of data with the TCP/IP mmodel. This covers everything from physical wires to the data that a web app sends. The top layer is the application layer, which handles user functionality (web (HTTP), mail (SMPT), files (FTP), remote shell (SSH), chat (IRC). Next is the transport layer -> breaks the application layers info into small chunks and sends the data. The actual connection is made on the internet layer, which finds the device you want to talk to and keeps the connection alive. Lastly is the link layer that handles the physical connections and hardware.
+
+|layer|example|function|
+|---|---|---|
+|application|HTTPS|functionality like web browsing|
+|transport|TCP|moving connection information packets|
+|internet|IP|establishing connections|
+|link|fiber, hardware|physical connections|
+
+# Web servers
+A web server is a computing device that hosts a web service that knows how to accept incoming internet connections and speak the HTTP application protocol.
+
+## monolithic web servers
+In the early days, you had to buy massive, complex, expensive software that spoke hTTP and installed the hardware server. Both the server and the software was considered the web server, because web service software was the only thing running.
+
+Originally, you could only send static HTML files. But that advanced to dynamic functionality, including being able to generate all the HTML on demand in response to a users interaction.
+
+## combining web and application services
+Most mosdern programming languages include libraries that provide the ability to make connections and serve HTTP. Here is a simple Go program that is a fully functioning web service.
+
+```go
+package main
+
+import (
+	"net/http"
+)
+
+func main() {
+	// Serve up files found in the public_html directory
+	fs := http.FileServer(http.Dir("./public_html"))
+	http.Handle("/", fs)
+
+	// Listen for HTTP requests
+	http.ListenAndServe(":3000", nil)
+}
+```
+
+Easily creating web services makes it easy to drop the monolithic web server and just build services right into your application. Take the Go example, and add a function that responds with the current time when requesting `/api/time`
+
+```
+package main
+
+import (
+	"fmt"
+	"io"
+	"net/http"
+	"time"
+)
+
+func getTime(w http.ResponseWriter, r *http.Request) {
+	io.WriteString(w, time.Now().String())
+}
+
+func main() {
+	// Serve up files found in the public_html directory
+	fs := http.FileServer(http.Dir("./public_html"))
+	http.Handle("/", fs)
+
+	// Dynamically provide data
+	http.HandleFunc("/api/time", getTime)
+
+	// Listen for HTTP requests
+	fmt.Println(http.ListenAndServe(":3000", nil))
+}
+```
+
+Run that web service code, and use the console app `curl` to make an HTTP request and see time response
+
+```
+-> curl localhost:3000/api/time
+
+2022-12-03 09:50:37.391983 -0700
+```
+
+## web service gateways
+It is common to find multiple web services running on the same device. You want to expose the multiple services in a way that a connection can be made to each of them. Every network allows for separate network connections by referring to unique port numbers. Each service on the device starts on a different port. In the Go website above, the service was using port 80. You could just have a user access each service by referring to the port it was launched on. This makes it hard for the user to remember what port matches to what service. We fix this with a gateway, or a reverse proxy, that is a simple web service that listens on the common HTTPS port 443. The gateway looks at the request and maps it to the other services running on different ports. Our web service uses Caddy.
+
+## microservices
+Web services that provice a single functional purpose are microservices. You separate functionality in small logical chuncks, so you can develop and manage them independtly from other functionality in a large system. They also handle fluctuation in user demand by running more and more stateless copies of the microservice from multiple virtual servers hosted in a dynamic cloud environment. Example: a microservice for generating your genealogical family tree might be able to handle 1,000 users concurrently. To support 1 million users, you just deploy 1000 instances of the server running on scalable virtual hardware.
+
+## serverless
+Microservers evolved into `serverless` functionality where the server is conceptually removed from the architecture and you just write a function that speaks HTTP. The function is loaded through a gateway that maps a web request to the function. The gateway automatically scales the hardware needed to host the serverless function based on demand. This reduces what the web application developer needs to think about to a single independent function.
+
+# Domain Names
+A domain name is a text string that follows a specific naming convention and is listed in a special database called the domain name registry. Names are broken into a root domain, with one or more subdomain prefixes. The root is split into a secondary level domain and a top level domain. The top level domain (TLD) is things like `com` and `edu` and `click`. A root domain would be something like `byu.edu`, `google.com`, or `cs260.click`. The possible TLDs are controlled by ICANN.
+
+The owner of the root domain can create any number of subdomains off the root domain Each subdomain may resolve to a different IP address. The owner of cs260.click can have subdomains for travel (`travel.cs260.click`), finance (`finance.cs260.click`), or a blog (`blog.cs260.click`). You can get info about a domain name from the domain name registry using the `whois` console utility.
+
+```whois byu.edu
+
+Domain Name: BYU.EDU
+
+Registrant:
+	Brigham Young University
+	3009 ITB
+	2027 ITB
+	Provo, UT 84602
+	USA
+
+Administrative Contact:
+	Mark Longhurst
+	Brigham Young University
+	Office of Information Technology
+	1208 ITB
+	Provo, UT 84602
+	USA
+	+1.8014220488
+	markl@byu.edu
+
+Technical Contact:
+	Brent Goodman
+	Brigham Young University
+	Office of Information Technology
+	1203J ITB
+	Provo, UT 84602
+	USA
+	+1.8014227782
+	dnsmaster@byu.edu
+
+Domain record activated:    19-Jan-1987
+Domain record last updated: 11-Jul-2022
+Domain expires:             31-Jul-2025
+```
+
+This provudes info like technical contact to talk to if there is a problem with the domain, and an administrative contact to ttalk to if you want to buy the domain.
+
+## DNS
+After a domain name is in the registry, if can be listed with a domain name system (DNS) and is associated with a IP address. All DNS servers in the world references a few special DNS servers that are considered the `authoritative name servers` for associating a domain name with an IP address.
+
+The DNS database records the facilitate the mapping of domain names to IP addresses come in several flavours. The main ones are `address (A)` and the `canonical name (CNAME) records. `A` records are straight mapping from a domain to an IP. `CNAME` maps one domain name to another name. This is a domain name alias. You can use CNAME to map something like byu.com and byu.edu so that either can be used.
+
+When you enter a domain name in the browser, it first checks to see if it has the name already in its cache of names and if not, it contacts a DNS server for the IP address. The DNS also keeps a cache of names. If the name is not in the cache, it will request it from the `authoritative name server`. If they don't know, you get an unkown domain name error. If it does resolve, the nthe browser makes the HTTP connection to the IP address.
+
+There are a lot of levels of name caching, which helps for performance reasons. However, it can be frustrating when you are trying to update the infor associated with your domain name. This is where `time to live (TIL)` setting for a domain record comes into play. You can set it for something short (5 mins) or long (several days). The different caching layers should then honour the TTL and clear their cache after the requested period has passed.
+
+## Leasing a domain name
+You can pay to lease an unused domain name for a specific period of time. Before it expires, you have the right to extend the lease for an addition amount of time. The cost varies from $3 to $200 a year. Buying, or sub-leasing, an existing domain from a private party can be very expensive, so its better buying something obsucre like `idigfor.gold` (available for only 101 dollars). This is a reason why companies have strange names.
