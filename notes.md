@@ -10,6 +10,9 @@ A markdown file consisting of all my class notes for the winter 2026 semester.
 
 ## Development Essentials
 
+<details>
+<summary>Git</summary>
+
 ### Git
 Git was created by Linus Torvalds (also created Linux).
 
@@ -42,7 +45,6 @@ With Git initialised and ready to go, you can use 'echo' to create new files and
 - See what Git is doing: ```git status```
 
 Here's an example:
-
 ```
 ➜ echo hello world > hello.txt
 ➜ git status
@@ -164,6 +166,28 @@ You can store any type of file with Git. But when storing large binary files lik
 Using Git from the console is super important and a good skill to learn, but you can also use something like VS Code to hide all the hard command line bits and use a visual interface instead.
 
 The GitLens extension on VS Code does the same thing we can do on the command line, but in a visual way that can make it easier for us to use. 
+</details>
+
+<details>
+<summary>GitHub</summary>
+
+### GitHub
+While Git helps you track versions in your repository and gives you the ability to clone that repository to another location, it's much easier to manage these repositories on a cloud based service like GitHub.
+
+GitHub was launched in 2008 and acquired by Microsoft in 2018 for $7.5 billion. GitHub start as an application for storing and cloning Git repositories and now has functionality for hosting websites, supporting community pull requests, tracking issues, hosting codespaces, running continuous deployment processes, managing projects, and AI code generation.
+
+This class uses GitHub for three things:
+1) Hosting all of the instruction. This makes it easy for us to make pull requests if you see something that needs to be improved.
+2) Publicly hosting your project repositories. This allows you to make a backup of your code, shows your progress through commit history, lets you review your code, and makes it so you can collaborate with your peers. (And looks good on a resume!)
+3) Lets you keep notes on what you learn and what you remember (this file ;))
+
+
+Some required reading but also just useful GitHub specs:
+- [GitHub create a repo](https://docs.github.com/en/get-started/quickstart/create-a-repo)
+- [GitHub cloning a repo](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
+- [GitHub personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+</details>
+
 
 ## Web Server Setup
 ## HTML
