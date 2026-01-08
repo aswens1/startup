@@ -251,7 +251,7 @@ Fast-forward
  1 file changed, 3 insertions(+), 1 deletion(-)
  ```
 
- #### GitHub README.md
+#### GitHub README.md
 
 The README.md file that GitHub can include when you create a repository is super helpful for keeping track of what you learn and writing documentation for your project. You use [markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) to write the content of the README.md file.
 
@@ -280,6 +280,78 @@ A good habit to follow to make sure you commit often:
 2) Refactor, test, and/or implement a small portion of cohesive code (test code test)
 3) Commit and push (```git commit``` ```git push```)
 4) Repeat
+</details>
+
+<details>
+<summary>The Console</summary>
+
+### The Console
+
+More reading: [MDN Command Line Crash Course](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Understanding_client-side_tools/Command_line)
+
+Before graphical user interfaces (GUI), all computer systems were console environments made of prompts for inputting a command and displaying the output of the command. All original programming tools ran as a console application. The console is still actively used by professional developers and most programming tools execute within a console window. The console is also known as the command line, shell, or terminal. 
+
+The console window is an essential web development tool. It gives you access to the file system and lets you execute command line applications.
+
+You choose any sort of console application. All operating systems have a default one (terminal on mac) but you can also install different applications. [Warp](https://app.warp.dev/referral/28JW4E) is one of these.
+
+Consoles need to be [POSIX](https://en.wikipedia.org/wiki/POSIX) compliant to be used for web developing, meaning it supports a standard set of console commands. Mac and Linux both support POSIX.
+
+#### Viewing the File System
+Viewing the file system is one of the main uses of the console application. Computer files are organised in a tree structure of nodes called directories. At any given point, your console is located at one of these directories. You can see which one you're in now by using ```pwd```, the present working directory command.
+
+```
+➜  pwd
+
+/Users/student/byu//webprogramming260
+```
+
+Use ```ls``` to list the files in the current directly. Most command line applications use parameters after the main command to get more specifics. Use ```ls -la``` to list ALL files, including hidden ones.
+
+#### Executing Commands
+The other main purpose for the console is to run commands. The console can do all sorts of operations.
+
+| Command | Function |
+|---------|-----------|
+| `echo` | Output the parameters of the command |
+| `cd` | Change directory |
+| `mkdir` | Make directory |
+| `rmdir` | Remove directory |
+| `rm` | Remove file(s) |
+| `mv` | Move file(s) |
+| `cp` | Copy files |
+| `ls` | List files |
+| `curl` | Command line client URL browser |
+| `grep` | Regular expression search |
+| `find` | Find files |
+| `top` | View running processes with CPU and memory usage |
+| `df` | View running processes with CPU and memory usage |
+| `cat` | Output the contents of a file |
+| `less` | Interactively output the contents of a file |
+| `wc` | Count the words in a file |
+| `ps` | View the currently running processes |
+| `kill` | Kill a currently running process |
+| `sudo` | Execute a command as a super user (admin) |
+| `ssh` | Create a secure shell on a remote computer |
+| `scp` | Securely copy files to a remote computer |
+| `history` | Show the history of commands |
+| `ping` | Check if a website is up |
+| `tracert` | Trace the connections to a website |
+| `dig` | Show the DNS information for a domain |
+| `man` | Look up a command in the manual |
+
+You can use special characters to chain the input and output of commands.
+- `|`: Takes the output from the command on the left and *pipe* (pass) it to the command on the right
+- `>`: Redirects output to a file. Overwrites the file if it exists
+- `>>`:Redirects output to a file. Appends if the file exists
+
+For example: you can lust the files in a directory, pipe it into ```grep``` to search for files created in November, then pipe it into ```wc``` to count the number of files found with a date of November.
+
+```ls -l | grep ' Nov ' | wc -l```
+
+You can also use a few keyboard shortcuts that have specific meaning in the console:
+- `CTRL-R`: Use type ahead to find previous commands
+- `CTRL-C`: Kill the currently running command
 </details>
 
 ## Web Server Setup
