@@ -129,8 +129,8 @@ Usually you don't actually want to reverse to the previous commit - and instead 
 
 There are a few options:
 - Specify two different SHAs for the commits you want to compare: ```git diff [SHA1] [SHA2]```
-- Use the HEAD command (which always points to the current commit) and a SHA to compare: ```git diff HEAD [SHA1]```
-- Or you can use ~ to specify the numerical distance before the current commit: ```git diff HEAD HEAD~1``` (compares the current and the commit right before. You can use any number here.)
+- Use the ```HEAD``` command (which always points to the current commit) and a SHA to compare: ```git diff HEAD [SHA1]```
+- Or you can use ```~``` to specify the numerical distance before the current commit: ```git diff HEAD HEAD~1``` (compares the current and the commit right before. You can use any number here.)
 
 Using ```dif``` on our example from earlier gives us:
 
