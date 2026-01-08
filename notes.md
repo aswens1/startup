@@ -186,8 +186,101 @@ Some required reading but also just useful GitHub specs:
 - [GitHub create a repo](https://docs.github.com/en/get-started/quickstart/create-a-repo)
 - [GitHub cloning a repo](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
 - [GitHub personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
-</details>
 
+#### Creating & Cloing a Repository
+You can create a repository in your dev environment, and later connect it to GitHub, but it is much easier to make the repository on GitHub and clone it to your dev environment. This way they are automatically linked and it takes less setting up. 
+
+Every GitHut repository has a unique URL. If it's public, anyone with the URL can clone the repository to their own environment. A clone is an exact copy of the repository, and includes commits, comments, and SHAs. It also makes it so the clone knows the remote source so you an use Git commands to keep them both in sync. In this case, the remote source is the GitHub repository.
+
+You can clone a repository using the unique URL and the  ```git clone``` command. If you're in your GitHub repository's main page, there is a green button with the word Code on it. Clicking that gives you the URL you can use to clone it. For example:
+```
+➜  git clone https://github.com/webprogramming260/startup-example.git
+
+Cloning into 'startup-example'...
+remote: Total 4 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (4/4), done.
+
+➜  cd startup-example
+```
+
+#### Making Changes
+Now you can make any changes to the code and commit them back to the repository. As you make commits and changes in the local repository, you have to remember to push those changes back to the source repository on GitHub so they're all in sync. When everything's been pushed, your peers can now pull those commits to their own local repository using the ```pull``` command. For example:
+
+```
+➜  printf "\nChange from my development environment!\n" >> test.md
+
+➜  git add test.md
+
+➜  git commit -am "update(notes) thoughts about startup applications"
+
+➜  git push
+```
+
+This pattern below is something that should become second nature in your development process. You should commit frequently.
+1) Pull the repository's latest changes from GitHub (```git pull```)
+2) Make changes to the code
+3) Commit the changes (```git commit```)
+4) Push the changes to GitHub (```git push```)
+
+If you use something like the GitHub Lens extension for VS Code, this process is made even easier as it's just a series of buttons to push.
+
+The first time you try to push to a repository, Git will have you identify yourself with some sort of password to use with GitHub. Your password should be a [Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token). 
+
+```
+*** Please tell me who you are
+
+Run
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your name"
+```
+
+You want to make sure the email you provide is the same as the email you used for your GitHub account.
+
+After everything's been pushed, you can view your code in GitHub with your browser, and even make changes to your files. If you make changes through GitHub and not in your local repository, you have to pull that new code to your local repository. You can use ```fetch``` to get the information, ```status``` to view the changes, and ```pull``` to pull those changes into your local repository.
+
+```
+➜  git fetch
+➜  git status
+Your branch is behind 'origin/main' by 1 commit, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+
+➜  git pull
+Updating d13a9ce..cafe81a
+Fast-forward
+ test.md | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+ ```
+
+ #### GitHub README.md
+
+The README.md file that GitHub can include when you create a repository is super helpful for keeping track of what you learn and writing documentation for your project. You use [markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) to write the content of the README.md file.
+
+For this class, the README.md file should be used to record progress on the startup deliverables.
+
+#### Forks
+GitHub forks allow you to make a copy the repository. This makes it so the new remote source is your own personal copy, instead of pushing back to the original when you clone it. This is super helpful when you want to contribute to open source projects, as you can clone the fork and make changes to your version without affection the original. The fork still has a link to the original copy, so you can pull updates from the original to your fork, and allows you to create a pull request to merge your fork back in with the original.
+
+#### Pull Requests
+Pull requests are made when you make changes to a fork and push the changes back to the original. This tells the owner of the original repository that someone is requesting to make changes, and they can review the changes and decide if they want to commit them to the original. This is how open source communities manage their work with a group of developers volunteers.
+
+Additional reading:
+- [GitHub pull requests](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests)
+- [GitHub pulls from forks](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork)
+
+#### Creating a History of Your Work
+Consistently committing your changes and pushing to your repositories helps create a comprehensive history of your work. This has multiple benefits:
+- Backup: If your computer dies, you can easily clone the repo to a new computer and save all your work.
+- Portfolio: Your repositories are valuable artifacts you can show to employers to show your mastery through different projects.
+- Proof of work: Demonstrate authorship of your code by consistently and frequently committing your work.
+- Exploration: With branches, you can experiment with different ideas and methods without losing your main development. You can also try something, realise it doesn't work, and reset to your last commit.
+- Experience: Git is the default versioning system. Learning how to use it is a super important skill.
+
+A good habit to follow to make sure you commit often:
+1) Verify you have the latest code (```git pull```)
+2) Refactor, test, and/or implement a small portion of cohesive code (test code test)
+3) Commit and push (```git commit``` ```git push```)
+4) Repeat
+</details>
 
 ## Web Server Setup
 ## HTML
