@@ -354,6 +354,67 @@ You can also use a few keyboard shortcuts that have specific meaning in the cons
 - `CTRL-C`: Kill the currently running command
 </details>
 
+<details>
+<summary>Editors</summary>
+
+### Editors
+
+Code editors are where you do most of the actual coding. Learning an editor really well is a really useful skill that makes you efficient and flexible. 
+
+Class reccomendations: VS Code and VI.
+
+#### Visual Studio Code
+
+Website: [VS Code](https://code.visualstudio.com/)
+
+VS Code was created by Microsoft and is free and supported by a lot of open source developers. As of a [2021 Stack Overflow survey](https://insights.stackoverflow.com/survey/2021#section-most-popular-technologies-integrated-development-environment), VS Code is the number one most used IDE.
+
+It's simple, flexible, and powerful. There are lots of extensions and features that can be used for all sorts of different projects.
+
+#### Vim
+VI (Vim) is one of the oldest console editors. It's available on every Linux server and can do anything that you will need. It does come with a bit of a learning curve though.
+
+There are a lots of tutorials out there on learning to use vim, here are a few based on how you like to learn:
+
+- [Textual](https://www.linuxfoundation.org/blog/blog/classic-sysadmin-vim-101-a-beginners-guide-to-vim)
+- [Video](https://youtu.be/RZ4p-saaQkc)
+- [Interactive](https://www.openvim.com/)
+- [Game](https://vim-adventures.com/)
+- `Console` - type `vimtutor` in your console
+
+Here are some more basic instructions just in case:
+
+Open vim through your console by cd-ing into the directory that holds the code you want to work on. For example, if you want to work on a file called `index.html`, type `vi index.html`.
+
+Vim has no menu bar or navigation aides since it's run entirely on keyboard commands. There are two modes in vim, command mode and insert mode. Command mode is the default when you open vim. To edit a document, enter `i` to enter insert mode. Now type actually modifies the document. To exit insert mode, pres `ESC`. Type `:q` from cpmmand mode to quit vim when you're done.
+
+|keystroke|meaning|
+|---|---|
+| `:h` | help |
+| `i` | enter insert mode. This will allow you to type and delete text. Use ESC to exit insert mode. No other commands will work while in insert mode.|
+| `u` | undo |
+| `CRTL-r` | redo |
+| `gg` | go to beginning of file |
+| `G` | go to end of file |
+| `/` | search for text that you type after `/` |
+| `n` | next search match |
+| `N` | previous search match |
+| `v` | visually select text |
+| `y` | yank or copy selected text to clipboard |
+| `p` | paste clipboard |
+| `CRTL-wv` | split window vertically |
+| `CRTL-ww` | toggle windows |
+| `CRTL-wq` | close current file |
+| `:e` | open a file. type ahead available. if you open a directory you can navigate it in the window |
+| `:w` | write file (save) |
+| `:q` | quit. use `:q!` to exit without saving|
+
+These commands work with a lot of POSIX console prgrams.
+
+Here is a [cheat sheet](https://vim.rtorr.com/) on these commands.
+
+</details>
+
 ## Web Server Setup
 ## HTML
 ## CSS
