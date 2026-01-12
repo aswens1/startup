@@ -437,13 +437,80 @@ There are two major organizations that control the management of the internet. T
 
 #### Hypertext Markup Language (HTML)
 
+Tim Berners-Lee invented the Hyper text markup language starting in the 1980s. Its a document format language based on the digital publishing industry's Standard Generalised Markup Language (SGML). One of the main ideas of HTML is that documents could be interconnected with 'hyperlinks' to allow access to other related documents. In 1990 he put them all together and built the world's firt web server on his desktop NeXT computer. 
+
+Here's a reproduction of the first website: [infor.cern.ch](http://info.cern.ch/).
+
+At the beginning, HTML only 18 elements/tags. The latest version has over 100. The initial growth was caused in part by browser vendors wanting to create differentiating functionality to gain market share. Since 1996, the HTML specification has been controlled by the [W3C](https://www.w3.org/).
+
+Example of an HTML document:
+
+```
+<html>
+  <body>
+    <p>Hello world!</p>
+  </body>
+</html>
+```
+
 #### HTTP & URL
+
+Berners-Lee hade a few other contributions to web history, including the definition of the HyperText Transfer Protocol ([HTTP](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol)) and the Uniform Resource Locator ([URL](https://en.wikipedia.org/wiki/URL)). These specify how web documents are addressed and transmitted across the internt.
+
+Example of a URL:
+```http://info.cern.ch/hypertext/WWW/Helping.html```
+
+Example of a HTTP request:
+```
+GET /hypertext/WWW/Helping.html HTTP/1.1
+Host: info.cern.ch
+Accept: text/html
+```
  
 #### Cascading Style Sheets (CSS)
 
+[CSS](https://en.wikipedia.org/wiki/CSS) was first introduced in 1994 by Hakon Wium Lie, who worked with Berners-Lee at CERN. The idea was to give HTML documents visual styling independents of the content's structure. Before CSS, you had to hard code the visual appearance of the content with HTML elements. That would have made it so there was a single visual style for the entire web, completely defined by browser vendors.
+
+CSS became a standard by 1996 and all major browsers implemented the funcionality. The first few years has a lot of issues that early HTML has, and a lot of work on version 2.1 was to remove errors and make all the features compatible.
+
+Here's an example of CSS (defines the white spacing, colour, and shadow of paragraph text):
+```
+p {
+  margin: 0;
+  padding: 20px 0;
+  color: #00539f;
+  text-shadow: 3px 3px 1px black;
+}
+```
+
+With modern CSS, a web programmer can import fonts, animate HTML, respond to user acctions, and dynamically alter the entire layouts of the page based on the size of a device and orientation.
+
 #### JavaScript
 
-#### What's Next
+JavaScript was initially implenteted by Netscape (Navigator) in 1995 with the goal of adding the ability to script web pages. This was originally led by Brendan Eich and named JavaScript. It turned the previously static web into an interactive experience, allowed a web page to change dynamically based on user interaction.
+
+In 1996, Netscape gave control of JS to ECMA Internation to try and standardise the definition of the language. Then, JS officially became known as ECMAScript but is still referred to as JS.
+
+Here is an example of a simple program (combines the variables and prints out the result):
+```
+const join = (...a) => {
+  return a.reduce((accumulator, currentValue) => accumulator + currentValue);
+};
+
+console.log(join(1, 2));
+console.log(join('hello', ' ', 'world', '!'));
+```
+
+The first decade was rough because every major browser vendors attempted to introduce new features to gain market share. In 2009, the major vendors agreed on the ECMAScript 5 standard and in 2015, the ECMAScript 6 was released as the last major update. Minor releases have used the year of their release as their version number.
+
+##### JavaScript Outside the Browser
+
+Ryan Dahl created Node.js in 2009 as the first successful application for deploying JS outside of a browser. This changed the mindset of JS from a purely browser tech to one that is leveraged across the whole tech stack.
+
+Other important milestones include:
+- 2013 -> standardization of the common object notation JSON
+- 2012 -> a typed variant named TypeScript
+- the introduction of a bunch of transpilers for converting other languages into compatible ECMAScript
 
 </details>
 
