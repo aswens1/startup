@@ -415,6 +415,38 @@ Here is a [cheat sheet](https://vim.rtorr.com/) on these commands.
 
 </details>
 
+<details>
+<summary>History of the Web</summary>
+
+### A Brief History of Web Programming
+
+There are three distince phases to the history of web programming.
+1. The formation of the internet that supports the communication of web applications.
+2. The creation of HTML and HTTP that made it possible to share hyperlinked documents (Web 1.0).
+3. The creation of CSS and JavaScript that enabled interactive web applications (Web 2.0).
+
+#### The Internet
+
+The first step in what is now called web programming was the formation of a global communications network that was reliable and publicly available. The US Department of Defense created the ARPANET to help with sharing information between universities doing defense related research.
+
+ARPANET had the goal of withstanding nuclear attack. This means it was implemented by a graph of redundantly connected computing devices. This allowed for two computers to communicate by discovering a path to each other without the help of a single authority.
+
+The National Science Foundation expanded the network in the 1980s and commercial enterprises started to contribute. The world went online in an explosion of consumer participation in the early 90s. This increased expontentially in the 2000s with the introduction of smart phones and appliances.
+
+There are two major organizations that control the management of the internet. The Internet Engineering Task Force (IEFT) defines technical standards that specify how the physical network communicates. The Internet Corporation for Assigned Names and Numbers (ICANN) oversees the Internet Protocol ([IP](https://en.wikipedia.org/wiki/Internet_Protocol)) address space, and the Domain Name System ([DNS](https://en.wikipedia.org/wiki/Domain_Name_System)). These databases are the address book of the internet. The US government transitioned control of these bodies to a global community of non-profit stakeholders in 2016, which made the internet a worldwide asset free from political control.
+
+#### Hypertext Markup Language (HTML)
+
+#### HTTP & URL
+ 
+#### Cascading Style Sheets (CSS)
+
+#### JavaScript
+
+#### What's Next
+
+</details>
+
 ## Web Server Setup
 ## HTML
 ## CSS
