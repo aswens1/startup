@@ -39,6 +39,6 @@ I am going to use the required technologies in the following ways.
 - **HTML** - HTML will be used for the core structureand organisation by creating the pages for the login/sign up, lobby/collaborative canvas, gameplay pages, and the leaderboards.
 - **CSS** - CSS will be used to style the pixel grids, UI panels, and controls. It will also be used to animate pixel changes and help with a responsive layout based on screen size.
 - **React** - React will be used to break the UI into reusable compenents, manages the page connections, and handles reactive updates to pixel and gameplay.
-- **Service** - Service will be used to handle authentication, endpoints for the current board state, accepts and validates pixels, and supplies leaderboard data.
+- **Service** - Service will be used to handle authentication, endpoints for the current board state, accepts and validates pixels, and supplies leaderboard data. I will also use the [Colormind API](http://colormind.io/api-access/) to randomise the pixel colour for teams in game play. 
 - **DB/Login** - The Database will store accounts and auth information, saves the pixel data for each board, and stores game boards and leaderboard stats.
 - **WebSocket** - WebSocket will be used to update boards in real-time to other players when a pixel is changed, sends board resets and game state changes, and enables live multiplayer interactions.
