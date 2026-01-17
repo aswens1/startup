@@ -613,11 +613,93 @@ Common problems:
 | Using the browser to hit my server using my IP was working but now it doesn't | Check that your IP address hasn't changed. Perhaps due to assigning an elastic IP address or stopping your server. |
 | My server doesn't come up in the brower | Check that you are not trying to use `https` before you configure Caddy to use https. |
 
-
-
 </details>
 
+<details>
+<summary>Domain Names</summary>
 
+### Domain Names
+
+- Deeper dive reading: [MDN What is a Domain Name](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_domain_name)
+
+An IP address can be referenced by a domain name. You can get the IP address for any domain using the `dig` console utility. In the following example, there are multuple IP addresses to the same domain, which allows for redundancy in case one of the IP addresses fails to successfully resolve a valid connection because the server listening at the IP address isn't responding.
+
+```
+➜  dig amazon.com
+
+amazon.com.		126	IN	A	205.251.242.103
+amazon.com.		126	IN	A	52.94.236.248
+amazon.com.		126	IN	A	54.239.28.85
+```
+
+A domain name is simply a text string that follows specific naming conections and is listed in a special database called the domain name registry.
+
+Domain names are broken up into a root domain with one or more possible subdomain prefixes. The root domain is represented by a secondary level domain and a top level domain. The top level domain (TLD) represents things like `com`, `edu`, or `click`. A root domain would look something like `byu.edu`, `google.com`, or `cs260.click`. The [possible list of TLDS](https://www.icann.org/resources/pages/tlds-2012-02-25-en) is controlled by ICANN, one of the governing boards of the internet.
+
+The owner of a root domain can create any number of subdomains. Each subdomain may resolve to a different IP address. So the owner of `cs260.click` can have subdomains for travel (`travel.cs260.click`), finance (`finance.cs260.click`), or even a blog (`blog.cs260.click`). 
+
+You can get information about a domain name from the domain name registry using the `whois` console utility.
+
+```
+➜  whois byu.edu
+
+Domain Name: BYU.EDU
+
+Registrant:
+	Brigham Young University
+	3009 ITB
+	2027 ITB
+	Provo, UT 84602
+	USA
+
+Administrative Contact:
+	Mark Longhurst
+	Brigham Young University
+	Office of Information Technology
+	1208 ITB
+	Provo, UT 84602
+	USA
+	+1.8014220488
+	markl@byu.edu
+
+Technical Contact:
+	Brent Goodman
+	Brigham Young University
+	Office of Information Technology
+	1203J ITB
+	Provo, UT 84602
+	USA
+	+1.8014227782
+	dnsmaster@byu.edu
+
+Domain record activated:    19-Jan-1987
+Domain record last updated: 11-Jul-2022
+Domain expires:             31-Jul-2025
+```
+
+This provies information such as a technical contact to talk to if there is a problem with a domain, and an admin contract to talk to if you want to buy a domain.
+
+#### DNS
+
+Once a domain is in the registry it can be listed with a domain name system (DNS) server and associated with an IP address. You have to lease the IP address before you can use it to uniquely identify a device on the internet. Every DNS server in the world references a dew special DNS servers that are considered the `authoritative name servers` for associating a domain name with an IP address.
+
+DNS database records that facilitate the mapping of domain names to IP addresses come in several flavours. The main ones we are concerned with are the:
+- `address (A)`
+- `canonical name (CNAME)` 
+
+An `A` record is a straight mapping from a domain name to the IP address. A `CNAME` record maps on domain name to another domain name that acts as a domain name alias. You would use a CNAME to do things like map `byu.com` to the same IP address as `byu.edu` so that either of them could be used.
+
+When you search a domain name in your browser, the browser first checks to see if it has the name already in its cache of names. If npt, it contacts a DNS server to get the IP address. The DNS server also keeps a cache of names. If the domain name is not in the cache, it will request the name from an `authoritative name server`. If the authority doesn't know the name, you'll get an unknown domain name error. If the process resolves, then the browser makes the HTTP connection to the IP address.
+
+There are a lot of of levels of name caching. This is done for performance reasons, but it can also be frustrating when you want to update the informatoin associated with your domain name. This is where `time to live` (`TTL`) settings come to play. You can make this something short like 5 minutes or as long as several days. The different caching layers should honour the TTL and clear their cache after the requested period has passed.
+
+#### Leasing a Domain Name
+
+You can pay to lease an unused domain name for a specific period of time. Before it expires, you have the right to extend the lease for an addition amount of time. The cost varies significatly. Buying (subleasing) a domain from a private party can be very expensive, and so you are better off buying something obscure. This is part of the reason why companies have strange names.
+
+If you're interested in leasing a domain name, follow the [Route 53 instructions](https://github.com/webprogramming260/webprogramming/blob/main/instruction/webServers/amazonWebServicesRoute53/amazonWebServicesRoute53.md).
+
+</details>
 
 ## HTML
 ## CSS
