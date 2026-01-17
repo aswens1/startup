@@ -407,7 +407,7 @@ Vim has no menu bar or navigation aides since it's run entirely on keyboard comm
 | `CRTL-wq` | close current file |
 | `:e` | open a file. type ahead available. if you open a directory you can navigate it in the window |
 | `:w` | write file (save) |
-| `:q` | quit. use `:q!` to exit without saving|
+| `:q` | quit. use `:q!` to exit without saving |
 
 These commands work with a lot of POSIX console prgrams.
 
@@ -605,7 +605,7 @@ When you rent a web server, it's physically located in a large data center in pl
 Follow these instructions to set up AWS server instance:
 - [cs260 instructions](https://github.com/webprogramming260/webprogramming/blob/main/instruction/webServers/amazonWebServicesEc2/amazonWebServicesEc2.md)
 
-Common problems:
+#### Common problems
 
 | Symptom | Reason |
 | --- | --- |
@@ -712,7 +712,7 @@ IP addresses are fine for development, bit they're not great for most users. Plu
 
 Here are the [Route 53 instructions](https://github.com/webprogramming260/webprogramming/blob/main/instruction/webServers/amazonWebServicesRoute53/amazonWebServicesRoute53.md).
 
-Common problems
+#### Common problems
 
 | Symptom | Reason |
 | I leased my domain name and set up DNS, but I can't hit it with the browser	| Give it some time. Perhaps 10 minutes. Use `dig` or `nslookup` to see if the DNS records are publicly available. Check to see if the IP address is correct. Make sure the DNS records are correct. |
@@ -721,8 +721,155 @@ Common problems
 | My `simon` or `startup` subdomains work, but not my root domain	 | Check your DNS records. Make sure you have a root record. |
 | My domain name was working, but after 15 days it stopped.	 | Make sure you received and responded the the email from the registrar to verify your email address. Check your spam folder if you did not receive an email. If you open the Route 53 browser console and navigate to your Registered Domain information you can see if it thinks you are verified or not. |
 
+</details>
+
+<details>
+<summary>Caddy</summary>
+
+### Caddy
+
+- Recommended reading: [Getting Started](https://caddyserver.com/docs/getting-started)
+
+In 2020, Matt Holt combined the power of building an HTTP server using the [Go programming language](https://go.dev/) with the ease of generating TLS certificates with [LetsEncrypt](https://letsencrypt.org/).
+
+Caddy is a web service that listens for incoming HTTP requests. It then either serves up the requested static files or routes the request to another web service. The ability to route requests is called a `gateway`, or `reverse proxy`, and allows you to expose multiple web services (i.e. your project services) as a single external web service (i.e. Caddy).
+
+We use Caddy for these reasons:
+- Caddy handles all of the creation and rotation of web certificates, which allows us to easily support HTTPS.
+- Caddy serves up all your static HTML, CSS, and JS files. ALl your early application work will be hosted as static files.
+- Caddy acts as a gateway for subdomain requests to your Simon and startup application services. For example, when a request is made to `simon.yourdomain`, Caddy will proxy the request to the Simon application running with node.js as an internal werb service.
+
+#### Important Caddy Files
+As part of the installation of Caddy, we created 2 links in the Ubuntu user's home directory that point to the key Caddy configuration files. These links are in the home directory so you don't have to hunt them down.
+
+- Configuration file `~/Caddyfile`
+
+This file contains the definitions for routing HTTP requests that Caddy receives. This is used to determine the location where static HTML files are loaded from, and proxy requests into the services you will create later. Other than when you configure the domain name of your server, you should never have to modify this file manually. It is still good to know how it works in case things go wrong. You can read about it in the [Caddy Server documentation](https://caddyserver.com/docs/caddyfile).
+
+- HTML files `~public_html`
+
+This is the directory of files that Caddy serves up when requests are made to the root or your web server. If you actually look at the Caddyfile, you will see that the static file server is mapped to `usr/share/caddy`. That's the location that the file link in the Ubuntu user's home directory, `~/public_html` is pointing to.
+
+```
+:80 {
+      root * /usr/share/caddy
+      file_server
+}
+```
+
+According to this configuration, whenever Caddy receives an HTTP request for any domain name on port 80 it will use the path of the request to find a corresponding file in this directory.
+
+#### Proxy Servers
+
+A proxy server acts as an intermediary between a client and a server. It handles requests and responses, often providing benefits of security, anonymity, load balancing, and caching.
+
+Two main types:
+
+**Forward Proxy**
+- sits in front of the client
+- forwards client requests to external servers
+- used for content filtering, hiding client identity, or bypassing restrictions
+
+**Reverse Proxy**
+- sits in front of the server
+- handles incoming client requests and routes them to internal servers
+- used for load balancing, SSL termination, caching, and hiding backend architecture
+
+**Proxy comparison table**
+
+| Feature | Forward Proxy | Reverse Proxy |
+| --- | --- | --- |
+| Placement | In front of clients | In front of servers |
+| Who it hides | The client | The server |
+| Common use | Anonymity, filtering | Load balancing, proectection |
+| Awareness | Client knows it's using it | Client is unaware |
+| Request direction | Client -> Proxy -> Server | Client -> Proxy -> Server |
+
+Both proxies handle requests and responses, so the term "reverse" doesn't refer to data flow but to reversed roles.
 
 </details>
+
+<details>
+
+<summary>HTTPS, TLS, and Web Certificates</summary>
+
+### HTTPS, TLS, and Web Certificates
+
+During the first decades of the web, it was common for websites to simply use HTTP (non-sceure hypertext transport protocol) since it was difficult, non-performant, and expensive to secure the connection. Plus, most websites just provided access to documents so it didn't need to protect user information. The only websites that really needed a secure connection were commerce. This changed when computers got faster and the web moved from simple document servers (Web 1.0) to full on web apps (Web 2.0) that accepted information from users and displayed that information within the app. Without a secure connection, anyone that had access to the network traffic at any point could easily capture all the data sent in either direction.
+
+#### HTTPS and TLS
+
+The secure version of HTTP is called Secure Hypertext Transport Protocol (`HTTPS`). It's basically HTTP with a negotiatied secure connection that happens before any data is exchanged. Having a secure connection means all the daya is encrypted using the [TLS Protocol](https://developer.mozilla.org/en-US/docs/Web/Security/Transport_Layer_Security). TLS is sometimes referred to by a now unsecure predecessor protocol named SSL. TLS works by negotiating a shared secret that is then used to encrypt data. You can see the negotiation that happens by using the console brower based application `curl`, along with the `-v` parameter to see the verbose HTTPS exchange. The `> /dev/null` redirection throws away the actual HTTP response, since we only care about the negotion, by redirecting the output to the null device.
+
+```
+➜  curl -v -s https://byu.edu > /dev/null
+
+*   Trying 128.187.16.184:443...
+* Connected to byu.edu (128.187.16.184) port 443 (#0)
+* ALPN: offers h2
+* ALPN: offers http/1.1
+*  CAfile: /etc/ssl/cert.pem
+*  CApath: none
+* (304) (OUT), TLS handshake, Client hello (1):
+} [312 bytes data]
+* (304) (IN), TLS handshake, Server hello (2):
+{ [122 bytes data]
+* (304) (IN), TLS handshake, Unknown (8):
+{ [25 bytes data]
+* (304) (IN), TLS handshake, Certificate (11):
+{ [3211 bytes data]
+* (304) (IN), TLS handshake, CERT verify (15):
+{ [520 bytes data]
+* (304) (IN), TLS handshake, Finished (20):
+{ [52 bytes data]
+* (304) (OUT), TLS handshake, Finished (20):
+} [52 bytes data]
+* SSL connection using TLSv1.3 / AEAD-AES256-GCM-SHA384
+* ALPN: server accepted http/1.1
+* Server certificate:
+*  subject: C=US; ST=Utah; L=Provo; O=Brigham Young University; CN=*.byu.edu
+*  start date: Jan 24 00:00:00 2022 GMT
+*  expire date: Jan 24 23:59:59 2023 GMT
+*  subjectAltName: host "byu.edu" matched cert's "byu.edu"
+*  issuer: C=US; O=DigiCert Inc; CN=DigiCert TLS RSA SHA256 2020 CA1
+*  SSL certificate verify ok.
+```
+
+The negotiation is fairly complex because it involves multiple steps. A core pieve of the handshake is the exchange of a web certificate that identifies the domain name of the server creating the secure connection. The browser compares the certificate domain naim to the one represented in the URL and if they don't match, or the certificate invalid/out of date, it will display a massive warning.
+
+#### Web Certificates
+
+Web certificates are generated by a trusted 3rd party using public/private key encryption. The certificate issuer is responsible for verifying that the certificate owner actually owns the domain represented by the certificate. One you have a certificate, you can serve the application from your web server and then the browser can validate the certificate by using the public keys of the certificate issuer. 
+
+Until around 2014, it cost hundreds of dollars a year to get a web certificate, and you needed a certificate for every domain and subdomain you owned. Even for a small company, this would cost thousands of dollars a year since they needed to be renewed in order to ensure that it still represented the owner of the domain name and to limit the impact of a stolen certificate.
+
+This changed when Moxilla employees created a non-profit called `Let's Encrypt` with the goal of creating trusted web certificates for free. This broke the monopoly that the trusted web certificate issuers had on the industry. 
+
+Using a service like `Let's Encrypt`, and the IETF standard [ACME protocol](https://en.wikipedia.org/wiki/Automatic_Certificate_Management_Environment), anyone who owns a domain name can dynamically generate a new certificate for free. This has made the web safer, and more reliable, for everyone.
+
+Caddy uses Let's Encrypt to generate a web certificate every time an HTTPS request is made for a domain name that Caddy doesn't have a certificate for. When this happens, Caddy asks Let's Encrypt to verify that the domain for the requested certificate is actually owned by the requester. Let's Encrypt does this by telling the requester to return a specific digitally signed response for a temporary URL when an HTTP request to the domain is made. It then makes the HTTP request, and if successful, issues the certificate to the requester.
+
+You can read more in the Let's Encrypt [documentation](https://letsencrypt.org/how-it-works/)
+
+#### Enabling HTTPS
+
+Modern browsers expect web servers to exclusively use HTTPS for all communications. The next version of HTTP (v3) only supports secure connections. Thus, you should always support HTTPS for any web app that you build.
+
+You can obtain and renew a web certificate by enabling the ACME protocol for your web server and communication with Let's Encrypt to generate the necessary certificates. It's not that hard, and many languages like Rust, Node.js, or Go support this functionality by including an addition library.
+
+
+#### Common Problems
+
+| Symptom |	Reason |
+| --- | ---  |
+| The browser doesn't display by website | Check that the browser hasn't inserted a `www` subdomain prefix. Some browsers will hide this. You must actually click on the domain name in the address bar to see what it is really using |
+| My root domain works, but not the simon or startup subdomains | Your Caddy file is not configured properly. Check for typos. Also make sure you removed the `:` from the start of the Caddy rule. |
+| My simon or start up subdomains work, but not my root domain | Your Caddy file is not configured properly. Check for typos. |
+
+</details>
+
+
+
 
 ## HTML
 ## CSS
