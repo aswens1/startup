@@ -515,6 +515,100 @@ Other important milestones include:
 </details>
 
 ## Web Server Setup
+
+<details>
+<summary>Technology Stack</summary> 
+
+### Tehcnology Stack
+
+The collection of technologies you use to create/deliver your web application is called a technology stack. It's called a stack because they usaully layer ontop of one another. The top of the stack generally holds your web framework (things like Angular, React, Vue, Svelte, etc). The web framework communicates with one or more services to provide authentication, business data, and storage. The web service then uses the backend services such as caching, databse, logging, and monitoring.
+
+
+For this class, the stack is as follows:
+- React for the web framework
+- Caddy as the web server hosted on AWS
+- Node.js running web services
+- MongoDB as the database hosted on MongoDB Atlas
+
+There is no one answer to the question of what technology to use where, and that answer continually evolves. Usually, you use what the company you work for has invested in. It is expensive and error prone to migrate to a new stack, so learning how to maximise your effectiveness regardless of the technology, makes you very valuable.
+
+The more complex the stack, the more technologies are used to make the application work. You want to be very careful when you chose your technologies for a commerical stack. Focus on dependability, support, scalability, performance, and security. Also consider development productivity like documentation, ease of use, common acceptance, community support, build times, and testing integration.
+
+</details>
+
+<details>
+<summary>The Internet</summary>
+
+### The Internet
+
+Deeper reading:
+- [MDN How does the Internet work?](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/How_does_the_Internet_work)
+- [YouTube The Internet in 5 Minutes](https://youtu.be/7_LPdttKXPc)
+
+The internet gloablly connects independed networks and computing devices. You can think of the internet as a massive redundant collection of wires that connect all the computers in the world. A lot of the wires are wireless (WiFi, satellite, cell) and not all of the computers in the world are connected, but that's the general idea. The better your mental model of the internet, the more effectively you will be able to create web apps.
+
+#### Making Connections
+
+Devices talk to each other using IP addresses. For example, `128.187.16.184` is BYU's address. Humans usually prefer a symbolic name over an IP address because they're easier to remember. These are called domain names. Domain names are converted to IP adresses by doing a lookip in the Domain Name System (DNS). You can look up the IP address for any domain name using the `dig` console utility.
+
+```
+➜  dig byu.edu
+
+byu.edu.		5755	IN	A	128.187.16.184
+```
+
+Once you have the IP address, you can connect to the device it represents by first asking for a connection route to the device. This route consists of many hops across the network until the destination is dynamically discovered and the connection established. Once connected, the transport and application layers can start exchanging data.
+
+#### Traceroute
+
+Determine the hops in a connection using the `traceroute` console utility. Here's an example of using it to trace the routes between a home computer and BYU. The first address is `192.168.1.1` and ishte address of the network router the home computer is connected to. It goes through a few devices that don't identify themselves, and then hits the Google Fiber gateway. Google Fiber is the internet service provider (ISP) of the requesting device. Then it goes through more unidentified devices before getting to BYU at `128.187.16.184`.
+
+```
+➜  traceroute byu.edu
+
+traceroute to byu.edu (128.187.16.184), 64 hops max, 52 byte packets
+ 1  192.168.1.1 (192.168.1.1)  10.942 ms  4.055 ms  4.694 ms
+ 2  * * *
+ 3  * * *
+ 4  192-119-18-212.mci.googlefiber.net (192.119.18.212)  5.369 ms  5.576 ms  6.456 ms
+ 5  216.21.171.197 (216.21.171.197)  6.283 ms  6.767 ms  5.532 ms
+ 6  * * *
+ 7  * * *
+ 8  * * *
+ 9  byu.com (128.187.16.184)  7.544 ms !X *  40.231 ms !X
+```
+
+If you run it again, you might see a slightly different route since every connection through the internet is dynamically calculated. This ability to discover a route makes the internet resilient when network devices fail or disappear from the network.
+
+#### Network Internals
+
+The actual sending of data across the internet used the TCP/IP model. It's a layered architecture that covers everything from the physical wires to the data that the web app sends. At the top is the application layer, representing user functionality (such as the web (HTTP), mail (SMTP), files (FTP), remote shell (SSH), chat (IRC)). Under that is the transport layer, which breaks the application layer's information into small pieces and sends the data. The actual connection is made through the internet layer, which finds the device you want to talk to and keeps the connection alive. The bottom of the model is the link layer that deals with the physical connections and hardware.
+
+| Layer | Example | Purpose |
+| --- | --- | --- |
+| Application | HTTPS | Functionality like web browsing |
+| Transport | TCP | Moving connection information packets |
+| Internet | IP | Establishing connections |
+| Link | Fiber, hardbware | Physical connections |
+
+</details>
+
+<details>
+<summary>Amazon Web Services - EC2</summary>
+
+### Amazon Web Services - EC2
+
+Now you can rent your own web server. In theory, you could contact your ISP and lease an IP address that you would then associate with your laptop. This turns your laptop into a web server and has the downside of requiring your laptop to always be available, have enough bandwidth to support millions of fans, and creates a significant security risk. Instead, you want to use a cloud providor that can give you an inesxpensive small computer that you can experiment with and throw away any time that you would like. Many web companies do this with their core business.
+
+When you rent a web server, it's physically located in a large data center in places like Virginia, Ohio, Dublin, or Tokyo. Data centers are very secure, climate controlled, warehouses that hold hundreds of thousands of computers sitting in massive racks.
+
+Follow these instructions to set up AWS server instance:
+- [cs260 instructions](https://github.com/webprogramming260/webprogramming/blob/main/instruction/webServers/amazonWebServicesEc2/amazonWebServicesEc2.md)
+
+</details>
+
+
+
 ## HTML
 ## CSS
 ## JavaScript and Web Frameworks
