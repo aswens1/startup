@@ -605,6 +605,16 @@ When you rent a web server, it's physically located in a large data center in pl
 Follow these instructions to set up AWS server instance:
 - [cs260 instructions](https://github.com/webprogramming260/webprogramming/blob/main/instruction/webServers/amazonWebServicesEc2/amazonWebServicesEc2.md)
 
+Common problems:
+
+| Symptom | Reason |
+| --- | --- |
+| You can SSH into the server, but you can't use HTTP | Check that your security group exposes SSH, HTTP, and HTTPS |
+| Using the browser to hit my server using my IP was working but now it doesn't | Check that your IP address hasn't changed. Perhaps due to assigning an elastic IP address or stopping your server. |
+| My server doesn't come up in the brower | Check that you are not trying to use `https` before you configure Caddy to use https. |
+
+
+
 </details>
 
 
