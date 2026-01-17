@@ -1053,7 +1053,6 @@ The `main` contains multiple `section` that contain either an unordered list `ul
 
 The `footer` has a content division with a single span.
 
-
 ```HTML
 <body>
   <p>Body</p>
