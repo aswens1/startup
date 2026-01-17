@@ -872,6 +872,250 @@ You can obtain and renew a web certificate by enabling the ACME protocol for you
 
 
 ## HTML
+
+<details>
+<summary>HTML Introduction</summary>
+
+### HTML Introduction
+
+Deeper dive reading:
+- [MDN HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
+- [W3C specification](https://html.spec.whatwg.org/multipage/) -> official specification is only for reference
+
+HyperText Markup Language (HTML) provides foundational content structure that all web apps build on. HTML was originally designed to be a publishing format for web documents, or pages. From there, web programmers have morphed the `web page` concept into a `web app`. A page now represents either a `single page application` (SPA) or a large group of hyperlinked pages that form a `multi-page application` (MPA). HTML can do a lot by itself, but to create a full web app you need other technology to style (CSS) the pages and make them interactive (JavaScript).
+
+Here is an example of a simple HTML document:
+
+```HTML
+Hello World
+```
+
+This looks like a simple text document. That's because text is valid HTML. To provide structure to our text we need to introduce `elements` and ther associated `tags`.
+
+#### Elements and Tags
+
+HTML `elements` are represented with enlosing `tags` that my enclose other elements or text. For example, the paragraph element and associated tag `p` designate the text as a structural paragraph of text. Tags refer to a delimited textual name that we use to designate the start and end of an HTML element as it appears in a document. Tags are delimited with `<` and `>`. A closing tag looks like `/>`
+
+```HTML
+<p>Hello World</p>
+```
+
+You can keep adding structure to the pages by adding more elements. Each element may contain other elements that provide structure to the web page. The `html` element represents the top leel page structure. The `head` element contains metadata about the page and the page title. The `body` element represents the content structure. The `main` element represents the main content structure. as opposed to things like headers, footers, asides, and navigation content. These additional elements result in the following HTML page.
+
+```HTML
+<html>
+	<head>
+		<title>My First Page</title>
+	</head>
+	<body>
+		<main>
+			<p>Hello world</p>
+		</main>
+	</body>
+</html>
+```
+
+When we `render` the HTML in a browser, it looks the same as the original text example above. This is because HTML is almost completely about structure. The visual appearance of a web page won't really change until we start styling the page with CSS.
+
+#### Attributes
+
+Every HTML element may have attributes. Attributes describe the specific details of the element. For example, the `id` attribute gives a unique ID to the element so you can distinguish it from other elements. The `class` attribute is another common element attribute that designates the element as being classified into a named group of elements. Attributes are written inside the tag with a name followed by an optional value. You can use single quotes (`'`) or double quotes (`"`) to delimit attribute values.
+
+```HTML
+<p id='hello' class='greeting'>Hello world</p>
+```
+
+#### Hyperlinks
+
+One of the core features that made the web successful was the ability to create hyperlinks that take you from one page to another with a click. A hyperlink in HTML is represented with an anchor (`a`) element that has an attribute containing the address of the hyperlink reference (`href`). A hyperlink to BYU's homepage looks like:
+
+```HTML
+<a href='https://byu.edu'>Go to the Y</a>
+```
+
+#### Complete Example
+
+HTML defines a header (`<!DOCTYPE html>`) that tells the browser the type and version of the document. You should always include this at the top of the HTML file. We can now add the header, some attributes, and more content to our document for a full example.
+
+```HTML
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <main>
+      <h1>Hello world</h1>
+      <p class="introduction">
+        HTML welcomes you to the amazing world of
+        <span class="topic">web programming</span>.
+      </p>
+      <p class="question">What will this mean to you?</p>
+      <p class="assignment">Learn more <a href="instruction.html">here</a>.</p>
+    </main>
+  </body>
+</html>
+```
+
+The rendered document has almost no styling. This is because the entire purpose of HTML is to provide content and structure. The layout of the content is left almost entirely up to Cascading Stylesheets (CSS). When CSS introduced styling, all the HTML elements that defined style such as font, strinke, and plaintext were deprecated.
+
+#### Common elements
+
+Modern HTML has over 100 different elements. Here's a list of some of the most common ones.
+
+| element | meaning |
+|---|---|
+| `html` | the page container |
+| `head` | header information |
+| `title` | title of the page |
+| `meta` | metadata for the page such as character set or viewport settings |
+| `script` | JavaScript reference. either external reference or inline |
+| `include` | external content reference |
+| `body` |  the entire content body of the page |
+| `header` | header of the main content |
+| `footer` | footer of the main content |
+| `nav` | navigational inputs |
+| `main` | main content of the page |
+| `section` |  a section of the main content |
+| `aside` |  aside content from the main content |
+| `div` | a block division of the content |
+| `span` | an inline span of content |
+| `h<1-9>` | text heading. from h1, the highest level, to h9, the lowest level |
+| `p` | a paragraph of text |
+| `b` | bring attention |
+| `table` | table |
+| `tr` | table row |
+| `th` | table header |
+| `td` | table data |
+| `ol, ul` | ordered or unordered list |
+| `li` | list item |
+| `a` | anchor the text to a hyperlink |
+| `img` | graphical image reference |
+| `dialog` |  interactive component such as confirmation |
+| `form` | a collection of user input |
+| `input` | user input field |
+| `audio` | audio content |
+| `video content` | video content |
+| `svg` |  scalable vector graphic content |
+| `iframe` | inline frame of another HTML page |
+
+
+#### Comments
+
+You can include comments in your HTML file by sandwiching your comment between `<!-->` and `-->`. Anything within a comment block will be completely ignored when the browser renders it.
+
+```HTML
+<!-- comment text -->
+```
+
+#### Special Characters
+
+HTML uses several reserved characters for defining file format. If you want to use them in your content then you need to escape them using the `entity` syntax. For example, to disaply the less than symbol (`<`) you would instead use the less than entity (`&lt;`). You can also use the entity syntax to represent any unicode character.
+
+| character | entity |
+| --- | --- |
+| `&` | `&amp;` |
+| `<` | `&lt;` |
+| `>` | `&gt;` |
+| `"` | `&quot;`  |
+| `'` | `&apos;` |
+| 😀 | `&#12852;` |
+
+#### HTML Versions
+
+Understanding when different HTML features were introduced helps you know whats been around for a long time and is probably supported by all browsers, versus what is new and may not work everywhere. HTML is pretty stable, but it's still good to check a website like [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/p#browser_compatibility) or [canIUse](https://caniuse.com/mdn-html_elements_p) to make sure.
+
+| year | version | features |
+| --- | --- | --- |
+| 1990 | HTML1 | format tags |
+| 1995 | HTML2 | tables, internalization |
+| 1997 | HTML3 | MathML, CSS, frame tags |
+| 1999 | HTML4 | external CSS |
+| 2014 | HTML5 | email, password, media, and semantic tags|
+
+#### index.html
+
+By default, a web server will display the HTML file named `index.html` when a browser, like Google Chrome, makes a request without asking for a specific HTML file. For example, when you ask for `https://google.com` in your browser, you will actually get back the HTML for the file `https://google.com/index.html`. Because of this, it's very common to name the main HTML file for your web app `index.html`.
+
+#### Rendering HTML
+
+You can save any HTML file to your computer's disk and then open the file using your browser. You can also open the HTML file in VS Code and use the Live Server extension to display the HTML. Another easy way to play with HTML is in a sandbox like [CodePen](https://codepen.io/). However, when you use CodePen it is not necessary to supply the HTML DocType header or the root `html` element since CodePen already assumes you are providing HTML.
+
+</details>
+
+<details>
+<summary>HTML Structure Elements</summary>
+
+### HTML Structure Elements
+
+The two major purposes of HTML is to provide structure and content to your web app. Some of the common HTML structural elements include `body`, `header`, `footer`, `main`, `section`, `aside`, `p`, `table`, `ol/ul`, `div`, and `span`. The following document is a good example of all of these in use. It has a top level content `body`. The body has three children, a `header`, `main`, and `footer`. Each of the body children have another structural element.
+
+The `header` contains a `p` paragraph with a `span`, and a `nav` containing multiple `div` of sub-content.
+
+The `main` contains multiple `section` that contain either an unordered list `ul` or a `table`. Main also contains an `aside` for content that doesn't fit with the content flow of the sections.
+
+The `footer` has a content division with a single span.
+
+
+```HTML
+<body>
+  <p>Body</p>
+  <header>
+    <p>Header - <span>Span</span></p>
+    <nav>
+      Navigation
+      <div>Div</div>
+      <div>Div</div>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <p>Section</p>
+      <ul>
+        <li>List</li>
+        <li>List</li>
+        <li>List</li>
+      </ul>
+    </section>
+    <section>
+      <p>Section</p>
+      <table>
+        <tr>
+          <th>Table</th>
+          <th>Table</th>
+          <th>Table</th>
+        </tr>
+        <tr>
+          <td>table</td>
+          <td>table</td>
+          <td>table</td>
+        </tr>
+      </table>
+    </section>
+    <aside>
+      <p>Aside</p>
+    </aside>
+  </main>
+
+  <footer>
+    <div>Footer - <span>Span</span></div>
+  </footer>
+</body>
+```
+
+Properly representing the page structure using elemennts is important not only so it makes logical sense to a programmer, but so that automated tools like search indexing crawlers and accessibility screen readers can correctly interpret the document.
+
+#### Block and Inline
+
+There is a difference between structure elements that are block vs inline. A block element is meant to be a distinct block in the flow of the content structure, while an inline element is meant to be inline with the content flow of a block element. In other words, inline elements do not disrupt the flow of a block element's content. For example, the block element `div` (division) could have an inline element `b` in order to bring attention to a portion of its sub-text. Likewise a `p` (paragraph) element could have a `span` to mark the paragraph's sub-text as a person's name.
+
+```HTML
+<div>He said <b>don't</b> cross the beams.</div>
+
+<p>Authors such as <span>ee cummings</span> often used unconventional structure.</p>
+```
+
+</details>
+
+
 ## CSS
 ## JavaScript and Web Frameworks
 ## HTTP Service
