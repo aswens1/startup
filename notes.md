@@ -701,6 +701,29 @@ If you're interested in leasing a domain name, follow the [Route 53 instructions
 
 </details>
 
+<details>
+<summary>Amazon Web Services - Route 53</summary>
+
+### Amazon Web Services - Route 53
+
+IP addresses are fine for development, bit they're not great for most users. Plus, you want to create a secure (HTTPS) connection to your application, and that's not possible with just an IP address. Instead, you want to use a domain name to represent your application. This makes it easy to remember and secure. But to do that you need to buy a domain name, and then create DNS records with a DNS server.
+
+`Route 53` is the AWS service that handles everything DNS-related. With Route 53, you can buy a domain name, host your domain on their DNS servers, and create DNS records. 
+
+Here are the [Route 53 instructions](https://github.com/webprogramming260/webprogramming/blob/main/instruction/webServers/amazonWebServicesRoute53/amazonWebServicesRoute53.md).
+
+Common problems
+
+| Symptom | Reason |
+| I leased my domain name and set up DNS, but I can't hit it with the browser	| Give it some time. Perhaps 10 minutes. Use `dig` or `nslookup` to see if the DNS records are publicly available. Check to see if the IP address is correct. Make sure the DNS records are correct. |
+| The browser doesn't display my website | Check that you are not trying to use `https`. Check that the browser hasn't inserted a `www` subdomain prefix. Some browsers will hide this. You must actually click on the domain name in the address bar to see what it is really using |
+| My root domain works, but not the `simon` or `startup` subdomains | Check your DNS records. Make sure you created a wildcard `*.yourdomain` record. |
+| My `simon` or `startup` subdomains work, but not my root domain	 | Check your DNS records. Make sure you have a root record. |
+| My domain name was working, but after 15 days it stopped.	 | Make sure you received and responded the the email from the registrar to verify your email address. Check your spam folder if you did not receive an email. If you open the Route 53 browser console and navigate to your Registered Domain information you can see if it thinks you are verified or not. |
+
+
+</details>
+
 ## HTML
 ## CSS
 ## JavaScript and Web Frameworks
