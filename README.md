@@ -45,4 +45,4 @@ I am going to use the required technologies in the following ways.
 
 ## 🚀 AWS deliverable
 
-Server deployed and accessible with custom domain name - [My server link](https://8bitalley.click).
+Server deployed and accessible with custom domain name - [8bitalley.click](https://8bitalley.click).
