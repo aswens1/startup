@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Log in or Register" />
+    <title>Get Started - 8 Bit Alley</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../index.html">Home</a>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Welcome to 8 Bit Alley</h1>
+        <p>Login or sign up to join the fun!</p>
+
+        <form action="/login" method="post">
+            <h2>Login</h2>
+            <label for="login-username">Username:</label>
+            <input type="text" id="login-username" name="username" required />
+            <br />
+            <label for="login-password">Password:</label>
+            <input type="password" id="login-password" name="password" required />
+            <br />
+            <button type="submit">Login</button>
+        </form>
+
+        <form action="/register" method="post">
+            <h2>Register</h2>
+            <label for="register-username">Username:</label>
+            <input type="text" id="register-username" name="username" required />
+            <br />
+            <label for="register-password">Password:</label>
+            <input type="password" id="register-password" name="password" required />
+            <br />
+            <button type="submit">Register</button>
+        </form>
+
+
+    </main>
+
+    <footer>
+        <small>&copy; <span>2026</span></small> <span>|</span> <span><a href="https://github.com/aswens1/startup">Alyse's github repo</a></span>
+    </footer>
+
+</body>
+</html>
