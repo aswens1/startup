@@ -1116,6 +1116,184 @@ There is a difference between structure elements that are block vs inline. A blo
 
 </details>
 
+<details>
+<summary>HTML Input Elements</summary>
+
+### HTML Input Elements
+
+Deeper reading: [MDN Input Element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input)
+
+From the early days of HTML, there were elements fro accepting the input of user data. Here are some of the elements:
+
+| Element | Meaning | Example |
+| --- | --- | --- |
+| `form` | input container and submission | `<form action="form.html" method="post">` |
+| `fieldset` | labeled input grouping | `<fieldset> ... </fieldset>` |
+| `input` | multuple types of user input | `<input type="" />` |
+| `select` | selection dropdown | `<select><option>1</option></select>` |
+| `optgroup` | grouped selection dropdown | `<optgroup><option>1</option></optgroup>` |
+| `option` | selection option | `<option selected>option2</option>` |
+| `textarea` | multiline text input | `<textarea></textarea>` |
+| `label` | individual input label | `<label for="range">Range: </label>` |
+| `output` | output of input | `<output for="range">0</output>` |
+| `meter` | display valye with a known range | `<meter min="0" max="100" value="50"></meter>` |
+
+#### Form Element
+
+The main purpose of the `form` element is to submit the values of the inputs it contains. Before JavaScript was introducted, the `form` element was essential because it was the only way for the browser to send the input data to a web server as part of a request to process the input and generate a new page displaying the result of the input. With JavaScript, we have way more control over input data and what is done with it. For example, in a single web page app the JavaScript will dynamically rebuild the HTML elements to reflect the results of the user interaction. With this ability, the data may not even be sent to the server. This reduces the need for the `form` element, but it is often still used simply as a container. It's not required to have a form element to use input elements.
+
+Here is a simply example of a form that submits the value of a `textarea` element.
+
+```HTML
+<form action="submission.html" method="post">
+  <label for="ta">TextArea: </label>
+  <textarea id="ta" name="ta-id">
+Some text
+  </textarea>
+  <button type="submit">Submit</button>
+</form>
+```
+
+Pressing the submit button sends the follow data to the web server. The browser generates the data by combining the textarea's `name` attribute with the current value of the textarea.
+
+```
+ta-id=Some+text
+```
+
+#### Input Element
+
+The input element represents many different input types. You set the type of input with the `type` attribute. There are several different types to choose from, including different flavours of textual, numeric, date, and colour inputs.
+
+| Type | Meaning |
+| --- | --- |
+| `text` | single line textual value |
+| `password` | obscured password |
+| `email` | email address |
+| `tel` | telephone number |
+| `url` | URL address |
+| `number` | numerical value |
+| `checkbox` | inclusive selection |
+| `radio` | exclusive selection |
+| `range` | range limited number |
+| `date` | year, month, day |
+| `datetime-local` | date and time |
+| `month` | year, month |
+| `week` | week of year |
+| `color` | colour |
+| `file` | local file |
+| `sibmit` | button to trigger form submission |
+
+In order to create an input, you specify the desired `type` attribute along with any other attribute associated with that specific input. Here's an example of a checked radio button and its associated lable.
+
+```HTML
+<label for="checkbox1">Check me</label> <input type="checkbox" name="varCheckbox" value="checkbox1" checked />
+```
+
+Most inputs share some common attributes.
+
+| Attribute | Meaning |
+| --- | --- |
+| `name` | the name of the input. this is submitted as the name of the input if used in a form |
+| `disabled` | disables the ability for the user to interact with the input |
+| `value` | the initial value of the input |
+| `required` | signifies that the value is required in order to be valid |
+
+#### Validating Input
+
+Several of the input elements have validation built into them. This means they will not accept a value that is not, for example, a number, a URL, outside of a range, or an email address. You can also specify `required` on an input element to mark is as requiring a value before it can be submitted. The `pattern` attribute exists on `text`, `search`, `url`, `tel`, `email`, and `password` inputs. When present, the pattern attribute provides a regular expression that must match fpr the input to be considered valid. 
+
+You should have validation built into your JavaScript that checks input data to ensure that everything is valid before it is submitted. All the input elements support functions for determining their validation state. There are also CSS style selectors for visualizing the validity of the input. In order to have a good user experience, it is critical that you provide sufficient user feedback early in the input process. A good design will give feedback as, or before, the user begins to input. Poor design keeps the user guessing as to why the data isn't being accepted, or if it even was accepted.
+
+</details>
+
+<details>
+<summary>HTML Media Elements</summary>
+
+### HTML Media Elements
+
+The HTML elements that represent media include `img`, `audio`, `video`, `svg`, and `canvas`. The `img`, `audio`, and `video` elements are all referenes to external files, but `svg` and `canvas` both contain the code to render a visual image that can be animated.
+
+#### External Media
+
+The media tags that reference external media all take URLs as an attribute. The path represented by the URL can either be a relative path or a full path. A full path includes the protocol, domain name, and path to the file.
+
+```https://images.pexels.com/photos/164170/pexels-photo-164170.jpeg```
+
+A relative path references a file that's served from the same location as the HTML page rendering the element. You want to make the path as relative as possible so you can move your code around without having to actually adjust all of the external page references. For example, if your HTML page is located in a directory with a subdirectory named `images` that contains a file named `photo.jpg`, you would use a relative path as follows:
+
+```images/photo.jpg```
+
+##### Image
+
+To include an image in your content you use the `img` element and specify the `src` attribute with the URL to the source image. You should also add an `alt` attribute that describes the image to support accessibility.
+
+```HTML
+<img alt="mountain landscape" src="https://images.pexels.com/photos/164170/pexels-photo-164170.jpeg" />
+```
+
+##### Audio
+
+To include an audio file, you use the `audio` element and specify the `src` attribute with the URL to the source audio file. You can include the `controls` attribute if you want the user to be able to control the audio playback. If you don't include the controls then there is no visual representation of the audio on the rendered page. The `autoplay` attribute starts the audio immediately and the `loop` attribute keeps it playing over and over.
+
+```HTML
+<audio controls src="testAudio.mp3"></audio>
+```
+
+Note: Automatically playing audio is discouraged unless you provide a way for the user to opt-in.
+
+##### Video
+
+To include a video in your content, you use the `video` element and specify the `src` attribute with the URL to the source video. Just like the audio element, you can include the `controls` or `autoplay` attributes.
+
+```HTML
+<video controls width="300" crossorigin="anonymous">
+  <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />
+</video>
+```
+
+Note: You may need to include the `crossorigin-"anonymous"` attribute if you request files from a different domain than the one serving your content.
+
+#### Internal Media
+
+The internal media elements `svg` and `canvas` allow you to actually create images directly within your HTML.
+
+##### Scalable Vector Graphics (SVG)
+
+An SVG is a very powerful and widely supported way to render graphics inline in your HTML. Here's an example that draws a black border and a red circle.
+
+```HTML
+<svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" stroke="red" fill="red" style="border: 1px solid #000000">
+	<circle cx="150" cy="100" r="50" />
+</svg>
+```
+
+When combined with JavaScript and CSS, you can produce some amazing visualizations. Check out this [CodePen](https://codepen.io/leesjensen/pen/mdKjMLY) for an example.
+
+You can also read the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/SVG) if you want to learn more about SVGs.
+
+##### Canvas
+
+The `canvas` element was introduced to HTML to help with 2D drawing and animation. The HTML for the canvas element is simple, but actually drawing on the canvas requires JavaScript support. Here is the red dot example again.
+
+```HTML
+<canvas id="canvasDemo" width="300" height="200" style="border: 1px solid #000000"></canvas>
+<script>
+  const ctx = document.getElementById('canvasDemo').getContext('2d');
+  ctx.beginPath();
+  ctx.arc(150, 100, 50, 0, 2 * Math.PI);
+  ctx.fillStyle = 'red';
+  ctx.strokeStyle = 'red';
+  ctx.fill();
+  ctx.stroke();
+</script>
+```
+
+If you want to see some complex examples, check out these examples on CodePen.
+- [Neon Hexagon](https://codepen.io/leesjensen/pen/QWxBMrE)
+- [Particles](https://codepen.io/leesjensen/pen/vYraJRP)
+- [Ribbons 2](https://codepen.io/leesjensen/pen/wvXxqja)
+
+</details>
 
 ## CSS
 ## JavaScript and Web Frameworks
