@@ -51,14 +51,12 @@ Server deployed and accessible with custom domain name - [8bitalley.click](https
 
 I reviewed and deployed the Simon HTML code to my project - found at [simon.8bitalley.click](https://simon.8bitalley.click).
 
-So far I've added a basic index page and I'm working on the other HTML pages.
-
-- [ ] **HTML pages** - I did not complete this part of the deliverable.
-- [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
-- [ ] **Links** - I did not complete this part of the deliverable.
-- [ ] **Text** - I did not complete this part of the deliverable.
-- [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
-- [ ] **Images** - I did not complete this part of the deliverable.
-- [ ] **Login placeholder** - I did not complete this part of the deliverable.
-- [ ] **DB data placeholder** - I did not complete this part of the deliverable.
-- [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
+- **HTML pages** - So. far I have 5 HTML pages, [gameSelectionMenu](pages/gameSelectionMenu.html), [getStarted](pages/getStarted.html), [leaderboard](pages/leaderboard.html), [lobby](pages/lobby.html), and [index](index.html)
+- **Proper HTML element usage** - I'ved used proper HTML throughout all the HTML pages I've made to form the main structure of each page.
+- **Links** - I've been using links and the anchor tag on every page in a nav element to get from page to page. There is also a link to this repo in the footer of all the pages.
+- **Text** - I've used text as a placeholder for the leaderboard entries and the game options in the creating a game section. I plan to use it as placeholder data in the join a game section as well.
+- **3rd party API placeholder** - I did not complete this part of the deliverable.
+- **Images** - I did not complete this part of the deliverable.
+- **Login placeholder** - There is a login and sign up placeholder on the [getStarted](pages/getStarted.html) page.
+- **DB data placeholder** - There is text and form placeholders everywhere where the database will be called - login/register, create/join a game, and the leaderboard. There will be a placeholder in the main canvas lobby as well.
+- **WebSocket placeholder** - I did not complete this part of the deliverable.
