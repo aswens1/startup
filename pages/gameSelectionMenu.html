@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="8-Bit Alley is a pixel based arcade, where you can play pixel games with friends and contribute to the community canvas!" />
+        <title>Game Selection Menu - 8 Bit Alley</title>
+    </head>
+
+    <body>
+        <header>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="/pages/getStarted.html">Get Started</a>
+                <a href="/pages/leaderboard.html">Leaderboard</a>
+                <a href="/pages/gameSelectionMenu.html">Join a Game</a>
+            </nav>
+        </header>
+
+        <div>
+            <h1>Join a Game</h1>
+        </div>
+
+        <div>
+            <h1>Create a Game</h1>
+
+            <form action="/createGame" method="post">
+                <label for="game-name">Game Name:</label>
+                <input type="text" id="game-name" name="gameName" required />
+                <br />
+
+                <label for="game-type">Game Type:</label>
+                <select id="game-type" name="gameType" required>
+                    <option value="">Game Type</option>
+                    <option value="filler1">filler type 1</option>
+                    <option value="filler2">filler type 2</option>
+                    <option value="filler3">filler type 3</option>
+                </select>
+                <br />
+                
+                <!--add max team/player limit that can't be changed- just won't let them put a number higher than-->
+                <label for="number-of-teams">Number of Teams:</label>
+                <input type="number" id="number-of-teams" name="numberOfTeams" required />
+                <br />
+
+                <button type="submit">Create Game</button>
+
+                <!--make it so you can pick between number of teams or number of players? like set max number of players per team, or just a pvp, or etc-->
+            </form>
+        </div>
+
+        <footer>
+            <small>&copy; <span>2026</span></small> <span>|</span> <span><a href="https://github.com/aswens1/startup">Alyse's github repo</a></span>
+        </footer>
+    </body>
+
+</html>
