@@ -51,12 +51,12 @@ Server deployed and accessible with custom domain name - [8bitalley.click](https
 
 I reviewed and deployed the Simon HTML code to my project - found at [simon.8bitalley.click](https://simon.8bitalley.click).
 
-- **HTML pages** - So. far I have 5 HTML pages, [gameSelectionMenu](pages/gameSelectionMenu.html), [getStarted](pages/getStarted.html), [leaderboard](pages/leaderboard.html), [lobby](pages/lobby.html), and [index](index.html)
+- **HTML pages** - So. far I have 5 HTML pages, [gameSelectionMenu](pages/gameSelectionMenu.html), [getStarted](pages/getStarted.html), [leaderboard](pages/leaderboard.html), [lobby](pages/lobby.html), [collaborativeCanvas](pages/collaborativeCanvas.html), [index](index.html), and an example for [gamePlayCanvas](pages/gamePlayCanvas.html).
 - **Proper HTML element usage** - I'ved used proper HTML throughout all the HTML pages I've made to form the main structure of each page.
-- **Links** - I've been using links and the anchor tag on every page in a nav element to get from page to page. There is also a link to this repo in the footer of all the pages.
+- **Links** - I've been using links and the anchor tag on every page in a nav element to get from page to page. There is also a link to this repo in the footer of all the pages. There is also a link to my github repo on every page.
 - **Text** - I've used text as a placeholder for the leaderboard entries and the game options in the creating a game section. I plan to use it as placeholder data in the join a game section as well.
-- **3rd party API placeholder** - I did not complete this part of the deliverable.
-- **Images** - I did not complete this part of the deliverable.
+- **3rd party API placeholder** - On the [gamePlayCanvas](pages/gamePlayCanvas.html), there is a mock colour pallette. When I include the [Colormind API](http://colormind.io/api-access/), there will be a randomized colour pallette for each game when it is created.
+- **Images** - I've put an svg image on the index page that I would like to have as the background of that main page, just much fainter than it is now.
 - **Login placeholder** - There is a login and sign up placeholder on the [getStarted](pages/getStarted.html) page.
-- **DB data placeholder** - There is text and form placeholders everywhere where the database will be called - login/register, create/join a game, and the leaderboard. There will be a placeholder in the main canvas lobby as well.
-- **WebSocket placeholder** - I did not complete this part of the deliverable.
+- **DB data placeholder** - There is text and form placeholders everywhere where the database will be called - login/register, create/join a game, collaborate and gameplay canvas, and the leaderboard.
+- **WebSocket placeholder** - When I add WebSocket, it will be used on the gameplay canvases and the collaborative canvas to update the board in real time as players place pixels.
