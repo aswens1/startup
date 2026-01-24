@@ -50,6 +50,7 @@ Server deployed and accessible with custom domain name - [8bitalley.click](https
 ## 🚀 HTML deliverable
 
 I reviewed and deployed the Simon HTML code to my project - found at [simon.8bitalley.click](https://simon.8bitalley.click).
+I've also deployed my HTML to my project - found at [startup.8bitalley.click](https://startup.8bitalley.click).
 
 - **HTML pages** - So. far I have 5 HTML pages, [gameSelectionMenu](pages/gameSelectionMenu.html), [getStarted](pages/getStarted.html), [leaderboard](pages/leaderboard.html), [lobby](pages/lobby.html), [collaborativeCanvas](pages/collaborativeCanvas.html), [index](index.html), and an example for [gamePlayCanvas](pages/gamePlayCanvas.html).
 - **Proper HTML element usage** - I'ved used proper HTML throughout all the HTML pages I've made to form the main structure of each page.
