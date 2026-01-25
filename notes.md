@@ -1296,6 +1296,131 @@ If you want to see some complex examples, check out these examples on CodePen.
 </details>
 
 ## CSS
+
+<details>
+
+<summary>Cascading Style Sheets</summary>
+
+### Cascading Style Sheets
+
+Deeper reading: [MDN CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+
+CSS converts the structure and content of HTML into responsive experiences. The initial purpose of CSS was to style the HTML based on the desires of the user, developer, and browser. In modern web apps, CSS styling focuses on helping the developer create complex renderings od dynamic content that is responsive to the actions of the user and the device the application is rendered on. With CSS, web programmers can animate pages, deploy custom fonts, respond to user actions, and dynamically alter the entire layout of a page based on the size of the device and its orientation.
+
+CSS is primarily concerned with defining `rulesets`, (`rules`). A rule is comprised of a `selector` that selects the elements to apply the rule to, and one or more `declarations` that represent the `property` to style with the given `property rule`.
+
+For example:
+```CSS
+p {
+  font-family: sans-serif;
+  font-size: 2em;
+  color: navy;
+  text-shadow: 3px 3px 1px #cccccc;
+}
+```
+
+The selector `p` selects all the paragraph elements in the HTML document. The 4 specified declarations are: 1) change the font to use a sans-serif font, 2) increase the font size to be twice as big as default, 3) change the text colour to navy, 4) create a grey shadow for the text. Result:
+
+![cssSimpleRules](picturesForNotes/cssSimpleRules.jpg)
+
+#### Associating CSS with HTML
+
+There are 3 ways to associate HTML with CSS.
+
+1) Use the `style` attribute of an HTML element and explicitly assing one or more declarations.
+
+```HTML
+<p style="color:green">CSS</p>
+```
+
+2) Use the HTML `style` element to define CSS rules within the HTML document. The `style` element should appear in the `head` element of the document so that the rules apply to all the elements of the document.
+
+```HTML
+<head>
+  <style>
+    p {
+      color: green;
+    }
+  </style>
+</head>
+
+<body>
+  <p>CSS</p>
+</body>
+```
+
+3) Use the HTML `link` element to create a hyperlink reference to an external file containing the CSS rules. The `link` element must appear in the `head` element of the document.
+
+```HTML
+<link rel="stylesheet" href="styles.css" />
+```
+
+**style.css**
+```CSS
+p {
+  color: green;
+}
+```
+
+All of the above are equivalent, but using the `link` element usually is the prefered way to define CSS.
+
+#### Cascading Styles
+
+Elements inherit the rules applied to their parents, so you often end up with the same declaration property applied to a single element multiple times. For example, we might set colour property for all `body` elements to be red, `paragraph` elements to be green, `span` elements to be blue, and then use a style element on a specific `span` to be black.
+
+```HTML
+<body>
+  <p><span style="color:black">CSS</span></p>
+<body>
+```
+
+```CSS
+body {
+  color: red;
+}
+p {
+  color: green;
+}
+span {
+  color: blue;
+}
+```
+
+The rules cascade down from the highest nodes in the DOM tree to the lowest level. Any declaration property defined at a lower level will override the higher declaration. You can see this in the browser's debugger. In Chrome, right click on the element and select `inspect`. You can then click on each element in the debugger and see what the value of the colour property is. For the case above, you'll see that all the higher level declarations are crossed out until you get to the style explicitly defined on the element.
+
+**Specificity (precedence)**
+
+The rules for determining which declaration will apply to a specific element also depend on the type of declaration. The following defines the general rules of precendence from highest to lowest.
+
+1. Inline styles: `style="color:black"`
+2. ID selectors: `#myElement {color:blue;}`
+3. Class selectors, attribute selectors, and psuedo-classes: `.myClass {color:green;}`
+4. Element selectors and psuedo-elements: `p {color:red;}`
+5. Universal selector (*) and inherited styles
+
+#### The Box Model
+
+CSS defines everything as boxes. When you apply styles, you apply them to a region of the display that is a rectangular box. Within an element's box are several internal boxes. The innermost box holds the content (where things like text or image of an element is displayed). Then it's padding (inherits things like the background colour). Then there's the border (properties like colour, thickness, and line style). The last box is the margin (external to the actual styling of the box and only represents whitespace). You need to understand all the boxes in order to apply CSS properly and achieve the desired visual result.
+
+![cssBoxModel](picturesForNotes/cssBoxModel.jpg)
+
+By default, the height and width of an element is defined by the height and width of the content box. You can change `box-sizing` CSS property from the default value of `content-box` to `border-box` in order to redefine the width and height to also inclde the padding and the border. This makes it easier to style elements when their visual size matches their actual size.
+
+#### CSS Versions
+
+CSS has evolved significantly over the years. 
+
+| Year | Version | Features |
+| --- | --- | --- |
+| 1996 | CSS1 | selectors, font, colour, background, alignment, margin, border |
+| 1998 | CSS2 | positioning, z-index, bidirectional text, shadows |
+| 2011 | CSS2.1 | removed incompatible features |
+| 1999-2021 | CSS3 | enhancements for media, box, background, borders, colour, template, multi-column, selectors |
+
+Beginning with CSS3, the specification was divided into modules so they could be implemented at different levels of maturity. They ahven't decided if these will culminate in a CSS4.
+
+</details>
+
 ## JavaScript and Web Frameworks
 ## HTTP Service
 ## Data & Authentication Services
