@@ -1421,6 +1421,198 @@ Beginning with CSS3, the specification was divided into modules so they could be
 
 </details>
 
+<details>
+
+<summary>CSS Selectors</summary>
+
+### CSS Selectors
+
+Deeper reading: [MDN CSS Selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors)
+
+The first step to using CSS is knowing how to select the element that a CSS rule applies to. The CSS rule selector takes many forms. Here's an example HTML page that we'll work with to show how this works.
+
+```HTML
+<body>
+  <h1>Departments</h1>
+  <p>welcome message</p>
+  <section id="physics">
+    <h2>Physics</h2>
+    <p class="introduction">Introduction</p>
+    <p>Text</p>
+    <p class="summary">Summary</p>
+  </section>
+  <section id="chemistry">
+    <h2>Chemistry</h2>
+    <p class="introduction">Introduction</p>
+    <p>Text</p>
+    <p class="summary">Summary</p>
+  </section>
+</body>
+```
+
+By default, every browser defines a base set of styles that it applies to HTML when it renders it. This varies slightly between browsers, but for the most part the document above will render like this:
+
+![cssSelectorBase.jpg](picturesForNotes/cssSelectorBase.jpg)
+
+We want our document to look like this by the time we're done:
+
+![cssSelectorFinal](picturesForNotes/cssSelectorFinal.jpg)
+
+#### Element Type Selector
+
+To start, we want all elements to use a sans-serif font. We do this by using an element name selector. By selecting the `body` element, we will cascade our declaration down to all the children of the body, which is the whole document.
+
+```CSS
+body {
+  font-family: sans-serif;
+}
+```
+
+We could also use the wildcard element name selector (`*`) to select all elements, but in this case the `body` element works fine.
+
+We can also use the element name selectors to give a bottom border to the top level heading (`h1`), as well as modify the section elements to pop out with a grey background and some white space in the padding and margins.
+
+```CSS
+h1 {
+  border-bottom: thin black solid;
+}
+
+section {
+  background: #eeeeee;
+  padding: 0.25em;
+  margin-bottom: 0.5em;
+}
+```
+
+#### Combinators
+
+Next, we want to change the colour of the second level headings (`h2`), but only within the sections for each department. We can do this by providing a `descent combinator` that is defined with a space delimited list of values where each item in the list is a descendant of the previous one. In this case, our selector would be all the `h2` elements that are descendants of `section` elements.
+
+```CSS
+section h2 {
+  color: #004400;
+}
+```
+
+There are other types of combinators you can use.
+
+| Combinator | Meaning | Example | Description |
+| --- | --- | --- | --- |
+| Descendent | a list of descendents | `body section` | any section that is a descendant of a body |
+| Child | a list of direct children | `section > p` | any p that is a direct child of a section |
+| General sibling | a list of siblings | `div ~ p` | any p that has a div sibling |
+| Adjacent sibling | a list of adjacent siblings | `div + p` | any p that has an adjacent sibling |
+
+We can use the general sibling combinator to increase the whitespace padding on the left of paragraphs that are siblings of a level two heading:
+
+```CSS
+h2 ~ p {
+  padding-left: 0.5em;
+}
+```
+
+#### Class Selectors
+
+Any element can have zero or more classifications apploes to it. For example, our document has a class of `introduction` applied to the first paragraph, and a class of `summary` applies to the final paragraph of each section. I we want to bold the summary paragraphs, we would supply the class name summary prefixed with a period (`.summary`).
+
+```CSS
+.summary {
+  font-weight: bold;
+}
+```
+
+We can also combine the element name and class selectors to select all paragraphs with a class of summary:
+
+```CSS
+p.summary {
+  font-weight: bold;
+}
+```
+
+#### ID Selectors
+
+ID selectors reference the ID of an element. All IDs should be unique within an HTML document so the CSS can target a specific element. To use the ID selector, you prefix the ID with the hash symbol (`#`). We would like to showcase our physics department by putting a thin purple border along the left side of the physics section.
+
+```CSS
+#physics {
+  border-left: solid 1em purple;
+}
+```
+
+#### Attribute Selectors
+
+Attribute selectors let you select elements based on their attributes. You use an attribute selector to select any element with a give attribute (`a[href]`). You can also specify a required value for an attribute (`a[href="./fish.png"]`) in order for the selector to match. Attribute selectors also support wildcards such as the ability to selct attribute values containing specific text (`p[href*=https://"]`).
+
+```CSS
+p[class='summary'] {
+  color: red;
+}
+```
+
+[MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors) has a full description of attribute selectors.
+
+#### Psuedo Selector
+
+CSS also defines a significant list of pseudo selectors which select based on positional relationships, mouse interactions, hyperlink visitation states, and attributes. Here is one example: suppose we want our purple highlight bar to appear only when the mouse hovers over the text. To accomplish this, we can change our ID selector to select whenever a section is hovered over.
+
+```CSS
+section:hover {
+  border-left: solid 1em purple;
+}
+```
+
+[MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes) has more information on psuedo selectors.
+
+#### Example Source
+
+The example HTML and CSS for this section is on [CodePen](https://codepen.io/leesjensen/pen/NWzByav).
+
+</details>
+
+<details>
+
+<summary>CSS Declarations</summary>
+
+### CSS Declarations
+
+Deeper reading: [MDN reference section on properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference)
+
+CSS rule declarations specify a property and value to assign when the rule selector matches one or more elements. There are a lot of potential properties defined for modifying the style of an HTML document. Here are some of the more commonly used ones.
+
+| Property | Value | Example | Discussion |
+| --- | --- | --- | --- |
+| background-color | colour | `red` | Fill the background color |
+| border | colour width style | `#fad solid medium` | Sets the border using shorthand where any or all of the values may be provided |
+| border-radius | unit | `50%` | The size of the border radius |
+| box-shadow | x-offset y-offset blu-radius colour | `2px 2px 2px gray` | Creates a shadow |
+| columns | number | `3` | Number of textual columns |
+| column-rule | colour width style | `solid thin black` | Sets the border used between columns using border shorthand |
+| color | colour | `rgb(128, 0, 0)` | Sets the text color |
+| cursor | type | `grab` | Sets the cursor to display when hovering over the element |
+| display | type | `none` | Defines how to display the element and its children |
+| filter | filter-function | `grayscale(30%)` | Applies a visual filter |
+| float | direction | `right` | Places the element to the left or right in the flow |
+| flex | | | Flex layout. Used for responsive design |
+| font | family size style | `Arial 1.2em bold` | Defines the text font using shorthand |
+| grid | | | Grid layout. Used for responsive design |
+| height | unit | `.25em` | Sets the height of the box |
+| margin | unit | `5px 5px 0 0` | Sets the margin spacing |
+| max-\[width/height]| unit | `20%` | Restricts the width or height to no more than the unit |
+| min-\[width/height]| unit | `10vh` | Restricts the width or height to no less than the unit |
+| opacity | number | `.9` | Sets how opaque the element is |
+| overflow | \[visible/hidden/scroll/auto] | `scroll` | Defines what happens when the content does not fix in its box |
+| position | \[static/relative/absolute/sticky] | `absolute` | Defines what happens when the content does not fix in its box |
+| padding | unit | `1em 2em` | Sets the padding spacing |
+| left | unit | `10rem` | The horizontal value of a positioned element |
+| text-align | \[start/end/center/justify] | `end` | Defines how the text is aligned in the element |
+| top | unit | `50px` | The vertical value of a positioned element |
+| transform | transform-function | `rotate(0.5turn)` | Applies a transformation to the element |
+| width | unit | `25vmin` | Sets the width of the box |
+| z-index | number | `100` | Controls the positioning of the element on the z axis |
+
+</details>
+
+
 ## JavaScript and Web Frameworks
 ## HTTP Service
 ## Data & Authentication Services
