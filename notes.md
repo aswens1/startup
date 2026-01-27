@@ -1708,6 +1708,88 @@ Check out this [CopePen](https://codepen.io/leesjensen/pen/zYaLgVW) for an examp
 
 </details>
 
+<details>
+
+<summary>CSS Animation</summary>
+
+### CSS Animation
+
+Deeper dive: [MDN Animation](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Using_CSS_animations)
+
+You can use CSS to animate your components for an easy way to make your app feel alive and interactive. You create CSS animations using the `animation` proeprties and defining `keyframes` for what the element should look like at different times in the animation.
+
+The following is an example.
+
+We have a paragraph of centered text and we want it to zoom in until its size is 20% of the view height.
+
+```CSS
+p {
+  text-align: center;
+  font-size: 20vh;
+}
+```
+
+To make this happen, we specify that we are animating the selected elements by adding `animation-name` property with the value of demo. The name refers to the name of the `keyframes` that we will sepcify in a minute. The keyframes tells what CSS properties should be applied at different key points in the animation sequence. We also add `animation-duration` property in order to specify that the animation should last for 3 seconds.
+
+```CSS
+p {
+  text-align: center;
+  font-size: 20vh;
+
+  animation-name: demo;
+  animation-duration: 3s;
+}
+```
+
+Now we can create keyframes. We don't have to define what happens at every millisecond. Instead, we only need to define the key points, and CSS will generate a smooth transition to move from one keyframe to another. Here, we want to start with text that is invisible and have it zoom into the full final size. We do this with two frames that are designated with the keywords `to` and `from`.
+
+```CSS
+@keyframes demo {
+  from {
+    font-size: 0vh;
+  }
+
+  to {
+    font-size: 20vh;
+  }
+}
+```
+
+That's all we need to do. But we can make it look better making the paragraph bounce out a little bit bigger than its final size at the end. We can do this by adding another keyframe that happens 95% through the animation.
+
+```CSS
+@keyframes demo {
+  from {
+    font-size: 0vh;
+  }
+
+  95% {
+    font-size: 21vh;
+  }
+
+  to {
+    font-size: 20vh;
+  }
+}
+```
+
+This example is demonstrated in this [CodePen](https://codepen.io/leesjensen/pen/LYrJEwX).
+
+But you can do a lot more with CSS than just pushing buttons and making text float. Here's an example of [animating a watch](https://codepen.io/leesjensen/pen/MWBjXNq) using only HTML and CSS.
+
+There are a lot of CSS animation examples on CodePen. Here's one with [floating clouds](https://codepen.io/leesjensen/pen/wvXEaRq).
+
+</details>
+
+<details>
+
+<summary>Debugging CSS</summary>
+
+### Debugging CSS
+
+
+</details>
+
 ## JavaScript and Web Frameworks
 ## HTTP Service
 ## Data & Authentication Services
