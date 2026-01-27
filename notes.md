@@ -1801,7 +1801,18 @@ This [video](https://youtu.be/NKyVgzYnYoU) shows you how to use the "inspect" to
 
 </details>
 
+<details>
 
+<summary>Responsive Design</summary>
+
+### Responsive Design
+
+
+
+
+
+
+</details>
 
 ## JavaScript and Web Frameworks
 ## HTTP Service
