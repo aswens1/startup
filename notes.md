@@ -1659,6 +1659,54 @@ This [CodePen](https://codepen.io/leesjensen/pen/rNKrgKQ) demonstrates the use o
 
 </details>
 
+<details>
+
+<summary>CSS Fonts</summary>
+
+### CSS Fonts
+
+Deeper dive: [MDN Web Fonts](https://developer.mozilla.org/en-US/docs/Learn/CSS/Styling_text/Web_fonts)
+
+Choosing an appropriate font is an important web app design characteristic. The CSS `font-family` property defines what fonts should be used. The property value represents an ordered list of fonts. The first font in the list that is available will be used. The ability to select from a list of fonts is important because different operating systems have different default fonts and your first choice may not be available.
+
+#### Font Families
+
+There are four major font families:
+- `serif`
+- `sans-serif`
+- `fixed`
+- `symbol`
+
+A serif is a small stroke attached to the ends of a major character's minor strokes. Serif fonts have extra strokes, while sans-serif fonts don't. Fixed fonts characters are all the same size, which is useful for lining up text when doing things like coding or displaying tabular data. Symbol fonts represent non-langauge characters like arrows and emojis.
+
+#### Importing Fonts
+
+Another way to pick a font is to specify a font that you provide with your application. The way your app is guaranteed to always look the same. To make the browser load a font you use the `@font-face` rule and provide the font name and source location.
+
+```CSS
+@font-face {
+  font-family: 'Quicksand';
+  src: url('https://cs260.click/fonts/quicksand.ttf');
+}
+
+p {
+  font-family: Quicksand;
+}
+```
+
+If you don't want to host font files on your server, then you can load them from a font provider. Google provides a large selection of [open source fonts](https://fonts.google.com/) that you can use without paying any royalties. The easiest way to use these is to use a CSS import statement to reference the Google Font Service. This automatically generates the CSS for importing the font.
+
+```CSS
+@import url('https://fonts.googleapis.com/css2?family=Rubik Microbe&display=swap');
+
+p {
+  font-family: 'Rubik Microbe';
+}
+```
+
+Check out this [CopePen](https://codepen.io/leesjensen/pen/zYaLgVW) for an example on importing fonts.
+
+</details>
 
 ## JavaScript and Web Frameworks
 ## HTTP Service
