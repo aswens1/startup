@@ -1610,6 +1610,53 @@ CSS rule declarations specify a property and value to assign when the rule selec
 | width | unit | `25vmin` | Sets the width of the box |
 | z-index | number | `100` | Controls the positioning of the element on the z axis |
 
+#### Units
+
+Deeper dive: [MDN Values and Units](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units)
+
+You can use a variety of units when defining the size of a CSS property. For example, the width of an element can be defined using absolute units uch as the number of pixels (`px`) or inches (`in`). You can also use relative units such as a percentage of the parent element (`50%`), a percentage of a minimum viewpoint dimension (`25vmin`), or a multiplier of the size of the letter m (`1.5em`) as defined by thr root element.
+
+```CSS
+p {
+  width: 25%;
+  height: 30vh;
+}
+```
+
+The following is a list of the most commonly used units. All the units are prefixed with a number when used as a property value.
+
+| Unit | Description |
+| --- | --- |
+| `px` | the number of pixels |
+| `pt` | the number of points (`1/72 of an inch`) |
+| `in` | the number of inches |
+| `cm` | the number of centimeters |
+| `%` | a percentage of the parent element |
+| `em` | a multiplier of the width of the letter `m` in the prent's font |
+| `rem` | a multiplier of the width of the letter `m` in the root's font |
+| `ex` | a multiplier of the height of the element's font |
+| `vh` | a percentage of the viewport's width |
+| `vh` | a percentage of the viewport's height |
+| `vmin` | a percentage of the viewport's smaller dimension |
+| `vmax` | a percentage of the viewport's larger dimension |
+
+#### Colour
+
+Deeper dive: [MDN Applying Colour](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Colors/Applying_color)
+
+CSS has multiple ways to describte colour, from representations that are known to programmers to ones familiar to layout designers and artists.
+
+| Method | Example | Description |
+| --- | --- | --- |
+| keyword | `red` | A set of predefined colors (e.g. white, cornflowerblue, darkslateblue) |
+| RBG hex | `#00FFAA22` or `#0FA2` | Red, green, and blue as a hexadecimal number, with an optional alpha opacity |
+| RGB function | `rgb(128, 225,128, 0.5)` | Red, green, and blue as a percentage or number between 0 and 255, with an optional alpha opacity percentage |
+| HSL | `hsl(180, 30% 90% 0.5)` | Hue, saturation, and light, with an optional opacity percentage. Hue is the position on the 365 degree color wheel (red is 0 and 255). Saturation is how gray the color is, and light is how bright the color is. |
+
+#### Experiment
+
+This [CodePen](https://codepen.io/leesjensen/pen/rNKrgKQ) demonstrates the use of many of the above declarations.
+
 </details>
 
 
