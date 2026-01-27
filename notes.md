@@ -1787,8 +1787,21 @@ There are a lot of CSS animation examples on CodePen. Here's one with [floating 
 
 ### Debugging CSS
 
+Deeper dive: [MDN Debugging CSS](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Debugging_CSS)
+
+CSS is very powerful, but it is very frustrating to figure out why your page is not rendering the way you expect it to. To help you understand why it's rendering as it it, you can use the browser's developer tool to inspect the CSS properties and visualize the HTML layout. Using the Chrome debugger let's you access the developer tools by right clicking on the HTML page element that you want to debug and selecting the `inspect` option.
+
+In the debugger window, if you use the `Elements` tab, you can move your cursor over the different elements and see a visual representation of the padding, borders, and margins. The `Styles` pane shows all of the CSS properties applied to the currently selected element. If you scroll down to the bottom of the styles pane, you will see the CSS box.By moving the cursor over different parts of the box, it will highlight the different box parts in the browser window.
+
+You can change and add properties right in the debugger. This lets you see how each property is contributing and change them to see how that impacts the rendering. 
+
+#### Extra Help With Debugging
+
+This [video](https://youtu.be/NKyVgzYnYoU) shows you how to use the "inspect" tool to debug your CSS.
 
 </details>
+
+
 
 ## JavaScript and Web Frameworks
 ## HTTP Service
