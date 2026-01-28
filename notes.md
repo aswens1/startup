@@ -1807,12 +1807,146 @@ This [video](https://youtu.be/NKyVgzYnYoU) shows you how to use the "inspect" to
 
 ### Responsive Design
 
+Deeper reading: [MDN Respsonsive Design](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design)
 
+Modern web apps are expected to run well on a large variety of computers. This includes everything from desktops, to phones, to shopping kiosks, to car dashboards. This ability to recongifure the interface so the app accomodates and takes advantage of the screen's size and orientation is called `responsive design`.
 
+Much of HTML and CSS is fluid due to the fact that it responds to the browser window being resized. For example, a paragraph element will resize when the browser window is resized. However, the following features can completely change the layout of the app based on the device's size and orientation.
 
+#### Display
 
+Deeper dive: [MDN Display](https://developer.mozilla.org/en-US/docs/Web/CSS/display)
+
+The CSS display property lets you change how and HTML element is displayed in the browser. Here are some common options.
+
+| Value | Meaning |
+| --- | --- |
+| none | Don't display this element. The element still exists, but the browser will not render it. |
+| block | Display this element with a width that fills its parent element. A `p` or `div` element has block display by default. |
+| inline | Display this element with a width that is only as big as its content. A `b` or `span` element has inline display by default. |
+| flex | Display this element's children in a flexible orientation. |
+| grid| Display this element's children in a grid orientation. |
+
+We can demonstrate the different CSS property values with the following HTML with a bunch of `div` elements. By default, the `div` elements have a display property value of `block`.
+
+```HTML
+<div class="none">None</div>
+<div class="block">Block</div>
+<div class="inline">Inline1</div>
+<div class="inline">Inline2</div>
+<div class="flex">
+  <div>FlexA</div>
+  <div>FlexB</div>
+  <div>FlexC</div>
+  <div>FlexD</div>
+</div>
+<div class="grid">
+  <div>GridA</div>
+  <div>GridB</div>
+  <div>GridC</div>
+  <div>GridD</div>
+</div>
+```
+
+With the default of `block`, the above HTML should look like this.
+
+![cssDisplayDefault](picturesForNotes/cssDisplayDefault.jpg)
+
+If we modify the display property associated with each element with the following CSS, we get a different rendering.
+
+```CSS
+.none {
+  display: none;
+}
+
+.block {
+  display: block;
+}
+
+.inline {
+  display: inline;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+```
+
+![cssDisplay](picturesForNotes/cssDisplay.jpg)
+
+You can mess with different display property values in this [CodePen](https://codepen.io/leesjensen/pen/RwBOPjv).
+
+#### Viewport Meta Tag
+
+When mobile smartphones began to gain popularity, they began to be used to view websites. But websites were optimised for desktop displays and not the tiny mobile screens. To solve this, mobile browsers automatically started scaling the website so that it looked better on a small screen. Unfortunately, as web apps became responsive to screen size, the mobile browser's scaling got in the way. The solution was to include a meta tag in the `head` element of all the HTML pages of an app. This tells the broswer not to scale the page.
+
+```HTML
+<meta name="viewport" content="width=device-width,initial-scale=1">
+```
+
+#### Float
+
+The float property moves an element to the left or right of its container element and allows inline elements to wrap around it. For example, if we had an `aside` element followed by a large paragraph of text, we could create the following CSS rule to cause the text to wrap around the aside.
+
+```CSS
+aside {
+  float: right;
+  padding: 3em;
+  margin: 0.5em;
+  border: black solid thin;
+}
+```
+
+When the browser resizes, the text will flow around the floating element. Use this [CodePen](https://codepen.io/leesjensen/pen/MWBRWPP) to experiement with `float`. Change the descriptor value to `none` or `left` and see what happens.
+
+#### Media Queries
+
+One of the main CSS features for creating responsive apps is the `@media` selector. This dynamically detects the size and orientation of the device and applies CSS rules to represent the structure of the HTML in a way that accommodates the change.
+
+We can use the `@media` selector to tell us which side of the screen (viewport) is the longest. The query takes one or more predicates separated by boolean operatora. In our case, we simply want to know if the screen is oriented in portrait mode (short side on top) or not. If it is, we transform all of our div elements by rotating them 270 degrees.
+
+```CSS
+@media (orientation: portrait) {
+  div {
+    transform: rotate(270deg);
+  }
+}
+```
+
+We can demonstrate this by using the brwoser's debugger and switching into phone and responsive mode. You can also use this [CodePen](https://codepen.io/leesjensen/pen/rNKZOva) and test it by resizing the browser window.
+
+We can also use media queries to make entire pieces of your app disappear, or move to a different location. For example, if we had an aside that was helpful when the screen is wide, but took of too much space when the screen got narrow, we could use the following media query to make it disappear:
+
+```CSS
+@media (orientation: portrait) {
+  aside {
+    display: none;
+  }
+}
+```
+
+Here is the [CodePen](https://codepen.io/leesjensen/pen/NWzLGmJ) for this example.
+
+#### Grid and Flexbox
+
+The final two responsive technologies are Grid and Flexbox. These are CSS display modes that automatically respond to screen size to position and resize their child elements.
 
 </details>
+
+### Grid
+
+### Flex
+
+### CSS Frameworks
+
+### Simon CSS
+
 
 ## JavaScript and Web Frameworks
 ## HTTP Service
