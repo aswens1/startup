@@ -2052,7 +2052,24 @@ main {
 }
 ```
 
- 
+Now, we need to add the CSS to the control and content areas represented by the two child section elements. We want the controls to have 25% of the space and content to have the rest. So we set the `flex` property value to 1 and 3 respectively. That means the controls get one unit of space and the content gets three units of space. No matter how we resize things, the ratio will remain the same.
+
+```CSS
+section:nth-child(1) {
+  flex: 1;
+  background-color: hsl(180, 10%, 80%);
+}
+section:nth-child(2) {
+  flex: 3;
+  background-color: white;
+}
+```
+
+#### Media Query
+
+While the above completes the original design, we also want it to be able to handle smaller screen sizes. To do this, we need to add some media queries that drop the header and the footer if the viewport gets too short, and orient the main sections as rows it it gets too narror.
+
+For the narrow screen (portrait mode), we include a media query that detects when we are in portrait orientation and sets the `flex-box`
 
 
 
