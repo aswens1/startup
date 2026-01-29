@@ -1980,7 +1980,102 @@ You can experiment with the source on [CodePen](https://codepen.io/leesjensen/pe
 
 </details>
 
-### Flex
+<details>
+
+<summary>CSS Flexbox</summary>
+
+### CSS Flexbox
+
+Deeper reading:
+- [MDN Flexbox](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox)
+- [CSS Tricks Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+- [Flexbox Froggy](https://flexboxfroggy.com/)
+
+The `flex` display layout is useful when you want to partition your app into areas that responsively move around as the window resizes or the orientation changes. To demonstrate this, we'll build an app with a header, footer, and a main content area split into two sections, with controls on the left and content on the right.
+
+For visualising:
+
+![cssAppMock](picturesForNotes/cssAppMock.jpg)
+
+The structural HTML to match the design:
+
+```HTML
+<body>
+  <header>
+    <h1>CSS flex &amp; media query</h1>
+  </header>
+  <main>
+    <section>
+      <h2>Controls</h2>
+    </section>
+    <section>
+      <h2>Content</h2>
+    </section>
+  </main>
+  <footer>
+    <h2>Footer</h2>
+  </footer>
+</body>
+```
+
+Now we can use Flexbox to make it all come together. We make the body element into a responsive flexbox by including the CSS `display` property with the value `flex`. This tells the browser that all the children of this element are to be displayed in a flex flow. To make the top level children be column oriented, we add the `flex-direction` property with a value of `column`. We then add some other simple declarations to zero out the margin and fill the entire viewport with our app frame.
+
+```CSS
+body {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  height: 100vh;
+}
+```
+
+To get the division of space for the flexbox children correct, we add the following flex properties to each child:
+- header - `flex: 0 80px` - zero means it will not grow and 80px means it has a starting basis height of 80 pixels. This creates a fixed size box.
+- footer - `flex: 0 30px` - like the header it won't grow and has a height of 30 pixels.
+- main - `flex: 1` - one means it will get one fractional unit of growth, and since it is the only child with a non-zero growth value, it will get all the remaining space. Main also gets some additional properties because we want it to also be a flexbox conainer for the controls and content area. So we set its display to be `flex` and specify the `flex-direction` to be row so that the children are oriented side by side.
+
+```CSS
+header {
+  flex: 0 80px;
+  background: hsl(223, 57%, 38%);
+}
+
+footer {
+  flex: 0 30px;
+  background: hsl(180, 10%, 10%);
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+}
+```
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</details>
 
 ### CSS Frameworks
 
