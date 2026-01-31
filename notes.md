@@ -2069,32 +2069,189 @@ section:nth-child(2) {
 
 While the above completes the original design, we also want it to be able to handle smaller screen sizes. To do this, we need to add some media queries that drop the header and the footer if the viewport gets too short, and orient the main sections as rows it it gets too narror.
 
-For the narrow screen (portrait mode), we include a media query that detects when we are in portrait orientation and sets the `flex-box`
+For the narrow screen (portrait mode), we include a media query that detects when we are in portrait orientation and sets the `flex-direction` of the main element to be column instead of row. This causes the children to be stacked on top of each other instead of side by side.
 
+To handle making the header and footer disappear when the screen is too short, we use a media query that triggers when our viewport height has a max value of 700 pixels. When that is true, we change the `display` property for both the header and the footer to `none` so they are both hidden. When that happens, the main element becomes the only child. Since it has a flex value of 1, it takes over everything.
 
+```CSS
+@media (orientation: portrait) {
+  main {
+    flex-direction: column;
+  }
+}
 
+@media (max-height: 700px) {
+  header {
+    display: none;
+  }
+  footer {
+    display: none;
+  }
+}
+```
 
+You can experiment with this on [CodePen](https://codepen.io/leesjensen/pen/MWOVYpZ)
 
+</details>
 
+<details>
 
+<summary>CSS Frameworks</summary>
 
+### CSS Frameworks
 
+CSS framweorks provide functions and components that commonly appear in web apps. As web developers built more and more web apps, they started to use the same patterns. They combined these patterns into a shared package of code and contributed it to the world as open source repos. This helped decrease the development time, and also created a common user experience for the web in general.
 
+There are a lot of open source CSS frameworks to choose from. Many contain the same types of functionality, but they all bring something a little bit different.
 
+#### Tailwind
 
+- [Tailwind CSS](https://tailwindcss.com/)
+- Component library: [Tailwind UI](https://tailwindui.com/)
 
+According to the 2022 StateOfCSS poll, Taiwling gained 46% of general usage with a retention rating of 78%.
 
+Tailwind approaches CSS a bit differntly than the traditional framworks. Instead of large, rich, CSS rulesets, it uses smaller definitions applied specifically to individual HTML elements. This moves much of the CSS representation out of the CSS file and into the HTML.
 
+#### Bootstrap
 
+- [Getting started with Bootstrap](https://getbootstrap.com/docs/5.2/getting-started/introduction/)
 
+[Bootstrap](https://getbootstrap.com/) is the reigning champion of the CSS frameworks. It's been supported by an active community for over a decade, and contains many lessons learned from real world applications. The biggest downfall of Bootstrap is its success. Because it's so popular, it defines the de facto look and feel of websites. This is great for user experience continuity, but it makes it difficult for a website to grab the attention of new users.
 
+##### Getting Bootstrap
 
+You can integrate Bootstrap into your web app by referencing the Bootstrap CSS files from their [content delivery network](https://getbootstrap.com/docs/5.2/getting-started/introduction/#cdn-links) (CDN). You then add it to the HTML in your head element with a link element.
 
+```HTML
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+  </head>
+  <body>
+    ...
+  </body>
+</html>
+```
+
+If you're using components that require JavaScript (like carousel, buttons, etc), then you also need to include the JavaScript module. You add this by putting it in the end of your HTML body element.
+
+```HTML
+<body>
+  ...
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+</body>
+```
+
+You can use the Node Package Manager (npm) to download Bootstrap and include it in your source code. This way you don't have to rely on someone else's server to provude you with a vital piece of your app. Use the following command in your console to install Bootstrap with npm:
+
+```
+npm install bootstrap@5.3.3
+```
+
+Word of caution: this command is specifically for version 5. You want to use the latest version when you install it.
+
+##### Using Bootstrap
+
+Once you have Bootstrap in your HTML, you can begin to use the components it provides. 
+
+For example, we'll talk about a button. When we use the Bootstrap `btn` CSS class, the button gets a ncie rounded appearance. The Bootstrap `btn-primary` CSS class shades the button with the current primary colour for the app, which is blue by default. Here's a demonstration of the Bootstrap vs the regular HTML button. They work the same, but the Bootstrap one looks better.
+
+```HTML
+<!-- Bootstrap styled button -->
+<button type="button" class="btn btn-primary">Bootstrap</button>
+
+<!-- Default browser styled button -->
+<button type="button">Plain</button>
+```
+
+![cssBootstrapBtn](picturesForNotes/cssBootstrapBtn.png)
+
+Here's a [CodePen](https://codepen.io/leesjensen/pen/JjZavjW) that demonstrates all the major Bootstrap components.
+ 
+</details>
+
+<details>
+
+<summary>Tailwind</summary>
+
+### Tailwind
+
+Deeper reading:
+- [Tailwind website](https://tailwindcss.com/)
+- [Getting started using Vite](https://tailwindcss.com/docs/installation/using-vite)
+
+Tailwind is a CSS framwork that appraches it differently than other framworks. Instead of importing a bunch of predefined components, Tailwind provides low-level utility classes that you apply to your HTML.
+
+#### History
+
+- Created by Adam Wathan, Steve Shoger, Jonathon Reinink, David Hemphill
+- Initially released in November 2017
+- Motivation: The team wanted a way to build UIs faster and more flexibly without constantly switching between HTML and CSS files or overriding styles from traditional frameworks
+- Success: It's grown to become one of the most popular CSS frameworks due to its developer-first philosophy and modern tooling ecosystm
+
+#### Tailwind Philosophy
+
+When you use Tailwind, you add standard Tailwind class names to your HTML elements. Then you run the HTML through a tool chain process, like Vite, and it will dynamically build your CSS files from the classes that you explicitly reference.
+
+Advantages
+- Reduces CSS bloat
+- Puts your styling directly in the HTML where it is used
+- Increases performance because you only include styling that you actually use
+- Closer to CSS, so if you're familiar with CSS you can quickly style your HTML with a simplified style syntax
+
+Tailwind works well with web component frameworks because it encourages you to build reusable components in a framework like React so you avoid creating similar components with slightly different Tailwind class references.
+
+Example of a Tailwind button:
+
+```HTML
+<button className="bg-blue-400 text-white px-4 py-2 rounded shadow hover:bg-blue-700 transition-colors m-4">Get Started</button>
+```
+
+#### Comparison to Bootstrap
+
+The exmpample here shows the same HTML styled with Boostrap and then with Tailwind.
+
+**Bootstrap**
+
+With Bootstrap, you use the card, card-body, card-tile, and card-text component classes. The HTML references a large static stylesheet to apply the CSS rules for the classes.
+
+```HTML
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="https://picsum.photos/400/200" />
+  <div class="card-body">
+    <h5 class="card-title">Card Title</h5>
+    <p class="card-text">Some quick example text.</p>
+  </div>
+</div>
+```
+
+**Tailwind**
+
+With Tailwind, there are no component level definitions. You work with class names that are similar to primitive CSS directives. Then you apply the class names in the HTML and not through CSS files.
+
+```HTML
+<div class="max-w-sm rounded overflow-hidden
+<div className="max-w-sm rounded bg-white overflow-hidden shadow-lg m-4 p-2">
+  <img className="w-full" src="https://picsum.photos/400/200" />
+  <div className="px-2 py-4">
+    <div className="font-bold text-xl mb-2">Card Title</div>
+    <p className="text-gray-700 text-base">Some quick example text.</p>
+  </div>
+</div>
+```
+
+The result is visually similar in both cases, but because Bootstrap uses predefined component level classes, you will need to download the entire Bootstrap CSS framework file in order to render the card. With Tailwind, a custom CSS file is created dynamically for you that only contains the styling that you used.
+
+**Feature Comparison**
 
 
 </details>
 
-### CSS Frameworks
+
 
 ### Simon CSS
 
