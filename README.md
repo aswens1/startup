@@ -62,3 +62,6 @@ I've also deployed my HTML to my project - found at [startup.8bitalley.click](ht
 - **Login placeholder** - There is a login and sign up placeholder on the [getStarted](pages/getStarted.html) page.
 - **DB data placeholder** - There is text and form placeholders everywhere where the database will be called - login/register, create/join a game, collaborate and gameplay canvas, and the leaderboard.
 - **WebSocket placeholder** - When I add WebSocket, it will be used on the gameplay canvases and the collaborative canvas to update the board in real time as players place pixels.
+
+## 🚀 CSS deliverable
+I reviewed and deployed the Simon CSS code to my project - found at [simon.8bitalley.click](https://simon.8bitalley.click).
