@@ -2248,13 +2248,67 @@ The result is visually similar in both cases, but because Bootstrap uses predefi
 
 **Feature Comparison**
 
+| Feature | Tailwind CSS | Bootstrap |
+| --- | --- | --- |
+| Philosophy | utility-first (build from primitives) | component-based (prebuilt UI components) |
+| Customization| highly customizable via config (`tailwind.config.js`) | customaizable but more rigid without overrides |
+| Design freedom | full control of spacing, colour, layout | limited to pre-defined component styling |
+| File size | smaller | larger due to bundled components and styles |
+| Learning curve | steep at first as you learn native CSS | easy to get started |
+| JS dependency | no JS (expect if using plugins) | depends on jQuery (Bootstrap <= 4) or native JS (bootstrap 5) |
+
+#### Adding Tailwind to your Project
+
+If you're already using Vite as the tool chain processor for your react application, it's easy to configure Vite to support Tailwind. You need to install Tailwind, configure Vite to execute Tailwind as part of the tool chain, add a reference to the resulting CSS, and start adding Tailwind class names to your HTML elements.
+
+1. Start with the [Hello World React](https://github.com/webprogramming260/webprogramming/blob/main/instruction/webFrameworks/react/introduction/introduction.md#react-hello-world) application.
+
+2. Install Tailwing CSS
+```npm install tailwindcss @tailwindcss/vite```
+
+3. Configure the Vite plugin to use Tailwind to compile CSS by modifying/creating `vite.config.js`
+```JavaScript
+import { defineConfig } from 'vite';
+import tailwindcss from '@tailwindcss/vite';
+export default defineConfig({
+  plugins: [tailwindcss()],
+});
+```
+
+4. Create a `index.css` file and import tailwindcss. This brings the dynamically generated Tailwind file.
+```CSS
+@import 'tailwindcss';
+```
+
+5. Modify the `index.html` head element to reference the placeholder CSS file.
+```HTML
+<link href="/src/style.css" rel="stylesheet" />
+```
+
+6. Modify the `index.jsx` file to use Tailwind classes.
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+
+function App() {
+  const [bgColor, setBgColor] = React.useState('bg-white');
+
+  const handleClick = () => {
+    setBgColor(bgColor === 'bg-white' ? 'bg-yellow-200' : 'bg-white');
+  };
+
+  return (
+    <div onClick={handleClick} className={`h-screen font-bold text-8xl flex items-center justify-center ${bgColor}`}>
+      <div> Hello React </div>
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+```
 
 </details>
-
-
-
-### Simon CSS
-
 
 ## JavaScript and Web Frameworks
 ## HTTP Service
