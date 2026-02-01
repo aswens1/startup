@@ -65,3 +65,5 @@ I've also deployed my HTML to my project - found at [startup.8bitalley.click](ht
 
 ## 🚀 CSS deliverable
 I reviewed and deployed the Simon CSS code to my project - found at [simon.8bitalley.click](https://simon.8bitalley.click).
+
+I've begun using CSS to style my application. So far, I've finished the index, the login register, and the leaderboard. These all have consistent styles and the same background. The game play and lobby pages will be different.
