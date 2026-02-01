@@ -148,3 +148,8 @@ header, footer {
     letter-spacing: 0.06em;
     font-size: large;
 }
+
+#get-started {
+    margin: none;
+    padding: none;
+}
