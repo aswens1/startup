@@ -48,14 +48,15 @@ body::before {
 /*    STYLING FOR THE HERO/MAIN CONTENT + BUTTON      */
 
 .hero {
-    min-height: 100vh;
+    min-height: calc(100vh - 160px);
+
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    /* align-items: center; */
 
-    min-height: 100vh;
-    padding-top: 5rem;   /* match header height */
-    padding-bottom: 5rem; /* match footer height */
+    padding-top: 5rem;   
+    padding-bottom: 5rem; 
 }
 
 .content {
@@ -235,4 +236,43 @@ header, footer {
     .auth-forms {
         grid-template-columns: 1fr;
     }
+}
+
+/* -------------------------------------------------- */
+
+/*    STYLING FOR THE LEADERBOARD      */
+
+#leaderboard h1 {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 5em;
+}
+
+#leaderboard p {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1em;
+}
+
+.hero .content {
+    width: 80%;
+    max-width: 900px;
+    height: 70vh;       
+    padding: 2rem;
+    overflow: hidden;    
+    display: flex;
+    flex-direction: column;
+}
+
+.leaderboard-scroll {
+    flex: 1;                
+    overflow-y: auto;    
+    margin-top: 1rem;
+}
+
+table thead th {
+    position: sticky;
+    top: 0;
+    background: whitesmoke;
+    z-index: 1;
 }
