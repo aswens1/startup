@@ -1,0 +1,150 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+  
+body {
+    position: relative;
+    overflow: hidden;
+}
+
+/* -------------------------------------------------- */
+
+/*    STYLING FOR THE BACKGROUNG     */
+/* The animated background */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+  
+    background-image: url("pppixelate.svg");
+    background-repeat: repeat;
+    background-size: 300px 300px; /* tweak this */
+    background-position: 0 0;
+  
+    opacity: 0.8; /* controls how subtle it is */
+  
+    animation: pan 120s linear infinite;
+  
+    z-index: -1;
+
+    filter: blur(0.5px);
+}
+
+/* Slow pan animation */
+@keyframes pan {
+    from { background-position: 0 0; }
+    to   { background-position: 1000px 0; }
+}
+
+/* -------------------------------------------------- */
+
+/*    STYLING FOR THE HERO/MAIN CONTENT + BUTTON      */
+
+.hero {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    min-height: 100vh;
+    padding-top: 5rem;   /* match header height */
+    padding-bottom: 5rem; /* match footer height */
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 12px;
+
+}
+
+#main-title {
+    font-family: "Jersey 10", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 7em;
+
+    line-height: 0.9;
+    letter-spacing: 0.07em;
+}
+
+.get-started-btn {
+    /* margin-top: 1rem; */
+
+    display: inline-block;
+
+    font-family: "Jersey 10", sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+
+    padding: 0.8rem 2.4rem;
+
+    color: #111;
+    background: #fff;
+
+    border: 3px solid #111;
+    border-radius: 8px;
+
+    box-shadow:
+        0 6px 0 #111,
+        0 10px 20px rgba(0, 0, 0, 0.2);
+
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.get-started-btn:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 8px 0 #111,
+        0 14px 24px rgba(0, 0, 0, 0.25);
+}
+
+.get-started-btn:active {
+    transform: translateY(4px);
+    box-shadow:
+        0 2px 0 #111,
+        0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* -------------------------------------------------- */
+
+/*    STYLING FOR THE HEADER AND FOOTER      */
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+}
+
+header, footer {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(6px);
+
+    text-align: center;
+    letter-spacing: 0.06em;
+    font-size: large;
+}
