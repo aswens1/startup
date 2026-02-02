@@ -21,66 +21,88 @@
 
         <h1>Collaborative Canvas</h1>
 
-        <main>
-            <section>
-                <h2>Mock Canvas Info</h2>
-                <p>Player: Player1</p>
-                <p>Active Players: 10</p>
-                <p>Status: in progress</p>
-                <p>Websocket will update the game state in real-time</p>
-            </section>
-
+        <main class="canvas-layout">
             <!-- mock board. will look good with css -->
-            <section>
+            <section class="canvas">
                 
-                <div>
-                    <span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span>
+                <div class="grid">
+                    <div class="row">
+                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
+                    </div>
+
+                    <div class="row">
+                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
+                    </div>
+
+                    <div class="row">
+                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
+                    </div>
+                    
+                    <div class="row">
+                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
+                    </div>
+                    
+                    <div class="row">
+                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
+                    </div>
+                    
+                    <div class="row">
+                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
+                    </div>
+
+                    <div class="row">
+                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
+                    </div>
+                    
+                    <div class="row">
+                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
+                    </div>
+
+                    <div class="row">
+                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
+                    </div>
+                    
+                    <div class="row">
+                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
+                    </div>
+
+                    <div class="row">
+                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
+                    </div>
+                    
+                    <div class="row">
+                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
+                    </div>
+
+                    <div class="row">
+                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
+                    </div>
+                    
+                    <div class="row">
+                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
+                    </div>
+
                 </div>
 
-                <div>
-                    <span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span>
-                </div>
-
-                <div>
-                    <span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span>
-                </div>
-
-                <div>
-                    <span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span>
-                </div>
-
-                <div>
-                    <span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span>
-                </div>
-
-                <div>
-                    <span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span>
-                </div>
-
-                <div>
-                    <span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span>
-                </div>
-
-                <div>
-                    <span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span>
-                </div>
-
-                <div>
-                    <span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span>
-                </div>
-
-                <div>
-                    <span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span><span>[ ]</span>
-                </div>
 
             </section>
 
-            <aside>
-                <h2>Mock Pallette</h2>
-                <!-- no api call here - main canvas has access to all colours. red blue green yellow for now -->
+            <aside class="canvas-panel">
 
-                <span><button>Red</button></span><span><button>Blue</button></span><span><button>Green</button></span><span><button>Yellow</button></span>
+                <div class="panel-section">
+                    <h2>Mock Canvas Info</h2>
+                    <p>Player: Player1</p>
+                    <p>Active Players: 10</p>
+                    <p>Status: in progress</p>
+                    <p>Websocket will update the game state in real-time</p>
+                </div>
 
+                <div class="panel-section">
+                    <h2>Mock Pallette</h2>
+
+                    <!-- no api call here - main canvas has access to all colours. red blue green yellow for now -->
+                    <span><button>Red</button></span><span><button>Blue</button></span><span><button>Green</button></span><span><button>Yellow</button></span>
+                </div>
 
             </aside>
 
