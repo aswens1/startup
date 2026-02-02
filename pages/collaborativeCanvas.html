@@ -6,88 +6,261 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="8-Bit Alley is a pixel based arcade, where you can play pixel games with friends and contribute to the community canvas!" />
+        <link href="collabCanvas.css" rel="stylesheet" />
         <title>Collaborative Canvas - 8 Bit Alley</title>
     </head>
 
     <body>
-        <nav>
-            <a href="../index.html">Home</a>
-            <a href="/pages/getStarted.html">Get Started</a>
-            <a href="/pages/leaderboard.html">Leaderboard</a>
-            <a href="/pages/gameSelectionMenu.html">Join a Game</a>
-            <a href="/pages/collaborativeCanvas.html">Collaborative Canvas</a>
-            <a href="/pages/gamePlayCanvas.html">Play the Game</a>
-        </nav>
+        <header>
+            <nav>
+                <a href="../index.html">Home</a>
+                <a href="/pages/getStarted.html">Get Started</a>
+                <a href="/pages/leaderboard.html">Leaderboard</a>
+                <a href="/pages/gameSelectionMenu.html">Join a Game</a>
+                <a href="/pages/collaborativeCanvas.html">Collaborative Canvas</a>
+                <a href="/pages/gamePlayCanvas.html">Play the Game</a>
+            </nav>
+        </header>
 
         <h1>Collaborative Canvas</h1>
 
         <main class="canvas-layout">
             <!-- mock board. will look good with css -->
-            <section class="canvas">
+            <section class="canvas-area">
                 
-                <div class="grid">
-                    <div class="row">
-                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
-                    </div>
-
-                    <div class="row">
-                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
-                    </div>
-
-                    <div class="row">
-                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
-                    </div>
-                    
-                    <div class="row">
-                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
-                    </div>
-                    
-                    <div class="row">
-                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
-                    </div>
-                    
-                    <div class="row">
-                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
-                    </div>
-
-                    <div class="row">
-                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
-                    </div>
-                    
-                    <div class="row">
-                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
-                    </div>
-
-                    <div class="row">
-                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
-                    </div>
-                    
-                    <div class="row">
-                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
-                    </div>
-
-                    <div class="row">
-                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
-                    </div>
-                    
-                    <div class="row">
-                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
-                    </div>
-
-                    <div class="row">
-                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
-                    </div>
-                    
-                    <div class="row">
-                        <span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span><span class="pixel">[ ]</span>
-                    </div>
-
+                <div class="pixel-grid">
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>      
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
+                    <div class="pixel"></div>
                 </div>
 
 
             </section>
 
-            <aside class="canvas-panel">
+            <aside class="control-panel">
 
                 <div class="panel-section">
                     <h2>Mock Canvas Info</h2>
