@@ -275,6 +275,6 @@ header, footer {
 table thead th {
     position: sticky;
     top: 0;
-    background: whitesmoke;
+    /* background: whitesmoke; */
     z-index: 1;
 }
