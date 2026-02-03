@@ -66,4 +66,14 @@ I've also deployed my HTML to my project - found at [startup.8bitalley.click](ht
 ## 🚀 CSS deliverable
 I reviewed and deployed the Simon CSS code to my project - found at [simon.8bitalley.click](https://simon.8bitalley.click).
 
-I've begun using CSS to style my application. So far, I've finished the index, the login register, and the leaderboard. These all have consistent styles and the same background. The game play and lobby pages will be different.
+I've also deployed my CSS to my project - found at [startup.8bitalley.click](https://startup.8bitalley.click).
+
+The game play pages ([gamePlayCanvas](pages/gamePlayCanvas.html) and [collaborativeCanvas](pages/collaborativeCanvas.html)), look unfinished as I hardcoded a bunch of pixels onto the screen. I want to use JavaScript to fill those in later, but for now I filled in part of the screen to demonstrate the style.
+
+- **Header, footer, and main content body** - Every page has a footer and main content body sections. Every page also has a header, with the exception of the two game play pages as their set up is very distinctly different from the rest of my application.
+- **Navigation elements** - For most pages, the navigation elements live in the header. The exception to this is the game play pages, where buttons are on the side of the screen. I plan to add a toggle to that panel later on.
+- **Framework** - I installed and used Tailwind to style some of the elements that didn't have repeating styles.
+- **All visual elements styled with CSS** - I've used CSS and Tailwind to style the entire application.
+- **Responsive to window resizing** - The pages are responsive to window resizes. 
+- **Application elements** - I used all the different elements depending on how specific the styling needed to be. These are spread across two style sheets, one for most of the styles ([styles.css](/styles.css)) and one for the game play pages ([canvas.css](/pages/canvas.css)).
+- **Application text content** - I have two imported fonts, Jersey 10 for the pixelated headers and Noto Sans Mono for everything else. These are imported from the Google Font library.
