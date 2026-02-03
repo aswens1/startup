@@ -24,57 +24,75 @@
         </header>
 
         <main class="min-h-[calc(100vh-160px)] flex justify-center pt-20 pb-20">
-          <div class="grid grid-cols-2 grid-gap-4 bg-white/85 rounded-xl px-8 py-16 max-w-3xl w-full flex justify-center flex-col items-center text-center">
+          <div class="bg-white/85 rounded-xl px-8 py-16 max-w-3xl w-full flex justify-center flex-col items-center text-center">
 
 
+            <div class="grid grid-cols-2 grid-gap-4">
 
-              <div>
-                  <h1>Join a Game</h1>
+              <div class="grid">
+                  <h1 class="font-['Jersey_10'] text-[4rem] ">Join a Game</h1>
 
                   <form action="gamePlayCanvas.html" method="get">
 
-                    <div class="game-option">
-                      <label>
-                        <input type="radio" id="game1" name="game" value="pixel-chaos" />
-                        <strong>Mock Game 1</strong><br />
-                            Players: 12 / 20<br />
-                            Teams: 4<br />
-                            Color Scheme: Neon<br />
-                            Status: In Progress
-                      </label>
+                    <div class="overflow-y-auto max-h-96 p-4 mb-4 text-left">
+
+                      <div class="game-option">
+                        <label class="game-info">
+                          <input type="radio" id="game1" name="game" value="pixel-chaos" />
+                          <strong>Mock Game 1</strong><br />
+                          <span>Game Type:</span> Pixel Chaos<br />
+                          <span>Players:</span> 12 / 20<br />
+                          <span>Teams:</span> 4<br />
+                          <span>Color Scheme:</span> Neon<br />
+                          <span>Status:</span> In Progress
+                        </label>
+                      </div>
+                          
+                      <div class="game-option">
+                        <label>
+                          <input type="radio" id="game2" name="game" value="retro-wall" />
+                          <strong>Mock Game 2</strong><br />
+                          <span>Game Type:</span> Retro Wall<br />
+                          <span>Players:</span> 6 / 10<br />
+                          <span>Teams:</span> 2<br />
+                          <span>Color Scheme:</span> 8-Bit Retro<br />
+                          <span>Status:</span> Waiting for Players
+                        </label>
+                      </div>
+                    
+                      <div class="game-option">
+                        <label>
+                          <input type="radio" id="game3" name="game" value="color-riot" />
+                          <strong>Mock Game 3</strong><br />
+                          <span>Game Type:</span> Color Riot<br />
+                          <span>Players:</span> 18 / 30<br />
+                          <span>Teams:</span> None (Free Draw)<br />
+                          <span>Color Scheme:</span> High Contrast<br />
+                          <span>Status:</span> Almost Full
+                        </label>
+                      </div>
+
+                      <div class="game-option">
+                        <label>
+                          <input type="radio" id="game4" name="game" value="color-riot" />
+                          <strong>Mock Game 4</strong><br />
+                          <span>Game Type:</span> Color Riot<br />
+                          <span>Players:</span> 18 / 30<br />
+                          <span>Teams:</span> None (Free Draw)<br />
+                          <span>Color Scheme:</span> High Contrast<br />
+                          <span>Status:</span> Almost Full
+                        </label>
+                      </div>
 
                     </div>
-                          
-                    <div class="game-option">
-                      <label>
-                        <input type="radio" id="game2" name="game" value="retro-wall" />
-                        <strong>Mock Game 2</strong><br />
-                        Players: 6 / 10<br />
-                        Teams: 2<br />
-                        Color Scheme: 8-Bit Retro<br />
-                        Status: Waiting for Players
-                      </label>
-                    </div>
-                    
-                    
-                    <div class="game-option">
-                      <label>
-                        <input type="radio" id="game3" name="game" value="color-riot" />
-                        <strong>Mock Game 3</strong><br />
-                        Players: 18 / 30<br />
-                        Teams: None (Free Draw)<br />
-                        Color Scheme: High Contrast<br />
-                        Status: Almost Full
-                      </label>
-                    </div>
       
-                    <button type="submit">Join Selected Game</button>
+                    <button class="get-started-btn" type="submit">Join Selected Game</button>
                   </form>
                     
               </div>
 
               <div>
-                  <h1>Create a Game</h1>
+                  <h1 class="font-['Jersey_10'] text-[4rem] ">Create a Game</h1>
 
                   <form action="/createGame" method="post">
                       <label for="game-name">Game Name:</label>
@@ -100,6 +118,7 @@
                       <!--make it so you can pick between number of teams or number of players? like set max number of players per team, or just a pvp, or etc-->
                   </form>
               </div>
+            </div>
             
           </div>
         </main>

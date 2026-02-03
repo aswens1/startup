@@ -275,69 +275,15 @@ table thead th {
 /* -------------------------------------------------- */
 /*    GAME SELECTION MENU                             */
 
-.game-forms {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    margin-top: 1rem; 
-
+.game-option {
+    margin-bottom: 1rem;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
 }
 
-.game-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-
-    text-align: left;
+.game-option strong {
+    font-size: 1.3rem;
 }
 
-.game-form h2 {
-    margin: 0 0 0.5rem 0;
-    /* font-size: 1.75rem; */
-    text-align: center;
-}
-
-.form-field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-}
-
-.game-form label {
-    font-size: 0.9rem;
-    opacity: 0.8;
-}
-
-.game-form input {
-    padding: 0.6rem 0.7rem;
-    border-radius: 6px;
-    border: 2px solid #111;
-    font-family: "Noto Sans Mono", sans-serif;
-}
-
-.game-form button {
-    margin-top: 0.5rem;
-
-    font-family: "Jersey 10", sans-serif;
-    font-size: 1.4rem;
-    letter-spacing: 0.05em;
-
-    padding: 0.5rem;
-    background: #fff;
-    border: 3px solid #111;
-    border-radius: 6px;
-    cursor: pointer;
-
-    box-shadow: 0 4px 0 #111;
-}
-
-.game-form button:active {
-    transform: translateY(2px);
-    box-shadow: 0 2px 0 #111;
-}
-
-@media (max-width: 700px) {
-    .game-forms {
-        grid-template-columns: 1fr;
-    }
+.game-option span {
+    font-weight: 700;
 }
