@@ -30,7 +30,7 @@
             <div class="grid grid-cols-2 grid-gap-4">
 
               <div class="grid">
-                  <h1 class="font-['Jersey_10'] text-[4rem]">Join a Game</h1>
+                  <h1 class="font-['Jersey_10'] text-[4rem] mb-0">Join a Game</h1>
 
                   <form action="gamePlayCanvas.html" method="get">
 
@@ -106,7 +106,7 @@
 
                     </div>
       
-                    <button class="get-started-btn" type="submit">Join Selected Game</button>
+                    <button class="get-started-btn h-16 align-middle" type="submit">Join Selected Game</button>
                   </form>
                     
               </div>
@@ -114,18 +114,18 @@
               <div >
                   <h1 class="font-['Jersey_10'] text-[4rem] ">Create a Game</h1>
 
-                  <div class="overflow-y-auto max-h-96 p-4 mb-4 text-left">
+                  <div class="overflow-y-auto md:max-h-96 sd:max-h-80 p-4 mb-6 text-left">
 
                     <form action="/createGame" method="post" class="grid grid-cols-1 gap-7" id="create-game">
 
                       <div class="create-game-section">
                         <label for="game-name">Game Name:</label>
-                        <input class="input" type="text" id="game-name" name="gameName" required />
+                        <input class="input w-full" type="text" id="game-name" name="gameName" required />
                       </div>
                       
                       <div class="create-game-section">
                         <label for="game-type">Game Type:</label>
-                        <select class="input" id="game-type" name="gameType" required>
+                        <select class="input w-full" id="game-type" name="gameType" required>
                             <option value=""></option>
                             <option value="filler1">filler type 1</option>
                             <option value="filler2">filler type 2</option>
@@ -136,10 +136,10 @@
                       <div class="create-game-section">
                         <!--add max team/player limit that can't be changed- just won't let them put a number higher than-->
                         <label for="number-of-teams">Number of Teams:</label>
-                        <input class="input" type="number" id="number-of-teams" name="numberOfTeams" required />
+                        <input class="input w-full" type="number" id="number-of-teams" name="numberOfTeams" required />
                       </div>
 
-                      <button class="get-started-btn" type="submit">Create Game</button>
+                      <button class="get-started-btn h-16 align-middle" type="submit">Create Game</button>
 
                       <!--make it so you can pick between number of teams or number of players? like set max number of players per team, or just a pvp, or etc-->
                     </form>
@@ -147,12 +147,8 @@
                   </div>
               </div>
             </div>
-            
           </div>
         </main>
-
-
-
 
         <br />
 
