@@ -2311,6 +2311,102 @@ root.render(<App />);
 </details>
 
 ## JavaScript and Web Frameworks
+
+### Part 1: HTML/CSS Components and Routing
+
+<details>
+
+<summary>JavaScript Introduction</summary>
+
+#### JavaScript Introduction
+
+Deeper reading:
+- [MDN JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+- [ECMA Specification](https://tc39.es/ecma262/) -> Official specification is only for reference
+
+JavaScript (officialy known as ECMAScript), is a weakly typed language based on concepts in C, Java, and Scheme. It's the most used programming langauge in the world. It runs on every web browser, and is commonly used as a web server langauge and for creating servless functions.
+
+The more effectively you understand JavaScript, the better web programmer you will be.
+
+Typically, JS is executed using an interpreter at runtime instead of compiling it into a machine specific binary at build time. This has the advantage of making JS very portable, but also allows for many errors like using an undefined variable. These errors commonly only get discovered when the program crashes during execution.
+
+##### JavaScript Versions
+
+It's important to be aware of JavaScript versions as browser compatability is always a issue when developing a web app. When considering a JS feature, consult websites like [MDN](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Browser_support_for_JavaScript_APIs) of [CanIUse](https://caniuse.com/) to see how well the feature is supported.
+
+| Year | Version | Features |
+| --- | --- | --- |
+| 1997 | ES1 | types, functions |
+| 1999 | ES3 | regex, exceptions, switch |
+| 2009 | ES5 | json, array, iteration |
+| 2015 | ES6 | let/const, default params, classes, template literals, destructuring, generators, promises, modules, internationalization |
+| 2016 | ES2016 | array.includes |
+| 2017 | ES2017 | async/await |
+| 2018 | ES2018 | rest/spread, promise.finally |
+| 2019 | ES2019 | string.trim |
+| 2020 | ES2020 | ?? operator |
+
+##### Getting Started
+
+We'll start with a basic example. The following JS will concatenate three strings together and then throw away the result. 
+
+``` JavaScript
+'Hello' + ' ' + 'world';
+```
+
+Slightly more complex is to call a function with the result of our concatenated string. In this case, we'll use the JS runtime's built in function `console.log` to output the string to the debugger console.
+
+```JavaScript
+console.log('Hello' + ' ' + 'world');
+// OUTPUT: Hello world
+```
+
+You can also write your own functions:
+
+```JavaScript
+function join(a, b) {
+  return a + ' ' + b;
+}
+
+console.log(join('Hello', 'world'));
+// OUTPUT: Hello world
+```
+
+##### Comments
+
+You can comment your JS with line or block comments.
+
+```JavaScript
+// Line comment
+
+/*
+Block comment
+*/
+```
+
+##### Code Delimiters
+
+These aren't technically required in most cases, but it is considered good form to end JS statements with a semicolon (`;`). Code blocks, and their scope, are defined with curly braces (`{ }`).
+
+##### Playgrounds
+
+To practise JavaScript, you need a way to write and run JS yourself. Here are two easy ways to do this.
+
+1. Use an online sandbox like [CodePen](https://codepen.io/). With CodePen, you can write whatever JS you want and immediately see the results. Make sure you display the CodePen's console window if your JS is using the `console.log` function.
+
+2. Use your browser's debugger. For example, if you open chrome and press `F12`, the debugger will display. Select the `Console` menu option. This will display a JS interpreter where you can write and execute your code.
+
+##### Examples
+
+You can see examples of all the JS we will talk about by using this [HTML page](https://htmlpreview.github.io/?https://github.com/webprogramming260/webprogramming/blob/main/instruction/javascript/introduction/jsDemo.html).
+
+
+</details>
+
+### Part 2: Reactivity
+
+### Enrichment Topics
+
 ## HTTP Service
 ## Data & Authentication Services
 ## WebSocket
