@@ -2318,7 +2318,7 @@ root.render(<App />);
 
 <summary>JavaScript Introduction</summary>
 
-#### JavaScript Introduction
+### JavaScript Introduction
 
 Deeper reading:
 - [MDN JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
@@ -2330,7 +2330,7 @@ The more effectively you understand JavaScript, the better web programmer you wi
 
 Typically, JS is executed using an interpreter at runtime instead of compiling it into a machine specific binary at build time. This has the advantage of making JS very portable, but also allows for many errors like using an undefined variable. These errors commonly only get discovered when the program crashes during execution.
 
-##### JavaScript Versions
+#### JavaScript Versions
 
 It's important to be aware of JavaScript versions as browser compatability is always a issue when developing a web app. When considering a JS feature, consult websites like [MDN](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Browser_support_for_JavaScript_APIs) of [CanIUse](https://caniuse.com/) to see how well the feature is supported.
 
@@ -2346,7 +2346,7 @@ It's important to be aware of JavaScript versions as browser compatability is al
 | 2019 | ES2019 | string.trim |
 | 2020 | ES2020 | ?? operator |
 
-##### Getting Started
+#### Getting Started
 
 We'll start with a basic example. The following JS will concatenate three strings together and then throw away the result. 
 
@@ -2372,7 +2372,7 @@ console.log(join('Hello', 'world'));
 // OUTPUT: Hello world
 ```
 
-##### Comments
+#### Comments
 
 You can comment your JS with line or block comments.
 
@@ -2384,11 +2384,11 @@ Block comment
 */
 ```
 
-##### Code Delimiters
+#### Code Delimiters
 
 These aren't technically required in most cases, but it is considered good form to end JS statements with a semicolon (`;`). Code blocks, and their scope, are defined with curly braces (`{ }`).
 
-##### Playgrounds
+#### Playgrounds
 
 To practise JavaScript, you need a way to write and run JS yourself. Here are two easy ways to do this.
 
@@ -2396,10 +2396,65 @@ To practise JavaScript, you need a way to write and run JS yourself. Here are tw
 
 2. Use your browser's debugger. For example, if you open chrome and press `F12`, the debugger will display. Select the `Console` menu option. This will display a JS interpreter where you can write and execute your code.
 
-##### Examples
+#### Examples
 
 You can see examples of all the JS we will talk about by using this [HTML page](https://htmlpreview.github.io/?https://github.com/webprogramming260/webprogramming/blob/main/instruction/javascript/introduction/jsDemo.html).
 
+</details>
+
+<details>
+
+<summary>Adding JavaScript to HTML</summary>
+
+### Adding JavaScript to HTML
+
+There are three ways to add JS into HTML.
+
+1. **Script block**: Directly including it in the HTML within the content of a `<script>` element.
+2. **External code**: Using the `src` attribute of the script element to reference an external JavaScript file.
+3. **Inline event attribute**: Putting JavaScript directly inline as part of an event attribute handler.
+
+**index.js**
+
+```JavaScript
+function sayHello() {
+  alert("Hello");
+}
+```
+
+**index.html**
+
+```HTML
+<!-- external script -->
+<head>
+  <script src="index.js"></script>
+</head>
+<body>
+  <button onclick="sayHello()">Say Hello</button>
+  <button onclick="sayGoodbye()">Say Goodbye</button>
+
+  <!-- internal script block -->
+  <script>
+    function sayGoodbye() {
+      alert("Goodbye");
+    }
+  </script>
+
+  <!-- inline attribute handler -->
+  <script>
+    let i = 1;
+  </script>
+  <button onclick="alert(`i = ${i++}`)">counter</button>
+</body>
+```
+
+Notice how we call the `sayHello` and `sayGoodbye` JS functions from the HTML in the `onclick` attribute of the button element. Special attributes like `onclick` automatically create event listeners for different DOM events that call the code contained in the attribute's value. The code specified by the attribute value can be a simple call to a function or any JS code.
+
+</details>
+
+<details>
+
+<summary>Node.js</summary>
 
 </details>
 
