@@ -8,6 +8,22 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "tailwindcss": "^4.1.18"
-  }
+    "tailwindcss": "^4.1.18",
+    "vite": "^7.3.1"
+  },
+  "name": "startup-2026",
+  "version": "1.0.0",
+  "description": "[My Class Notes](notes.md)",
+  "main": "tailwind.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aswens1/startup.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aswens1/startup/issues"
+  },
+  "homepage": "https://github.com/aswens1/startup#readme"
 }
