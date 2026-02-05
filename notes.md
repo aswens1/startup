@@ -2456,7 +2456,167 @@ Notice how we call the `sayHello` and `sayGoodbye` JS functions from the HTML in
 
 <summary>Node.js</summary>
 
+### Node.js
+
+Node.js was created in 2009 by Ryan Dahl. It was the first successful application for deploying JavaScript outside of a browser. Now, JS is not just a browser technology, but one that can run on the server as well. This means that JS can power your entire tech stack. Node.js is often referred to as Node, and is currently maintained by the [Open.js Foundation](https://openjsf.org/).
+
+Browsers run JS using a JS interpreter and execution engine. For example, Chromium based. browsers all use the [V8](https://v8.dev/) engine created by Google. Node.js took the V8 engine and ran it inside of a console application. When you run a JS program in Chrome of Node.js, it's the V8 that reads your code and executes it. The result is the same regardless of which program wraps V8.
+
+#### Installing Node.js
+
+Your production environment web server comes with Node.js installed. However, you need to install Node.js in your development enviroment also. The easiest way to install Node.js is to use the official download found on [nodejs.org](https://nodejs.org/en/download/package-manager).
+
+You can pick the method, but it's recommended to use the Prebuilt Installer for your operating system and computer processor. Make sure that you select the Long Term Support version (TLS) to get the most stabel version.
+
+#### Checking that Node is Installed
+
+The node.js console app is simply called `node`. You can check if Node is working correctly by running `node` with the `-v` paramter.
+
+```
+% node -v
+v24.13.0
+```
+
+#### Running Programs
+
+You can run a line of JS with Node.js from your console with the `-e` parameter.
+
+```
+➜  node -e "console.log(1+1)"
+2
+```
+
+You can also run `node` in interpretive mode by executing it without any parameters and then typing your JS code directly into the interpreter.
+
+```
+➜ node
+Welcome to Node.js v16.15.1.
+> 1+1
+2
+> console.log('hello')
+hello
+```
+
+But to do real work, you need to execute an entire project composed of dozens or even hundreds of JS files. You can do this by making a starting JS file, called something like `index.js`, that references the code found in the rest of your project. You can then execute your code by running `node` with `index.js` as a parameter. For example, the following JS saved to a file named `index.js`.
+
+``` JavaScript
+function countdown() {
+  let i = 0;
+  while (i++ < 5) {
+    console.log(`Counting ... ${i}`);
+  }
+}
+
+countdown();
+```
+
+We can execute the JS by passing the file to `node`, and receive the following.
+
+```
+➜  node index.js
+Counting ... 1
+Counting ... 2
+Counting ... 3
+Counting ... 4
+Counting ... 5
+```
+
+#### Node Package Manager
+
+It's always helpful to use preexisting packages of JS for implementing common tasks. To load a package using Node.js, there are two steps you have to take. First, install the package locally on your machine using the Node Package Manager (NPM) and include a `require` statement in your code that references the package name. NPM is automatically installed when you install Node.js.
+
+NPM can access a huge repository if preexisting packages. You can search these packages on the [NPM website](https://www.npmjs.com/). However, before you can start using NPM to install packages, you need to initilize your code to use NPM. This is done by creating a directory that will contain your JS and then running `npm init`. NPM will step you through a series of questions about the project you're making. You can press the return key for each question if you want the default settings. If you are always going to accept all the defaults, just use `npm init -y` to skip the questions.
+
+```
+➜  mkdir npmtest
+➜  cd npmtest
+➜  npm init -y
+```
+
+#### Package.json
+
+If you list the files in your directory, you'll see a new one called `package.json`. This file contains 3 main things: (1) Metadata about your project like its name and the default entry JS file, (2) commands (scripts) that you can execute to do things like run, test, or distribute your code, and (3) packages that the project depend on. The following is what it should look like at the start, with default metadata and a simple placeholder script that runs the echo command when you execute `npm run test` from the console.
+
+```JSON
+{
+  "name": "npmtest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
+```
+
+With NPM initialised, you can use it to install a node package. In this example, we'll install a package that knows how to tell jokes, called `give-me-a-joke`. You can search for it on the [NPM website](https://www.npmjs.com/), and see how many times it's been installed, examine the source code, and learn about who created it. Install the package using `npm install` followed by the name of the package.
+
+```
+➜  npm install give-me-a-joke
+```
+
+Now, if you look at the `package.json` file, you will see a reference to the new package dependency. If you don't want the package dependency anymore, you can remove it with `npm uninstall <package name>` in the console.
+
+With the dependency added, the unnecessary metadata removed, the addition of a useful script, and also adding a description, the `package.json` file should look like this:
+
+```JSON
+{
+  "name": "npmtest",
+  "version": "1.0.0",
+  "description": "Simple Node.js demo",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "dependencies": {
+    "give-me-a-joke": "^0.5.1"
+  }
+}
+```
+
+Note: When you install dependencies, NPM creates an additional file called `package-lock.json` and a directory named `node_modules` in your project directory. The `node_modules` directory contains the actual JS files for the package and all the dependent packages. As you start installing several packages, this directory gets really big. You don't want it on your source control system because it can be very large and can be rebuilt from the info in the `package.json` and `package-lock.json` files, so include `node_modules` in your `.gitignore` file.
+
+Whenever you clone your code from GitHub to a new location, you should always run `npm install` in the project directory. This causes NPM to download all the previously installed packages and recreate the `node_modules` directory.
+
+The `package-lock.json` file tracks the version of the package that you installed. That way if you rebuild your `node_modules` directory, you will have the version of the package you initially install and not the latest available one, which might not be compatible with your code.
+
+With NPM and the joke package installed, you can now use the joke package in a JS file by referencing the package name as a parameter to the `require` function. This is followed by a call to the joke object's `getRandomDadJoke` function to actually generate a joke. Create a file named `index.js` and paste the following.
+
+```JavaScript
+const giveMeAJoke = require('give-me-a-joke');
+giveMeAJoke.getRandomDadJoke((joke) => {
+  console.log(joke);
+});
+```
+
+If you run this with `node.js`, you should get a random joke.
+
+```
+➜  node index.js
+What do you call a fish with no eyes? A fsh.
+```
+
+This may seem like a lot of work, but it starts to feel natural. Here are the main steps.
+
+1) Create your project directory
+2) Initilize it for use with NPM by running `npm init -y`
+3) Make sure `.gitignore` file contains `node_modules`
+4) Install any desired packages with `npm install <package name>`
+5) Add `require('<package name>')` to your apps JS
+6) Use the code package provider in your jS
+7) Run your code with `node index.js`
+
+#### Deno and Bun
+
+Ryan created a successor to Node.js called [`Deno`](https://deno.land/). This version is more compliant with advances in ECMAScript and has significant performance advantages. There are also competitor server JS applications, like [`Bun`](https://bun.sh/).
+
 </details>
+
+
 
 ### Part 2: Reactivity
 
