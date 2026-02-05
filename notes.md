@@ -2766,6 +2766,142 @@ Now, when you press `F5` to start debugging, VS Code will start up `main.js` and
 
 </details>
 
+<details>
+
+<summary>Web Frameworks</summary>
+
+### Web Frameworks
+
+Deeper reading: [MDN Introduction to client-side frameworks](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/Introduction)
+
+Web frameworks make the job of writing web apps easier by providing tools for completing common application tasks. This includes things like modularizing code, creating single page apps, simplifying reactivity, and supporting diverse hardware devices.
+
+Some frameworks take things beyong the standard web technologies (HTML, CSS, JS) and create hybrid file formats that combine things like HTML and JS into a single file. Examples includes React JSX, Vue SFC, and Svelte files. Abstracting away the core web file formats puts the focus on functional components rather than files.
+
+There are a lot of web frameworks to choose from. You can view latest popularity at [StateOfJS](https://stateofjs.com/).
+
+Each framework has advantages and disadvantages. Some are very prescriptive (opinionated) about how to do things. Some have major institutional backing while others are open source. Other facts you want to consider is how easy it is to learn, how it impacts productivity, how performant it is, how long it takes to build, and how actively the framework is evolving.
+
+#### Hello World Examples
+
+We'll use React in class, but here are some examples.
+
+##### Vue
+
+[Vue](https://vuejs.org/) combines HTML, CSS, and JS in a single file. HTML is represented by a `template` element that can be aggregated into other templates.
+
+**SFC**
+
+```
+<script>
+  export default {
+    data() {
+      return {
+        name: 'world',
+      };
+    },
+  };
+</script>
+
+<style>
+  p {
+    color: green;
+  }
+</style>
+
+<template>
+  <p>Hello {{ name }}!</p>
+</template>
+```
+
+##### Svelte
+
+Like Vue, [Svelte](https://svelte.dev/) combines HTML, CSS, and JS into a single file. The different is that Svelte requires a transpiler to generate browser-ready code insted of a runtime virtual DOM.
+
+**Svelte file**
+
+```
+<script>
+  let name = 'world';
+</script>
+
+<style>
+  p {
+    color: green;
+  }
+</style>
+
+<p>Hello {name}!</p>
+```
+
+##### React
+
+React combines JS and HTML into component format. CSS must be declared outside the JSX file. The component itself leverages the functionality of JS and can be represented as a function or class.
+
+**JSX**
+
+``` JSX
+import 'hello.css';
+
+const Hello = () => {
+  let name = 'world';
+
+  return <p>Hello {name}</p>;
+};
+```
+
+**CSS**
+
+``` CSS
+p {
+  color: green;
+}
+```
+
+##### Anguler Component
+
+An Angular component defines what JS, HTML, and CSS are combined together. This keeps a fairly strong separation of files that are usually grouped together in a directory rather than using the single file representation.
+
+**JS**
+
+```JavaScript
+@Component({
+  selector: 'app-hello-world',
+  templateUrl: './hello-world.component.html',
+  styleUrls: ['./hello-world.component.css'],
+})
+export class HelloWorldComponent {
+  name: string;
+  constructor() {
+    this.name = 'world';
+  }
+}
+```
+
+**HTML**
+
+``` HTML
+<p>hello {{name}}</p>
+```
+
+**CSS**
+
+``` CSS
+p {
+  color: green;
+}
+```
+
+</details>
+
+<details>
+
+<summary>Toolchains</summary>
+
+### Toolchains
+
+</details>
+
 
 ### Part 2: Reactivity
 
