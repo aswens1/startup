@@ -77,3 +77,13 @@ The game play pages ([gamePlayCanvas](pages/gamePlayCanvas.html) and [collaborat
 - **Responsive to window resizing** - The pages are responsive to window resizes. 
 - **Application elements** - I used all the different elements depending on how specific the styling needed to be. These are spread across two style sheets, one for most of the styles ([styles.css](/styles.css)) and one for the game play pages ([canvas.css](/pages/canvas.css)).
 - **Application text content** - I have two imported fonts, Jersey 10 for the pixelated headers and Noto Sans Mono for everything else. These are imported from the Google Font library.
+
+## 🚀 React part 1: Routing deliverable
+
+I reviewed and deployed the Simon React part 1 code (by going through the instructions to change everything to react components) to my project - found at [simon.8bitalley.click](https://simon.8bitalley.click).
+
+For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
+
+- [ ] **Bundled using Vite** - I did not complete this part of the deliverable.
+- [ ] **Components** - I did not complete this part of the deliverable.
+- [ ] **Router** - I did not complete this part of the deliverable.
