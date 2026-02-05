@@ -2678,7 +2678,7 @@ You can use the debugger console window to inspect variables without using the `
 
 Open up Chrome's brower debugger with the same setup used before, but this time select the source tab. This will display the source files that comprise the currenly rendered content.
 
-You can either select `index.js` from the source view or press `CTRL-P` on Windows and `command-P` on Mac select `index.js` from the list that pops up. Set a breakpoint on line 4 by clicking on the line number on the left of the displayed code. This pauses the debugger when that line is exevuted. Refreshing the browser will reload `index.js` and pause on the breakpoint.
+You can either select `index.js` from the source view or press `CTRL-P` on Windows and `⌘-P` on Mac select `index.js` from the list that pops up. Set a breakpoint on line 4 by clicking on the line number on the left of the displayed code. This pauses the debugger when that line is exevuted. Refreshing the browser will reload `index.js` and pause on the breakpoint.
 
 With the browser paused, you can move your cursor over a variable to see its value, see what variabels are in scope, set watches on variables, or use the console to interact with the code.
 
@@ -2692,7 +2692,77 @@ This gives you complete control to inspect what the JS code is doing and experim
 
 ### Debugging Node.js
 
+Deeper reading: 
+- [Debugging a Node.js application](https://youtu.be/B0le_Z_2TQY)
+- [Node.js debugging in VS Code](https://code.visualstudio.com/docs/nodejs/nodejs-debugging)
 
+Now that you are writing JS that runs with Node.js, you need a way to launch and debug your code that runs outside of the browser. One way to do that is to use the debugging tools built into VS Code. To debug JS in VSCode, you forst need some JS to debug. Create a file called `main.js` and pasted the following.
+
+```JavaScript
+let x = 1 + 1;
+
+console.log(x);
+
+function double(x) {
+  return x * 2;
+}
+
+x = double(x);
+
+console.log(x);let x = 1 + 1;
+
+console.log(x);
+
+function double(x) {
+  return x * 2;
+}
+
+x = double(x);
+
+console.log(x);
+```
+
+Now, you can debug `main.js` in VS Code by executing the `Start Debugging` command by pressing `F5`. This first time you run this, VS Code will ask you what debugger you want to use. Pick Node.js.
+
+The code will run and the debug console window will automatically open to show you the debugger output where you can see the results of the two `console.log` statements found in the code.
+
+You can pause the code by adding a breakpoint. Do this by hovering over the numbers on the left and clicking when the red dot appears.
+
+Now you can restart the debugger by pressing `F5` again. This time it will stop at the breakpoint. You can see the values of variables by looking at the variable window on the left, or by hovering your mouse over the variable you'd like to inspect.
+
+You can continue the execution of the code by pressing `F10` to step to the next line, `F11` to step into a function call, or `F5` to continue running from the current line. When the last line of code runs, the debugger will exit and you need to press `F5` to run it again. You can stop debugging at any point by pressing `SHIFT-F5`.
+
+#### Node --watch
+
+Once you start writing complex apps, you'll find yourself making changes in the middle of debugging sessions. You want `node` to restart automatically and updte the browsers as changes are saved. 
+
+To accomplish this, you can start Node with the `watch` option. This causes Node to watch all your source code files and automatically reloud itself if anything changes.
+
+Test it out by starting node with the `--watch` parameter.
+
+```
+node --watch main.js
+```
+
+With VS Code, you can create a launch configuration that specifies the watch parameter when you debug with VS Code. In VS Code, press `CTRL-SHIT-P` on Windows or `⌘-SHIFT-P` on Mac and type the command `Debug: Add configuration`. Select the `Node.js` option. This will create a launch configuration named `.vscode/launch.json`. Modify the configuration so that it includes the `--watch` parameter. 
+
+```JSON
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Program",
+      "skipFiles": ["<node_internals>/**"],
+      "runtimeArgs": ["--watch"],
+      "program": "${workspaceFolder}/main.js"
+    }
+  ]
+}
+```
+
+Now, when you press `F5` to start debugging, VS Code will start up `main.js` and automatically restart node every time you modify your code.
 
 </details>
 
