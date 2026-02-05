@@ -2916,6 +2916,232 @@ The toolchain we use for our project includes [GitHub](https://github.com/) as t
 
 </details>
 
+<details>
+
+<summary>Vite</summary>
+
+### Vite
+
+Deeper reading: [Vite](https://vitejs.dev/guide/)
+
+In order to use most web frameworks, you need to include a full web framework toolchain that allows us to use JSX, minification, polyfills, and bundling for our simon and startup apps. One common way for configuring your project to take advantage of these technologies is to use a Command Line Interface (CLI) to initially set up a web app. Using a CLI save you the trouble of configuring the toolchain parameters and gets you quickly started with a default app.
+
+We're going to use [Vite](https://vitejs.dev/). Vite bundles quickly, has great debugging support, and allows you to support JSX, TypeScript, and different CSS flavours. 
+
+To start with Vite, we can first start with a simple web app. Later we'll convert Simon to React using Vite. 
+
+We can use Vite to build our first React-based web app. Open your command console and run the following commands:
+
+```
+npm create vite@latest demovite -- --template react
+cd demovite
+npm install
+npm run dev
+```
+
+This creates a new web app in the `demoVite` directory, download the required 3rd party packages, and start up the application using a local HTTP debugging server. You can Vite to open your browser to the URL that is hosting your app by pressing `o`, or press `h` to see all the Vite CLI options.
+
+One you played aroudn with the app in your browser, you can return to your console and stop Vite from hosting the app by pressing `q`.
+
+#### Generated Project
+
+Here are the files found in the directory Vite created. From the console, use VS Code `code .` to open the project directory.
+
+| Directory | File | Purpose |
+| --- | --- | --- |
+| `./` |||
+|| `index.js` | primary page for the app. this is the starting point to load all the JSX components `main.jsx` |
+|| `package.json` | NPM definition for package dependencies and script commands. This is what maps `npm run dev` to actually start up Vite. |
+|| `package-lock.json` | Version constraints for included packages (do not edit this). |
+|| `vite.config.js` | Configuration setting for Vite. Specifically this sets up React for development. |
+| `./public` |||
+|| `vite.svg` | Vite logo for use as favicon and for display in the app. |
+| `/src` |||
+|| `main.jsx` | Entry point for code execution. This simply loads the App component found in `App.jsx`. |
+|| `index.css` | CSS for the entire application. |
+|| `App.jsx` | JSX for top level application component. This displays the logs and implements the click counter. |
+|| `App.css` | CSS for the top level application component. |
+| `./src/assets` |||
+|| `react.svg` | React logo for display in the app. |
+
+The main files are `index.html`, `main.jsx`, and `App.jsx`. The browser loads `index.html` which provides the HTML element (`#root`) that the React application will be injected into. It also includes the script element to load `main.jsx`.
+
+`main.jsx` creates the React app by associating with the `#root` element with the `App` component found in `App.jsx`. This causes all the component render functions to execute and the generated HTML, CSS, and JS to be executed in `index.html`.
+
+#### JSX vs JS
+
+The `Vite` CLI uses the `.jsx` extension for JSX files instead of the JS `.js` extension. The Babel transpiler will work with either one, but some editor tools will work differently based on the extension. For this reason, you should prefer `.jsx` for files that contain JSX. 
+
+Interesting [conversation](https://github.com/webprogramming260/webprogramming/blob/main/instruction/webFrameworks/react/vite/vite.md#:~:text=had%20an%20interesting-,conversation,-on%20this%20topic) with AirBNB.
+
+#### Building a Production Release
+
+When you execute `npm run dev` you are bundling the code to a temporary directory that the Vite debug HTTP server loads from. When you want to bundle your app so that you can deploy to a production environment, you need to run `npm run build`. This executes the `build` script found in your `package.json` and invokes the `Vite` CLI. `vite build` transpiles, minifies, injects the proper JS, then outputs everything to deployment ready version contained in a distribution subdirectory named `dist`.
+
+```
+➜  npm run build
+
+> demovite@0.0.0 build
+> vite build
+
+vite v4.3.7 building for production...
+✓ 34 modules transformed.
+dist/index.html                   0.45 kB │ gzip:  0.30 kB
+dist/assets/react-35ef61ed.svg    4.13 kB │ gzip:  2.14 kB
+dist/assets/index-51439b3f.css    1.42 kB │ gzip:  0.74 kB
+dist/assets/index-58d24859.js   143.42 kB │ gzip: 46.13 kB
+✓ built in 382ms
+```
+
+#### Deploying a Production Release
+
+The deployment script for Simon React (`deployReact.sh`) creates a production distribution by calling `npm run build` and copying the resulting `dist` directory to your production server.
+
+</details>
+
+<details>
+
+<summary>React</summary>
+
+### React
+
+Deeper reading: 
+- [MDN React Introduction Tutorial](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/React_getting_started)
+- [React Quick Start](https://react.dev/learn#components)
+
+React and the associated projects provides a powerful web programming framework. The name comes from its focus on making reactive web page components that automatically update based on user interactions or changes in underlying data.
+
+Jordan Walke created React for Facebook in 2011. It was first used with Facebook's news feed and then as the main facework for Instagram. After that, Facebook open sourced the framework and it was quickly adopted by a lot of popular web apps.
+
+React abstracts HTML into a JS variant called [JSX](). JSX is converted into valid HTML with JS using a preprocessors such as [Vite]() of [Babel](). For example, the following JSX file. Notice it mixes both HTML and JS into a single representation.
+
+``` JSX
+const i = 3;
+const list = (
+  <ol class='big'>
+    <li>Item {i}</li>
+    <li>Item {3 + i}</li>
+  </ol>
+);
+```
+
+The preprocessor will convert the JSX into valid JS that looks really complex to a human, but the browser renders easily.
+
+``` JSX
+const i = 3;
+const list = React.createElement('ol', { class: 'big' }, React.createElement('li', null, 'Item ', i), React.createElement('li', null, 'Item ', 3 + i));
+```
+
+When the JS interpreter running in the browser executes the `React.createElement` functions, it will generate HTML elements are displayed to the user.
+
+``` JSX
+<ol class="big">
+  <li>Item 3</li>
+  <li>Item 6</li>
+</ol>
+```
+
+#### React Hello World
+
+We'll make a simple React application for an example.
+
+The first step to set up a project that can convert JSX into JS that the browser can render. After installing Node.js, open up your command console and execute the following commands. This will create a directory named `reactDemo` that is configured to build a React app.
+
+```
+mkdir reactDemo && cd reactDemo
+npm init -y
+npm install vite@latest -D
+npm install react react-dom
+```
+
+The `npm init` command created a default `package.json` file that defines the project. the `npm install` commands installed the React dependencies into the project. You can see the package source code that was installed if you inspect the `node_modules` directory.
+
+Next you need to create the single HTML file, named `index.html`, that will contain the entire React app.
+
+**index.html**
+
+``` HTML 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>React Demo</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <script type="module" src="/index.jsx"></script>
+  </body>
+</html>
+```
+
+When the browser loads the HTML, it will execute the JSX code represented by the `script` tag. This means you create a file named `index.jsx`, which renders the JSX returned by the `App` component function. The JSX element looks a lot like and HTML element, but that's only because we haven't fully explored what JSX can do. It alls works when you connect the HTML `div` to the React rendering code by telling React to render the `App` component in place of the rot element's contents.
+
+**index.jsx**
+
+``` JSX 
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+
+function App() {
+  return <div>Hello React</div>;
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+```
+
+Now you need to compile the JSX into JS using Vite and have Vite host a hot reloading HTTP server so that you can see the result in the browser. So this by running a varient of the NPM command called NPX. NPX directly executes a node package without referencing the package.json file. This is useful for running JS code that is meant to run as a command line programm (CLI) like vite.
+
+```
+npx vite
+```
+
+This displays something like the following that tells you that Vite has successfully bundled the app and it's ready to be viewed in the browser with the URL `http://localhost:5173`.
+
+```
+  VITE v6.0.4  ready in 72 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help
+```
+
+You can have Vite open the browser for you by pressing `o ⏎`.
+
+This might feel like a lot of work to display something that could've been shown with one line of HTML. Let's finish the tutorial by making our simple app interactive.
+
+``` JSX
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+
+function App() {
+  const [bgColor, setBgColor] = React.useState('white');
+
+  const handleClick = () => {
+    setBgColor(bgColor === 'white' ? 'yellow' : 'white');
+  };
+
+  return (
+    <div onClick={handleClick} style={{ backgroundColor: bgColor, height: '100vh', font: 'bold 20vh Arial', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div> Hello React </div>
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+```
+
+First, we introduce the concept of event handlers. All HTML elements can generate events that JS code can respond to. In this case, we are registering an event handler that will call the **handleClick** function whenever the **div** is clicked on. This function will toggle the background colour of the element. Because the CSS backgroundColor rule is set to a variable, it will reactively change whenever the variable is changed.
+
+Now the background will toggle every time you cick on the page.
+
+This example demonstrates several important concepts of React.
+1) Creating componentized representations of HTML and JS
+2) Storing component state as component variables
+3) Reacting to the user by altering the component's state
+
+</details>
 
 ### Part 2: Reactivity
 
