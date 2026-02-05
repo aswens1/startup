@@ -2900,6 +2900,20 @@ p {
 
 ### Toolchains
 
+As web programming becomes more complex, it becomes necessary to abstract away some of that complexity with a series of tools. Some common functional pieces in a web app tool chain include:
+
+- **Code repository** - stores code in a shared, versioned location
+- **Linter** - removes, or warns of, non-idiomatic code usage
+- **Prettier** - formats code according to a shared standard
+- **Transpiler** - compiles code into a different format. For example, from JSX to JS, TypeScript to JS, or SCSS to CSS
+- **Polyfill** - generates backward compatible code for supporting old browser versions that do not support the latest standards
+- **Bundler** - packages code into bundles for delivery to the browser. This enables compatibility (for example with ES6 module support) or performance (with lazy loading)
+- **Minifier** - removes whitespace and renames variables in order to make code smaller and more efficient to deploy
+- **Testing** - automated tests at multiple levels to ensure correctness
+- **Deployment** - automated packaging and deliver of code from the development environment to the production environment
+
+The toolchain we use for our project includes [GitHub](https://github.com/) as the code repository, [Vite](https://vitejs.dev/) for JSX, TS, development and debugging support, [ESBuild](https://esbuild.github.io/) for converting to ES6 modules and transpiling (with [Babel](https://babeljs.io/docs/en/) underneath), [Rollup](https://rollupjs.org/) for bundling and tree shaking, [PostCSS](https://github.com/webprogramming260/webprogramming/blob/main/instruction/webFrameworks/react/toolChains) for CSS transpiling, and a simple bash script for deployment.
+
 </details>
 
 
