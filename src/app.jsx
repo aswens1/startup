@@ -4,7 +4,7 @@ import './app.css';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import { CollabCanvas } from './collabCanvas/collabCanvas.jsx';
+import { CollaborativeCanvas } from './collabCanvas/collabCanvas.jsx';
 import { GameCanvas } from './gameCanvas/gameCanvas.jsx';
 import { Login } from './getStarted/getStarted.jsx';
 import { Leaderboard } from './leaderboard/leaderboard.jsx';
@@ -19,9 +19,13 @@ export default function App() {
           <Route path='/leaderboard' element={ <Leaderboard /> } />
           <Route path='/gameMenu' element={ <GameSelectionMenu /> } />
           <Route path='/login' element={ <Login />} />                
-          <Route path='/collabCanvas' element={ <CollabCanvas /> } />
+          <Route path='/collabCanvas' element={ <CollaborativeCanvas /> } />
           <Route path='/gameCanvas' element={ <GameCanvas /> } />
         </Routes>
     </BrowserRouter>
   );
+}
+
+function NotFound() {
+  return <main className="container-fluid bg-secondary text-center">404: Return to sender. Address unknown.</main>;
 }
