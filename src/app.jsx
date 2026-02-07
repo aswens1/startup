@@ -9,6 +9,8 @@ import { GameCanvas } from './gameCanvas/gameCanvas.jsx';
 import { Login } from './getStarted/getStarted.jsx';
 import { Leaderboard } from './leaderboard/leaderboard.jsx';
 import { GameSelectionMenu } from './selectMenu/selectMenu.jsx';
+import { Landing } from './landing/landing.jsx'
+import { Nav } from 'react-bootstrap';
 
 
 export default function App() {
@@ -17,11 +19,16 @@ export default function App() {
         <div className="body bg-dark text-light">
             <header>
                 <nav>
-                    <a href="../index.html">Home</a>
-                    <a href="../pages/leaderboard.html">Leaderboard</a>
-                    <a href="../pages/gameSelectionMenu.html">Join a Game</a>
-                    <a href="../pages/collaborativeCanvas.html">Collaborative Canvas</a>
-                    <a href="../pages/gamePlayCanvas.html">Play the Game</a>
+                    {/* <a href="../index.html">Home</a> */}
+                    {/* <a href="../pages/leaderboard.html">Leaderboard</a> */}
+                    {/* <a href="../pages/gameSelectionMenu.html">Join a Game</a> */}
+                    {/* <a href="../pages/collaborativeCanvas.html">Collaborative Canvas</a> */}
+                    {/* <a href="../pages/gamePlayCanvas.html">Play the Game</a> */}
+                    <NavLink to='/'>Home</NavLink>
+                    <NavLink to='/leaderbord'>Leaderboard</NavLink>
+                    <NavLink to='/gameMenu'>Join a Game</NavLink>
+                    <NavLink to='/collabCanvas'>Collaborative Canvas</NavLink>
+                    <NavLink to='/gameCanvas'>Play the Game</NavLink>
                 </nav>
             </header>
 
@@ -35,7 +42,18 @@ export default function App() {
                 </div>
             </main> */}
 
-            <main>App components go here</main>
+            {/* <main>App components go here</main> */}
+
+            <Routes>
+                <Route path='/' element={ <Landing /> } exact />
+                <Route path='/leaderboard' element={ <Leaderboard /> } exact />
+                <Route path='/gameMenu' element={ <GameSelectionMenu /> } exact />
+                <Route path='/collabCanvas' element={ <CollabCanvas /> } exact />
+                <Route path='/gameCanvas' element={ <GameCanvas /> } exact />
+
+
+
+            </Routes>
 
             <footer>
                 <small>&copy; <span>2026</span></small> <span>|</span> <span><a href="https://github.com/aswens1/startup">Alyse's github repo</a></span>
