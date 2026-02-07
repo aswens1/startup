@@ -2,9 +2,19 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 
+import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
+
+import { CollabCanvas } from './collabCanvas/collabCanvas.jsx';
+import { GameCanvas } from './gameCanvas/gameCanvas.jsx';
+import { Login } from './getStarted/getStarted.jsx';
+import { Leaderboard } from './leaderboard/leaderboard.jsx';
+import { GameSelectionMenu } from './selectMenu/selectMenu.jsx';
+
+
 export default function App() {
-  return <div className="body bg-dark text-light">
-    
+  return (
+    <BrowserRouter>
+        <div className="body bg-dark text-light">
             <header>
                 <nav>
                     <a href="../index.html">Home</a>
@@ -30,6 +40,7 @@ export default function App() {
             <footer>
                 <small>&copy; <span>2026</span></small> <span>|</span> <span><a href="https://github.com/aswens1/startup">Alyse's github repo</a></span>
             </footer>
-
-  </div>;
+        </div>
+    </BrowserRouter>
+  );
 }
