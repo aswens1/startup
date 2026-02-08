@@ -1,6 +1,7 @@
 import React from 'react';
 import { Footer } from '../components/footer.jsx';
 import '../canvas.css';
+import { Link } from 'react-router-dom';
 
 
 export function GameCanvas() {
@@ -172,7 +173,8 @@ export function GameCanvas() {
                     <button className="w-8 h-8 bg-yellow-400 rounded border border-black"></button>
                 </div>
 
-                <button className="w-full bg-gray-300 hover:bg-gray-400 rounded py-2 mb-2"><a href="leaderboard.html">Leaderboard</a></button>
+                <Link to='/leaderboard' className='w-full bg-gray-300 hover:bg-gray-400 rounded py-2 mb-2'>Leaderboard</Link>
+                {/* <button className="w-full bg-gray-300 hover:bg-gray-400 rounded py-2 mb-2"><a href="leaderboard.html">Leaderboard</a></button> */}
                 <button className="w-full bg-gray-300 hover:bg-gray-400 rounded py-2">Leave Game</button>
 
             </div>

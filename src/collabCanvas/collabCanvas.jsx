@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export function CollaborativeCanvas() {
   return (
@@ -169,8 +170,10 @@ export function CollaborativeCanvas() {
                 <button className="w-8 h-8 bg-yellow-400 rounded border border-black"></button>
             </div>
 
-            <button className="w-full bg-gray-300 hover:bg-gray-400 rounded py-2 mb-2"><a href="gameSelectionMenu.html">Join a Game</a></button>
-            <button className="w-full bg-gray-300 hover:bg-gray-400 rounded py-2 mb-2"><a href="leaderboard.html">Leaderboard</a></button>
+            {/* <button className="w-full bg-gray-300 hover:bg-gray-400 rounded py-2 mb-2"><a href="gameSelectionMenu.html">Join a Game</a></button> */}
+            <Link to='/gameMenu' className='w-full bg-gray-300 hover:bg-gray-400 rounded py-2 mb-2'>Join a Game</Link>
+            <Link to='/leaderboard' className='w-full bg-gray-300 hover:bg-gray-400 rounded py-2 mb-2'>Leaderboard</Link>
+            {/* <button className="w-full bg-gray-300 hover:bg-gray-400 rounded py-2 mb-2"><a href="leaderboard.html">Leaderboard</a></button> */}
             <button className="w-full bg-gray-300 hover:bg-gray-400 rounded py-2">Log Out</button>
           </div>
 
