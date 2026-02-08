@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
 
@@ -9,15 +8,15 @@ export function Leaderboard() {
     <>
       <Header />
     
-      <main class="min-h-[calc(100vh-160px)] flex justify-center pt-20 pb-20">
-        <div class="bg-white/85 rounded-xl px-8 py-16 max-w-3xl w-full flex justify-center flex-col items-center text-center md:gap-y-5">
+      <main className="min-h-[calc(100vh-160px)] flex justify-center pt-20 pb-20">
+        <div className="bg-white/85 rounded-xl px-8 py-16 max-w-3xl w-full flex justify-center flex-col items-center text-center md:gap-y-5">
 
-            <h1 class="font-['Jersey_10'] text-[7rem] tracking-wider leading-[0.9]">Leaderboard</h1>
-            <p class="mt-6 text-xl">Place more pixels in the lobby and the games to see your name on the leaderboard!</p>
+            <h1 className="font-['Jersey_10'] text-[7rem] tracking-wider leading-[0.9]">Leaderboard</h1>
+            <p className="mt-6 text-xl">Place more pixels in the lobby and the games to see your name on the leaderboard!</p>
 
-            <div class="leaderboard-scroll">
-                <table class="w-full border-separate border-spacing-x-6">
-                    <thead class="text-xl">
+            <div className="leaderboard-scroll">
+                <table className="w-full border-separate border-spacing-x-6">
+                    <thead className="text-xl">
                         <tr>
                             <th>Rank</th>
                             <th>Username</th>
