@@ -21,11 +21,20 @@ export default function App() {
           <Route path='/login' element={ <Login />} />                
           <Route path='/collabCanvas' element={ <CollaborativeCanvas /> } />
           <Route path='/gameCanvas' element={ <GameCanvas /> } />
+          <Route path='*' element={<NotFound />} />
         </Routes>
     </BrowserRouter>
   );
 }
 
 function NotFound() {
-  return <main className="container-fluid bg-secondary text-center">404: Return to sender. Address unknown.</main>;
+  return (
+    <>
+      <main className="min-h-[calc(100vh-160px)] flex justify-center pt-20 pb-20">
+        <div className="bg-white/85 rounded-xl px-8 py-16 max-w-3xl w-full flex justify-center flex-col items-center text-center">
+          <p className='text-lg'>404: Return to sender. Address unknown.</p>
+        </div>
+      </main>
+    </>
+  );
 }
