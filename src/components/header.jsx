@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 export function Header() {
     return (
         <header>
-            <nav>
+            <nav className='flex justify-center gap-8'>
             <NavLink to="/">Home</NavLink>
             <NavLink to="/leaderboard">Leaderboard</NavLink>
             <NavLink to="/gameMenu">Join a Game</NavLink>
