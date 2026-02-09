@@ -1,96 +1,97 @@
 import React from 'react';
 import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
+import '../app.css';
 
 export function GameSelectionMenu() {
   return (
     <>
     <Header />
-    <main className="min-h-[calc(100vh-160px)] flex justify-center pt-20 pb-20">
-          <div className="bg-white/85 rounded-xl px-8 py-16 max-w-3xl w-full flex justify-center flex-col items-center text-center">
+    <main className="flex-1 flex justify-center py-10">
+      <div className="bg-white/85 rounded-xl px-8 py-10 max-w-5xl w-full
+                flex flex-col items-center text-center
+                max-h-full overflow-y-auto">
 
-            <div className="grid grid-cols-2 grid-gap-4 overflow-y-auto">
+        <div className="grid grid-cols-2 gap-4">
 
-              <div className="grid">
-                  <h1 className="font-['Jersey_10'] text-[4rem] mb-0">Join a Game</h1>
+          <div className="grid">
+            <h1 className="font-['Jersey_10'] text-[4rem] mb-0">Join a Game</h1>
 
-                  <form action="gamePlayCanvas.html" method="get">
+              <form action="gamePlayCanvas.html" method="get">
 
-                    <div className="overflow-y-auto max-h-96 p-4 mb-4 text-left">
+                <div className="overflow-y-auto max-h-96 p-4 mb-4 text-left space-y-4">
 
-                      <div claclassNamess="game-option">
-                        <label className="game-card">
-                          <input type="radio" id="game1" name="game" value="pixel-chaos" />
-                          <div className="game-info">
-                            <div className="game-title">Mock Game 1</div>
+                  <div className="game-option">
+                    <label className="game-card">
+                      <input type="radio" id="game1" name="game" value="pixel-chaos" />
+                      <div className="game-info">
+                        <div className="game-title">Mock Game 1</div>
 
-                            <div className="meta">
-                              <span>Game Type:</span> Pixel Chaos<br />
-                              <span>Players:</span> 12 / 20<br />
-                              <span>Teams:</span> 4<br />
-                              <span>Colour Scheme:</span> Neon<br />
-                              <span>Status:</span> In Progress
-                            </div>
-                          </div>
-                        </label>
+                        <div className="meta">
+                          <span>Game Type:</span> Pixel Chaos<br />
+                          <span>Players:</span> 12 / 20<br />
+                          <span>Teams:</span> 4<br />
+                          <span>Colour Scheme:</span> Neon<br />
+                          <span>Status:</span> In Progress
+                        </div>
                       </div>
+                    </label>
+                  </div>
                           
-                      <div className="game-option">
-                        <label className="game-card">
-                          <input type="radio" id="game2" name="game" value="retro-wall" />
-                          <div className="game-info">
-                            <div className="game-title">Mock Game 2</div>
+                  <div className="game-option">
+                    <label className="game-card">
+                      <input type="radio" id="game2" name="game" value="retro-wall" />
+                      <div className="game-info">
+                        <div className="game-title">Mock Game 2</div>
 
-                            <div className="meta">
-                              <span>Game Type:</span> Retro Wall<br />
-                              <span>Players:</span> 6 / 10<br />
-                              <span>Teams:</span> 2<br />
-                              <span>Colour Scheme:</span> 8-Bit Retro<br />
-                              <span>Status:</span> Waiting for Players
-                            </div>
-                          </div>
-                        </label>
+                        <div className="meta">
+                          <span>Game Type:</span> Retro Wall<br />
+                          <span>Players:</span> 6 / 10<br />
+                          <span>Teams:</span> 2<br />
+                          <span>Colour Scheme:</span> 8-Bit Retro<br />
+                          <span>Status:</span> Waiting for Players
+                        </div>
                       </div>
+                    </label>
+                  </div>
                     
-                      <div className="game-option">
-                        <label className="game-card">
-                          <input type="radio" id="game3" name="game" value="color-riot" />
-                          <div className="game-info">
-                            <div className="game-title">Mock Game 3</div>
+                  <div className="game-option">
+                    <label className="game-card">
+                      <input type="radio" id="game3" name="game" value="color-riot" />
+                      <div className="game-info">
+                        <div className="game-title">Mock Game 3</div>
 
-                            <div className="meta">
-                              <span>Game Type:</span> Color Riot<br />
-                              <span>Players:</span> 18 / 30<br />
-                              <span>Teams:</span> None (Free Draw)<br />
-                              <span>Colour Scheme:</span> High Contrast<br />
-                              <span>Status:</span> Almost Full
-                            </div>
-                          </div>
-                        </label>
+                        <div className="meta">
+                          <span>Game Type:</span> Color Riot<br />
+                          <span>Players:</span> 18 / 30<br />
+                          <span>Teams:</span> None (Free Draw)<br />
+                          <span>Colour Scheme:</span> High Contrast<br />
+                          <span>Status:</span> Almost Full
+                        </div>
                       </div>
+                    </label>
+                  </div>
 
-                      <div className="game-option">
-                        <label className="game-card">
-                          <input type="radio" id="game4" name="game" value="color-riot" />
-                          <div className="game-info">
-                            <div className="game-title">Mock Game 4</div>
+                  <div className="game-option">
+                    <label className="game-card">
+                      <input type="radio" id="game4" name="game" value="color-riot" />
+                      <div className="game-info">
+                        <div className="game-title">Mock Game 4</div>
 
-                            <div className="meta">
-                              <span>Game Type:</span> Color Riot<br />
-                              <span>Players:</span> 18 / 30<br />
-                              <span>Teams:</span> None (Free Draw)<br />
-                              <span>Colour Scheme:</span> High Contrast<br />
-                              <span>Status:</span> Almost Full
-                            </div>
-                          </div>
-                        </label>
+                        <div className="meta">
+                          <span>Game Type:</span> Color Riot<br />
+                          <span>Players:</span> 18 / 30<br />
+                          <span>Teams:</span> None (Free Draw)<br />
+                          <span>Colour Scheme:</span> High Contrast<br />
+                          <span>Status:</span> Almost Full
+                        </div>
                       </div>
+                    </label>
+                  </div>
 
-                    </div>
-      
-                    <button className="get-started-btn" type="submit">Join Selected Game</button>
-                  </form>
-                    
+                </div>
+                <button className="get-started-btn" type="submit">Join Selected Game</button>
+              </form>
               </div>
 
               <div >
