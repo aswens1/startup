@@ -173,7 +173,8 @@ export function GameCanvas() {
                     <button className="w-8 h-8 bg-yellow-400 rounded border border-black"></button>
                 </div>
 
-                <Link to='/leaderboard' className='w-full bg-gray-300 hover:bg-gray-400 rounded py-2 mb-2'>Leaderboard</Link>
+                <Link to='/leaderboard' className='w-full bg-gray-300 hover:bg-gray-400 rounded py-2 mb-2
+             block text-center no-underline text-black'>Leaderboard</Link>
                 {/* <button className="w-full bg-gray-300 hover:bg-gray-400 rounded py-2 mb-2"><a href="leaderboard.html">Leaderboard</a></button> */}
                 <button className="w-full bg-gray-300 hover:bg-gray-400 rounded py-2">Leave Game</button>
 
