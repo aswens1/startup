@@ -2318,7 +2318,7 @@ root.render(<App />);
 
 <summary>JavaScript Introduction</summary>
 
-### JavaScript Introduction
+#### JavaScript Introduction
 
 Deeper reading:
 - [MDN JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
@@ -2330,7 +2330,7 @@ The more effectively you understand JavaScript, the better web programmer you wi
 
 Typically, JS is executed using an interpreter at runtime instead of compiling it into a machine specific binary at build time. This has the advantage of making JS very portable, but also allows for many errors like using an undefined variable. These errors commonly only get discovered when the program crashes during execution.
 
-#### JavaScript Versions
+##### JavaScript Versions
 
 It's important to be aware of JavaScript versions as browser compatability is always a issue when developing a web app. When considering a JS feature, consult websites like [MDN](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Browser_support_for_JavaScript_APIs) of [CanIUse](https://caniuse.com/) to see how well the feature is supported.
 
@@ -2346,7 +2346,7 @@ It's important to be aware of JavaScript versions as browser compatability is al
 | 2019 | ES2019 | string.trim |
 | 2020 | ES2020 | ?? operator |
 
-#### Getting Started
+##### Getting Started
 
 We'll start with a basic example. The following JS will concatenate three strings together and then throw away the result. 
 
@@ -2372,7 +2372,7 @@ console.log(join('Hello', 'world'));
 // OUTPUT: Hello world
 ```
 
-#### Comments
+##### Comments
 
 You can comment your JS with line or block comments.
 
@@ -2384,11 +2384,11 @@ Block comment
 */
 ```
 
-#### Code Delimiters
+##### Code Delimiters
 
 These aren't technically required in most cases, but it is considered good form to end JS statements with a semicolon (`;`). Code blocks, and their scope, are defined with curly braces (`{ }`).
 
-#### Playgrounds
+##### Playgrounds
 
 To practise JavaScript, you need a way to write and run JS yourself. Here are two easy ways to do this.
 
@@ -2396,7 +2396,7 @@ To practise JavaScript, you need a way to write and run JS yourself. Here are tw
 
 2. Use your browser's debugger. For example, if you open chrome and press `F12`, the debugger will display. Select the `Console` menu option. This will display a JS interpreter where you can write and execute your code.
 
-#### Examples
+##### Examples
 
 You can see examples of all the JS we will talk about by using this [HTML page](https://htmlpreview.github.io/?https://github.com/webprogramming260/webprogramming/blob/main/instruction/javascript/introduction/jsDemo.html).
 
@@ -2406,7 +2406,7 @@ You can see examples of all the JS we will talk about by using this [HTML page](
 
 <summary>Adding JavaScript to HTML</summary>
 
-### Adding JavaScript to HTML
+#### Adding JavaScript to HTML
 
 There are three ways to add JS into HTML.
 
@@ -2456,19 +2456,19 @@ Notice how we call the `sayHello` and `sayGoodbye` JS functions from the HTML in
 
 <summary>Node.js</summary>
 
-### Node.js
+#### Node.js
 
 Node.js was created in 2009 by Ryan Dahl. It was the first successful application for deploying JavaScript outside of a browser. Now, JS is not just a browser technology, but one that can run on the server as well. This means that JS can power your entire tech stack. Node.js is often referred to as Node, and is currently maintained by the [Open.js Foundation](https://openjsf.org/).
 
 Browsers run JS using a JS interpreter and execution engine. For example, Chromium based. browsers all use the [V8](https://v8.dev/) engine created by Google. Node.js took the V8 engine and ran it inside of a console application. When you run a JS program in Chrome of Node.js, it's the V8 that reads your code and executes it. The result is the same regardless of which program wraps V8.
 
-#### Installing Node.js
+##### Installing Node.js
 
 Your production environment web server comes with Node.js installed. However, you need to install Node.js in your development enviroment also. The easiest way to install Node.js is to use the official download found on [nodejs.org](https://nodejs.org/en/download/package-manager).
 
 You can pick the method, but it's recommended to use the Prebuilt Installer for your operating system and computer processor. Make sure that you select the Long Term Support version (TLS) to get the most stabel version.
 
-#### Checking that Node is Installed
+##### Checking that Node is Installed
 
 The node.js console app is simply called `node`. You can check if Node is working correctly by running `node` with the `-v` paramter.
 
@@ -2477,7 +2477,7 @@ The node.js console app is simply called `node`. You can check if Node is workin
 v24.13.0
 ```
 
-#### Running Programs
+##### Running Programs
 
 You can run a line of JS with Node.js from your console with the `-e` parameter.
 
@@ -2521,7 +2521,7 @@ Counting ... 4
 Counting ... 5
 ```
 
-#### Node Package Manager
+##### Node Package Manager
 
 It's always helpful to use preexisting packages of JS for implementing common tasks. To load a package using Node.js, there are two steps you have to take. First, install the package locally on your machine using the Node Package Manager (NPM) and include a `require` statement in your code that references the package name. NPM is automatically installed when you install Node.js.
 
@@ -2533,7 +2533,7 @@ NPM can access a huge repository if preexisting packages. You can search these p
 ➜  npm init -y
 ```
 
-#### Package.json
+##### Package.json
 
 If you list the files in your directory, you'll see a new one called `package.json`. This file contains 3 main things: (1) Metadata about your project like its name and the default entry JS file, (2) commands (scripts) that you can execute to do things like run, test, or distribute your code, and (3) packages that the project depend on. The following is what it should look like at the start, with default metadata and a simple placeholder script that runs the echo command when you execute `npm run test` from the console.
 
@@ -2610,7 +2610,7 @@ This may seem like a lot of work, but it starts to feel natural. Here are the ma
 6) Use the code package provider in your jS
 7) Run your code with `node index.js`
 
-#### Deno and Bun
+##### Deno and Bun
 
 Ryan created a successor to Node.js called [`Deno`](https://deno.land/). This version is more compliant with advances in ECMAScript and has significant performance advantages. There are also competitor server JS applications, like [`Bun`](https://bun.sh/).
 
@@ -2620,7 +2620,7 @@ Ryan created a successor to Node.js called [`Deno`](https://deno.land/). This ve
 
 <summary>Debugging JavaScript</summary>
 
-### Debugging JavaScript
+#### Debugging JavaScript
 
 Deeper reading: [MDN Console](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_are_browser_developer_tools)
 
@@ -2628,7 +2628,7 @@ You will have bugs in your code at some point. They may happen when you're autho
 
 Learning how to quickly find and fix bugs will greatly increase your value as a web developer. Additionally, debugging skills can also be used during the development process. By following a pattern of writing code and then stepping through and debugging it, you gain confidence that the block is working as desired.
 
-#### Console Debugging
+##### Console Debugging
 
 Deeper reading: [MDN Console](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_are_browser_developer_tools)
 
@@ -2672,7 +2672,7 @@ Take the following steaps to see the result of the console debugging.
 
 You can use the debugger console window to inspect variables without using the `console.log` functions from your code. For example, if you type varCount in the console window, it will print out the current value of varCount. You can also execute JS directly in the console window. For example, if you type `varCount = 50` and press `Enter`, it will change the current value of varCount.
 
-#### Browser Debugging
+##### Browser Debugging
 
 `console.log` debugging is great for times when you just need to quickly see what is going on in your code. But if you really want to understand the code as it exeutes, you want to use the full capability of the browser's debugger.
 
@@ -2690,7 +2690,7 @@ This gives you complete control to inspect what the JS code is doing and experim
 
 <summary>Debugging Node.js</summary>
 
-### Debugging Node.js
+#### Debugging Node.js
 
 Deeper reading: 
 - [Debugging a Node.js application](https://youtu.be/B0le_Z_2TQY)
@@ -2732,7 +2732,7 @@ Now you can restart the debugger by pressing `F5` again. This time it will stop 
 
 You can continue the execution of the code by pressing `F10` to step to the next line, `F11` to step into a function call, or `F5` to continue running from the current line. When the last line of code runs, the debugger will exit and you need to press `F5` to run it again. You can stop debugging at any point by pressing `SHIFT-F5`.
 
-#### Node --watch
+##### Node --watch
 
 Once you start writing complex apps, you'll find yourself making changes in the middle of debugging sessions. You want `node` to restart automatically and updte the browsers as changes are saved. 
 
@@ -2770,7 +2770,7 @@ Now, when you press `F5` to start debugging, VS Code will start up `main.js` and
 
 <summary>Web Frameworks</summary>
 
-### Web Frameworks
+#### Web Frameworks
 
 Deeper reading: [MDN Introduction to client-side frameworks](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/Introduction)
 
@@ -2782,11 +2782,11 @@ There are a lot of web frameworks to choose from. You can view latest popularity
 
 Each framework has advantages and disadvantages. Some are very prescriptive (opinionated) about how to do things. Some have major institutional backing while others are open source. Other facts you want to consider is how easy it is to learn, how it impacts productivity, how performant it is, how long it takes to build, and how actively the framework is evolving.
 
-#### Hello World Examples
+##### Hello World Examples
 
 We'll use React in class, but here are some examples.
 
-##### Vue
+###### Vue
 
 [Vue](https://vuejs.org/) combines HTML, CSS, and JS in a single file. HTML is represented by a `template` element that can be aggregated into other templates.
 
@@ -2814,7 +2814,7 @@ We'll use React in class, but here are some examples.
 </template>
 ```
 
-##### Svelte
+###### Svelte
 
 Like Vue, [Svelte](https://svelte.dev/) combines HTML, CSS, and JS into a single file. The different is that Svelte requires a transpiler to generate browser-ready code insted of a runtime virtual DOM.
 
@@ -2834,7 +2834,7 @@ Like Vue, [Svelte](https://svelte.dev/) combines HTML, CSS, and JS into a single
 <p>Hello {name}!</p>
 ```
 
-##### React
+###### React
 
 React combines JS and HTML into component format. CSS must be declared outside the JSX file. The component itself leverages the functionality of JS and can be represented as a function or class.
 
@@ -2858,7 +2858,7 @@ p {
 }
 ```
 
-##### Anguler Component
+###### Anguler Component
 
 An Angular component defines what JS, HTML, and CSS are combined together. This keeps a fairly strong separation of files that are usually grouped together in a directory rather than using the single file representation.
 
@@ -2898,7 +2898,7 @@ p {
 
 <summary>Toolchains</summary>
 
-### Toolchains
+#### Toolchains
 
 As web programming becomes more complex, it becomes necessary to abstract away some of that complexity with a series of tools. Some common functional pieces in a web app tool chain include:
 
@@ -2920,7 +2920,7 @@ The toolchain we use for our project includes [GitHub](https://github.com/) as t
 
 <summary>Vite</summary>
 
-### Vite
+#### Vite
 
 Deeper reading: [Vite](https://vitejs.dev/guide/)
 
@@ -2943,7 +2943,7 @@ This creates a new web app in the `demoVite` directory, download the required 3r
 
 One you played aroudn with the app in your browser, you can return to your console and stop Vite from hosting the app by pressing `q`.
 
-#### Generated Project
+##### Generated Project
 
 Here are the files found in the directory Vite created. From the console, use VS Code `code .` to open the project directory.
 
@@ -2968,13 +2968,13 @@ The main files are `index.html`, `main.jsx`, and `App.jsx`. The browser loads `i
 
 `main.jsx` creates the React app by associating with the `#root` element with the `App` component found in `App.jsx`. This causes all the component render functions to execute and the generated HTML, CSS, and JS to be executed in `index.html`.
 
-#### JSX vs JS
+##### JSX vs JS
 
 The `Vite` CLI uses the `.jsx` extension for JSX files instead of the JS `.js` extension. The Babel transpiler will work with either one, but some editor tools will work differently based on the extension. For this reason, you should prefer `.jsx` for files that contain JSX. 
 
 Interesting [conversation](https://github.com/webprogramming260/webprogramming/blob/main/instruction/webFrameworks/react/vite/vite.md#:~:text=had%20an%20interesting-,conversation,-on%20this%20topic) with AirBNB.
 
-#### Building a Production Release
+##### Building a Production Release
 
 When you execute `npm run dev` you are bundling the code to a temporary directory that the Vite debug HTTP server loads from. When you want to bundle your app so that you can deploy to a production environment, you need to run `npm run build`. This executes the `build` script found in your `package.json` and invokes the `Vite` CLI. `vite build` transpiles, minifies, injects the proper JS, then outputs everything to deployment ready version contained in a distribution subdirectory named `dist`.
 
@@ -2993,7 +2993,7 @@ dist/assets/index-58d24859.js   143.42 kB │ gzip: 46.13 kB
 ✓ built in 382ms
 ```
 
-#### Deploying a Production Release
+##### Deploying a Production Release
 
 The deployment script for Simon React (`deployReact.sh`) creates a production distribution by calling `npm run build` and copying the resulting `dist` directory to your production server.
 
@@ -3003,7 +3003,7 @@ The deployment script for Simon React (`deployReact.sh`) creates a production di
 
 <summary>React</summary>
 
-### React
+#### React
 
 Deeper reading: 
 - [MDN React Introduction Tutorial](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/React_getting_started)
@@ -3041,7 +3041,7 @@ When the JS interpreter running in the browser executes the `React.createElement
 </ol>
 ```
 
-#### React Hello World
+##### React Hello World
 
 We'll make a simple React application for an example.
 
@@ -3147,13 +3147,13 @@ This example demonstrates several important concepts of React.
 
 <summary>Components</summary>
 
-### Components
+#### Components
 
 Deeper reading: [React.dev - Your First Component](https://react.dev/learn/your-first-component)
 
 React components let you modularize the functionality of your app. This allows the underlying code to directly represent the components that a user interacts with. It also enables code reuse as common app components often show up repeatedly.
 
-#### Rendering JSX
+##### Rendering JSX
 
 One of the primary purposes of a component is the make the user interface. This is done with the JSX returned by a component. Whatever is returned can be inserted into the component HTML element.
 
@@ -3198,7 +3198,7 @@ root.render(hello);
 <div>Hello</div>
 ```
 
-#### Styling Components
+##### Styling Components
 
 If you don't want to directly style your components with inline CSS, you can reference an external CSS file and then reference the rules in your JSX just like you would with HTML. For example, if you had a CSS file named `index.css` with the following:
 
@@ -3236,7 +3236,7 @@ This results in:
 
 ![applyStyles](picturesForNotes/applyStyles.png)
 
-#### Child Components
+##### Child Components
 
 The JSX that a component returns may reference other components. This allows you to build up a complex tree of interrelated components. The following is an example of an app that has a header with nav elements, main content, and a footer. The App component is the parent of all the other components.
 
@@ -3312,7 +3312,7 @@ This results in:
 
 ![withCSS](picturesForNotes/withCss.png)
 
-#### Properties
+##### Properties
 
 React components also let you pass info to them in the form of element properties. The component receives the properties in its constructor and then displays them when it renders.
 
@@ -3330,7 +3330,7 @@ function Demo(props) {
 }
 ```
 
-#### State
+##### State
 
 A component can also have an internal state. Component state is created by calling the `React.useState` hook function. The `useState` function returns a variable that contains the current state and a function to update the state. This next example creates a state variable called `clicked` that toggles the click state in the `updateClick` function that gets called when the paragraph text is clicked.
 
@@ -3349,7 +3349,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
 ```
 
-#### Reactivity
+##### Reactivity
 
 A component's properties and state are used by React to determine the reactivity of the interface. Reactivity controls how a component reacts to actions taken by the user or events that happen within the app. When a component's state or properties change, the `render` function for the component and all of its dependent component `render` functions are called.
 
@@ -3359,7 +3359,7 @@ A component's properties and state are used by React to determine the reactivity
 
 <summary>Router</summary>
 
-### Router
+#### Router
 
 Reading: [React Router DOM Tutorial](https://blog.webdevsimplified.com/2022-07/react-router/)
 
@@ -3406,7 +3406,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
 ```
 
-#### Router Example
+##### Router Example
 
 You can enhanve the [Hello World React](https://github.com/webprogramming260/webprogramming/blob/main/instruction/webFrameworks/react/introduction/introduction.md#react-hello-world) app that we built in early lessons to include a router by first installing the React Router DOM dependency.
 
@@ -3485,6 +3485,66 @@ As you click the different nav links, the URL to the app changes to match the ro
 </details>
 
 ### Part 2: Reactivity
+
+<details>
+
+<summary>JavaScript Console</summary>
+
+#### JavaScript Console
+
+Deeper reading: [MDN JavaScript Console](https://developer.mozilla.org/en-US/docs/Web/API/console)
+
+The JS console onject provides interaction with the JS runtime debugger console. This isn't the same as the operating system console (terminal or command line). The console provides functionality for outputting the value of texts and obkects, running timers, and counting iterations. These are very usefule for debugging when you can actually execute your code in an interactive debugger like VS Code.
+
+##### Log
+
+The basic usage of the console is to output a log message.
+
+```JavaScript
+console.log('hello');
+// OUTPUT: hello
+```
+
+You can format your messages in the log parameter.
+
+```JavaScript
+console.log('hello %s', 'world');
+// OUTPUT: hello world
+```
+
+You can also specify CSS declarations to style the log output.
+
+```JavaScript
+console.log('%c JavaScript Demo', 'font-size:1.5em; color:green;');
+// OUTPUT: JavaScript Demo //in large green text
+```
+
+##### Timers
+
+If you're trying to see how long a piece of code is running, you can wrap it with the `time` and `timeEnd` calls. This makes it output the duration between `time` and `timeEnd`.
+
+```JavaScript
+console.time('demo time');
+for (let i = 0; i < 10000000; i++) {}
+// ... some code that takes a long time.
+console.timeEnd('demo time');
+// OUTPUT: demo time: 12.74 ms
+```
+
+##### Count
+
+To see how many times a block of code is called, you can use the `count` function.
+
+```JavaScript
+console.count('a');
+// OUTPUT: a: 1
+console.count('a');
+// OUTPUT: a: 2
+console.count('b');
+// OUTPUT: b: 1
+```
+
+</details>
 
 ### Enrichment Topics
 
