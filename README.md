@@ -82,8 +82,8 @@ The game play pages ([gamePlayCanvas](pages/gamePlayCanvas.html) and [collaborat
 
 I reviewed and deployed the Simon React part 1 code (by going through the instructions to change everything to react components) to my project - found at [simon.8bitalley.click](https://simon.8bitalley.click).
 
-For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
+I've also reconfigured my startup to use React and Vite - found at [startup.8bitalley.click](https://startup.8bitalley.click/)
 
-- [ ] **Bundled using Vite** - I did not complete this part of the deliverable.
-- [ ] **Components** - I did not complete this part of the deliverable.
-- [ ] **Router** - I did not complete this part of the deliverable.
+- **Bundled using Vite** - I've bundled my project with Vite.
+- **Components** - Each page has it's own React component.
+- **Router** - I useed React Router in my app.jsx file to handle page routing.
