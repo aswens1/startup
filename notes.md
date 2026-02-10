@@ -4,7 +4,7 @@ A markdown file consisting of all my class notes for the winter 2026 semester.
 
 [Example startup - Simon](https://simon.cs260.click)
 
-[My startup - 8bitalley.click](https://8bitalley.click)
+[My startup - startup.8bitalley.click](https://startup.8bitalley.click)
 
 - [Course instruction](https://github.com/webprogramming260)
 - [Course Calendar](https://github.com/webprogramming260/webprogramming/blob/main/schedule/schedule.md)
