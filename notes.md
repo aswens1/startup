@@ -4353,10 +4353,83 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<Clicker />);
 ```
 
+</details>
 
+<details>
 
+<summary>Reactivity</summary>
 
+#### Reactivity
 
+Tutorial video: [Reactivity tutorial video](https://youtu.be/xmH_DJF7kOQ)
+
+Making UI change when the user adds input or data is on of the architectural foundations of React. React lets you use reactivity with three pieces of a React component: `props`, `state`, and `render`.
+
+React keeps a **table** of `state` values for every component. It records the requesed state in the table whenever a `updateState` method is called. It then periodically rerenders every component that has had a change since the last render.
+
+##### Demonstration Application
+
+To understand how React state works, we can use a simple React app that picks a colour. The app has one state variable (`color`) and three components. 
+
+- **App** - Top level component that manages the `color` state
+- **ColorDisplay** - Displays the currently selected colour
+- **ColorPicker** - Displays the colour and allows for the selection of a new colour
+
+When you change the colour using `ColorPicker`, it causes the colour rendered by the `ColorDisplay` component to update.
+
+The `App` component creates a React state variable by calling the `React.useState` function. This creates an entry in React's state table that tracks the current and desired value of every state object.
+
+```JSX
+const [color, updateColor] = React.useState('#737AB0');
+```
+
+The valye of `color` is passed as a property to both of the App's child components. Whenever React detects a change to the `color` state, it rerenders any component that depends on that state.
+
+The `updateColor` state function is also passed as a property to the `ColorPicker` component. This gives the ColorPicker the ability to modify the value of the colour state that is registered in the `App` parent component.
+
+![reactStateTable](picturesForNotes/reactStateTable.png)
+
+Just because you called `updateState` doesn't mean that you can access the updated state on the next line of code. Updates happen asynchronously, and so you never really know when it is going to happen, only that it will eventually happen.
+
+The following code is for the colour picker components. If you want to experiment, you can mess with the complete [example code](https://github.com/webprogramming260/webprogramming/blob/main/instruction/webFrameworks/react/reactivity/exampleCode/implementingReact).
+
+```JSX
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+
+function App() {
+  const [color, updateColor] = React.useState('#737AB0');
+
+  return (
+    <div>
+      <h1>Pick a color</h1>
+      <ColorDisplay color={color} />
+      <ColorPicker color={color} updateColor={updateColor} />
+    </div>
+  );
+}
+
+function ColorDisplay({ color }) {
+  return (
+    <div>
+      Your color: <span style={{ color: color }}>{color}</span>
+    </div>
+  );
+}
+
+function ColorPicker({ color, updateColor }) {
+  function onChange(e) {
+    updateColor(e.target.value);
+  }
+
+  return (
+    <div>
+      <span>Pick a color: </span>
+      <input type='color' onChange={onChange} value={color} />
+    </div>
+  );
+}
+```
 
 </details>
 
