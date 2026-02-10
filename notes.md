@@ -4219,6 +4219,41 @@ root.render(<Clicker initialCount={3} />);
 
 </details>
 
+<details>
+
+<summary>Timeout and Interval</summary>
+
+#### Timeout and Interval
+
+##### setTimeout
+
+It's common to want to delay the execution of something until after a certain period has expired. JS supports this with the `setTimeout` function. **setTimeout** takes a function that will be called once the given milliseconds delay has passed. In the next example, the message is sent to the console log after waiting 2000 milliseconds.
+
+```JavaScript
+setTimeout(() => console.log('time is up'), 2000);
+
+console.log('timeout will happen later');
+```
+
+It's important to know that the jS code continues to execute after the setTimeout is called. Then, once the delay has expired, the JS runtime will stop whatever JS code is currently executing, run the setTimeout callback function, and then return to the code that was halted previously. That's why the phrase **timeout will happen later** is printed before the timeout phrase is printed.
+
+##### setInterval
+
+Sometimes you need to execute a block of code periodically at a given time interval. **setInterval** works similarily to **setTimeout**, but it will continually call the function every time the delay has passed.
+
+```JavaScript
+setInterval(() => console.log('do something'), 1000);
+```
+
+You can cancel the setInterval request by capturing the result of the setInterval call and passing that result to the `clearInterval` function. In the example we set an interval to print a message every second and then after five seconds, clearing the interval.
+
+```JavaScript
+const interval = setInterval(() => console.log('do something'), 1000);
+
+setTimeout(() => clearInterval(interval), 5000);
+```
+
+</details>
 
 ### Enrichment Topics
 
