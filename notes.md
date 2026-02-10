@@ -3912,6 +3912,60 @@ You can see and experiment with this on [CodePen](https://codepen.io/leesjensen/
 
 </details>
 
+<details>
+
+<summary>JavaScript Array</summary>
+
+#### JavaScript Array
+
+Deeper reading: [MDN Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
+
+The JS array object represents a sequence of other objects and primatives. You can reference the members of the array using a zero based index. You can create an array with the array constructor or using the array literal notation below.
+
+```JavaScript
+const a = [1, 2, 3];
+console.log(a[1]);
+// OUTPUT: 2
+
+console.log(a.length);
+// OUTPUT: 3
+```
+
+##### Array Functions
+
+There are several interesting static functions associated with the array object.
+
+| Function | Meaning | Example |
+| push | add an item to the end of an array | `a.push(4)` |
+| pop | remove and item from the end of the array | `x = a.pop()` |
+| slice | return a sub-array | `a.slice(1,-1)` |
+| sort | run a function to sort an array in place | `a.sort((a,b) => b-a)` |
+| values | creates an iterator for use with a `for of` loop | `for (i of a.values()) {...}` |
+| find | find the first item satisfied by a test function | `a.find(i => i < 2)` |
+| forEach | run a function on each array item | `a.forEach(console.log)` |
+| reduce | run a function to reduce each array item to a single item | `a.reduce((a,c) => a + c)` |
+| map | run a function to map an array to a new array | `a.map(i => i+i)` |
+| filter | run a function to remove items | `a.filter(i => i%2)` |
+| every | run a function to test if all items match | `a.every(i => i < 3)` |
+| some | run a function to test if any items match | `a.some(i => i < 1)` |
+
+```JavaScript
+const a = [1, 2, 3];
+
+console.log(a.map((i) => i + i));
+// OUTPUT: [2,4,6]
+console.log(a.reduce((v1, v2) => v1 + v2));
+// OUTPUT: 6
+console.log(a.sort((v1, v2) => v2 - v1));
+// OUTPUT: [3,2,1]
+
+a.push(4);
+console.log(a.length);
+// OUTPUT: 4
+```
+
+</details>
+
 
 ### Enrichment Topics
 
