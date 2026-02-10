@@ -4255,6 +4255,112 @@ setTimeout(() => clearInterval(interval), 5000);
 
 </details>
 
+<details>
+
+<summary>React Hooks</summary>
+
+#### React Hooks
+
+Deeper reading: [Reactjs.org - Hooks Overview](https://reactjs.org/docs/hooks-overview.html)
+
+React hooks let React functions style components to be able to do everything that a class style component can do, and more. Plus, as new features are added to React, they add them as hooks. This makes function style components the preferred way of doing things in React. You've already seen one use of hooks to declare and update state in a function component with the `useState` hook.
+
+```JSX
+function Clicker({ initialCount }) {
+  const [count, updateCount] = React.useState(initialCount);
+  return <div onClick={() => updateCount(count + 1)}>Click count: {count}</div>;
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Clicker initialCount={3} />);
+```
+
+##### useEffect Hook
+
+The `useEffect` hook lets you represent lifecycle events. For example, if you want to run a function every time the component completes rendering, you can do this:
+
+```JSX
+function UseEffectHookDemo() {
+  React.useEffect(() => {
+    console.log('rendered');
+  });
+
+  return <div>useEffectExample</div>;
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<UseEffectHookDemo />);
+```
+
+##### useEffect Dependencies
+
+By default, the **useEffect** callback is called every time the component is rendered. You can control what triggers a useEffect hook by specifying its dependencies. In the following example, we have two state variables, but we only want the **useEffect** hook to be called when the component is initially called and when the first variable is clicked. To do this, you pass an array of dependencies as a second parameter to the **useEffect** call.
+
+```JSX
+function UseEffectHookDemo() {
+  const [count1, updateCount1] = React.useState(0);
+  const [count2, updateCount2] = React.useState(0);
+
+  React.useEffect(() => {
+    console.log(`count1 effect triggered ${count1}`);
+  }, [count1]);
+
+  return (
+    <ol>
+      <li onClick={() => updateCount1(count1 + 1)}>Item 1 - {count1}</li>
+      <li onClick={() => updateCount2(count2 + 1)}>Item 2 - {count2}</li>
+    </ol>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<UseEffectHookDemo />);
+```
+
+If you specify an empty array `[]` as the hook dependency then it is only called when the component is first rendered.
+
+Hooks must be called at the top scope of the function, and can't be called inside of a loop or conditional. This makes sure that hooks are always called in the same order when a component is rendered.
+
+##### useEffect Clean Up
+
+You can take action when the component cleans up by returning a cleanup function when you call `useEffect`. An example is where a component creates a database connection. The database connection is a resource that needs to be released when the component is destroyed. In the example, the function returned from **useEffect** gets called when the component is destroyed. This is triggered after a user clicks five times on the clicker component.
+
+```JSX
+function Clicker() {
+  const [count, update] = React.useState(5);
+
+  return (
+    <div onClick={() => update(count - 1)}>
+      Click count: {count}
+      {count > 0 ? <Db /> : <div>DB Connection Closed</div>}
+    </div>
+  );
+}
+
+function Db() {
+  React.useEffect(() => {
+    console.log('connected');
+
+    return function cleanup() {
+      console.log('disconnected');
+    };
+  }, []);
+
+  return <div>DB Connection</div>;
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Clicker />);
+```
+
+
+
+
+
+
+</details>
+
+
 ### Enrichment Topics
 
 ## HTTP Service
