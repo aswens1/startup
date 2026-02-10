@@ -3705,7 +3705,212 @@ labeler('fish');
 
 </details>
 
+<details>
 
+<summary>Arrow Functions</summary>
+
+#### Arrow Functions
+
+Since functions are first order objects, they can be declared anywhere an be passed as parameters. This causes there to be a lot of anonymous functions just hanging out and cluttering the code. The `arrow` syntax was created to make the code more compact. This replaces the need for `function` keywords with `=>` placed after the parameter declaration. The curly braces are also optional. 
+
+The follpowing function is in arrow syntax. It takes no parameters and always returns 3.
+
+```JavaScript
+() => 3;
+```
+
+The next to functions are sort of equivalent.
+
+```JavaScript
+const a = [1, 2, 3, 4];
+
+// standard function syntax
+a.sort(function (v1, v2) {
+  return v1 - v2;
+});
+
+// arrow function syntax
+a.sort((v1, v2) => v1 - v2);
+```
+
+Besides being compact, `arrow` function syntax has some semantic differences from the standard function syntax. This includes how a return value is specified and the scope of variables that an arrow function can access.
+
+##### Return Values
+
+Arrow functions have special rules for the `return` keyword. It's optional if no curley braces are provided for the function and it contains a single expression. In that case, the result of the expression is automatically returned. If there are curly braces, the arrow function behaves just like a standard function.
+
+```JavaScript
+() => 3;
+// RETURNS: 3
+
+() => {
+  3;
+};
+// RETURNS: undefined
+
+() => {
+  return 3;
+};
+// RETURNS: 3
+```
+
+##### Closure
+
+Arrow functions inherit the `this` pointer from the scope in which they are created. This is known as a `closure`. A closure lets a function continue to reference its creation scope, even after it has passed out of the scope. Remember that a closure includes a function and its created scope.
+
+The function `makeClosure` returns an anonymous function using arrow syntax. The function creates a variable from an initialization parameter. Both the parameter and the locally scoped variables are included in closure for the returned funtion.
+
+```JavaScript
+function makeClosure(init) {
+  let closureValue = init;
+  return () => {
+    return `closure ${++closureValue}`;
+  };
+}
+```
+
+When we call the `createClosure` function, it returns the arrow function that includes the closure of the variable that existed when it was created. That's why the closure function can reference a variable that is declared outside the scope tht it executes in. This is demonstrated by calling the closure function multiple times to result in different values.
+
+```JavaScript
+const closure = makeClosure(0);
+
+console.log(closure());
+// OUTPUT: closure 1
+
+console.log(closure());
+// OUTPUT: closure 2
+```
+
+Closures are important when we do things like execute JS within the scope of an HTML page. This is because it remembers the values of varaibels that were in scope when the function was created.
+
+##### Using Arrow Functions with React
+
+React components are helpful for learning arrow functions. The following example is a simple React app that increments and decrements a counter when the appropriate buttons are pressed. It uses standard JS functions.
+
+```JSX
+function App() {
+  const [count, setCount] = React.useState(0);
+
+  function Increment() {
+    setCount(count + 1);
+  }
+
+  function Decrement() {
+    setCount(count - 1);
+  }
+
+  return (
+    <div>
+      <h1>Count: {count}</h1>
+      <button onClick={Increment}>n++</button>
+      <button onClick={Decrement}>n--</button>
+    </div>
+  );
+}
+```
+
+By using arrow functions, the counter logic is moved directly into the JSX. This makes the code more concise and clarifies what the buttons are doing.
+
+```JSX
+function App() {
+  const [count, setCount] = React.useState(0);
+
+  return (
+    <div>
+      <h1>Count: {count}</h1>
+      <button onClick={() => setCount(count + 1)}>n++</button>
+      <button onClick={() => setCount(count - 1)}>n--</button>
+    </div>
+  );
+}
+```
+
+There is a problem here. Setting state with the function provided by the React useState function is asynchronous. This means you don't know if other concurrently running code has changed the value of `count` between when you read it and when you set it. This can cause the counter to be incremented multiple time in some cases or not at all in others. To dix this, we supply an arrow funtion to the `selfCount` function that sets the state instead of simply supplying the desired value. Here's a comparison.
+
+```JavaScript
+// may corrupt value
+setCount(count + 1);
+
+// safe
+setCount((prevCount) => prevCount + 1);
+```
+
+This works because React can control when the state variable is updated instead of allowing your code to do the read operation. Our counter app now looks like:
+
+```JavaScript
+function App() {
+  const [count, setCount] = React.useState(0);
+
+  return (
+    <div>
+      <h1>Count: {count}</h1>
+      <button onClick={() => setCount((prevCount) => prevCount + 1)}>n++</button>
+      <button onClick={() => setCount((prevCount) => prevCount - 1)}>n--</button>
+    </div>
+  );
+}
+```
+
+But now it looks clunkly because we put more duplicated inline logic for the `onClick` handler. We fix this by moving the creation of the arrow function out of the JSX and into the component body. We can also reduce the duplication of code caused by the different counter operations and make it easy to add new operations by using the factory pattern to create our operations. We use closure to reference the operation that is used by the arrow function that is returned from the factory.
+
+```JavaScript
+function App() {
+  const [count, setCount] = React.useState(0);
+
+  function counterOpFactory(op) {
+    return () => setCount((prevCount) => op(prevCount));
+  }
+
+  const incOp = counterOpFactory((c) => c + 1);
+  const decOp = counterOpFactory((c) => c - 1);
+  const tenXOp = counterOpFactory((c) => c * 10);
+
+  return (
+    <div>
+      <h1>Count: {count}</h1>
+      <button onClick={incOp}>n++</button>
+      <button onClick={decOp}>n--</button>
+      <button onClick={tenXOp}>n*10</button>
+    </div>
+  );
+}
+```
+
+##### An Advanced Example
+
+This example creates a `debounce` function. It includes the use of functions, arrow functions, parameters, a function as a parameter (callback), closures, and browser event listeners.
+
+The point of the debounce function i to only execute the specified function once within a given time window. Any requests to run the function more frequently than this will cause the time window to reset. This is important for cases where a user can trigger expensive events thousands of times per second. With a debounce function, the performance of your application can greatly suffer.
+
+The example below calls the browser's `window.addEventListener` function to add a callback function that is invoked whenever the user scrolls the web page. The first parameter to `addEventListener` tells us that it wants to listen for `scroll` events. The second parameter gives the function to call when a scroll event happens. In this case, we call it `debounce`. 
+
+The debounce function takes two parameters, the time window for executing the window function, and the window function to call within that limit. In this case, we will execute the arrow function at most every 500 milliseconds.
+
+```JavaScript
+window.addEventListener(
+  'scroll',
+  debounce(500, () => {
+    console.log('Executed an expensive calculation');
+  })
+);
+```
+
+The debounce function implements the execution of the windowFunc within the restricted time window by creating a closure that contains the current timeout and returning a function that will reset the timeout every time it's called. The returned function is called with the scroll event - whenever the user scrolls the page. However, instead of directly executing the `windowFunc`, it sets a timer based on the value of `windowMs`. If the debounce function is called again before the window times out, it resets the timeout.
+
+```JavaScript
+function debounce(windowMs, windowFunc) {
+  let timeout;
+  return function () {
+    console.log('scroll event');
+    clearTimeout(timeout);
+    timeout = setTimeout(() => windowFunc(), windowMs);
+  };
+}
+```
+
+You can see and experiment with this on [CodePen](). The example shows the background colour changing as long as the user is scrolling, which reverts back to white when they stop.
+
+</details>
 
 
 ### Enrichment Topics
