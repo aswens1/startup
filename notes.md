@@ -4497,6 +4497,68 @@ In this example, JSON can't represent the JS undefined object and so it's droppe
 
 </details>
 
+<details>
+
+<summary>Local Storage</summary>
+
+#### Local Storage
+
+Deeper reading: [MDN LocalStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+
+The browser's `localStorage` API gives the ability to persistantly store and retrieve data (like scores and usernames) on a user's browser across user sessions and HTML page renderings. For example, your frontend JS code could store a user's name on one HTML page, then retreive it later when a different HTML page is loaded. The name will also be available in local storage the next time the same browser is used to access the website.
+
+Plus, `localStorage` is used as a cache for when data cannot be obtained from the server. For example, your frontend JS could store the last high scores obtained from the service, and then display those scores in the future if the service isn't avaialable.
+
+##### How to use LocalStorage
+
+There are four main functions.
+
+| Function | Meaning |
+| --- | --- |
+| `setItem(name, value)` | sets a named item's value into local storage |
+| `getItem(name)` | gets a named item's value from local storage |
+| `removeItem(name)` | removes a named item from local storage |
+| `clear()` | clears all items in local storage |
+
+Values in local storage must be a `string`, `number`, or `boolean`. If you want to store a JS object or array, you have to turn it into a JSON string with `JSON.stringify()` on insertion, and parse it back to JS with `JSON.parse()` when retreived.
+
+##### Example
+
+Run this code in the browser's dev tools console window:
+
+```JavaScript
+let user = 'Alice';
+
+let myObject = {
+  name: 'Bob',
+  info: {
+    favoriteClass: 'CS 260',
+    likesCS: true,
+  },
+};
+
+let myArray = [1, 'One', true];
+
+localStorage.setItem('user', user);
+localStorage.setItem('object', JSON.stringify(myObject));
+localStorage.setItem('array', JSON.stringify(myArray));
+
+console.log(localStorage.getItem('user'));
+console.log(JSON.parse(localStorage.getItem('object')));
+console.log(JSON.parse(localStorage.getItem('array')));
+```
+
+Output:
+```
+Alice
+{name: 'Bob', info: {favoriteClass: 'CS 260', likesCS: true}
+[1, 'One', true]
+```
+
+You're able to see the round trip journey of the local storage values in the console output. If you want to see the values currently set for your app, then open the `Application` tab of the dev tools and select `Storage > Local Storage` and then your domain name. With the dev tools you can add,view, update, and delete any local storage values.
+
+</details>
+
 
 ### Enrichment Topics
 
