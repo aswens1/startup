@@ -4433,6 +4433,70 @@ function ColorPicker({ color, updateColor }) {
 
 </details>
 
+<details>
+
+<summary>JSON</summary>
+
+#### JSON
+
+Deeper reading:
+- [MDN JSON](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON)
+- [Douglas Crockgord: The JSON Saga](https://www.youtube.com/watch?v=-C-JoyNuQJs)
+
+JavaScript Object Notation (JSON) was invented by Douglas Crockford in 2001 while he worked at Yahoo!. It received official standardization in 2013 and 2017 (ECMA-404, [RFC 8259](https://datatracker.ietf.org/doc/html/rfc8259)).
+
+JSON is a simple way to share and store data. By design, it's easy to convert JS objects to and from JSON. This makes it a convenient data format when working with web technologies. Because of its simplicity, standardization, and compatibility with JS, JSON is one of the world's most popular data formats.
+
+##### Format
+
+A JSON document contains one of the following data types:
+
+| Type | Example |
+| --- | --- |
+| string | "crockford" |
+| number | 42 |
+| boolean | true |
+| array | \[null,42,"crockford"]|
+| object | \{"a":1,"b":"crockford"}|
+| null | null |
+
+Most commonly, a JSON document contains an object. Objects contain zero or more key value pairs. The key is always a string, and the value must be one of the valid JSON data types. Key value pairs are deliminated with commas. Curly braces delimit an object, square brackets for arrays, and strings are always with double quotes.
+
+```JSON
+{
+  "class": {
+    "title": "web programming",
+    "description": "Amazing"
+  },
+  "enrollment": ["Marco", "Jana", "فَاطِمَة"],
+  "start": "2025-02-01",
+  "end": null
+}
+```
+
+JSON is always encoded with [UTF-8](https://en.wikipedia.org/wiki/UTF-8), allowing for the representation of global data.
+
+##### Converting to JavaScript
+
+You can convert JSON to and from JS with the `JSON.parse` and `JSON.stringify` functions. 
+
+```JavaScript
+const obj = { a: 2, b: 'crockford', c: undefined };
+const json = JSON.stringify(obj);
+const objFromJson = JSON.parse(json);
+
+console.log(obj, json, objFromJson);
+
+// OUTPUT:
+// {a: 2, b: 'crockford', c: undefined}
+// {"a":2, "b":"crockford"}
+// {a: 2, b: 'crockford'}
+```
+
+In this example, JSON can't represent the JS undefined object and so it's dropped when converting from JS to JSON.
+
+</details>
+
 
 ### Enrichment Topics
 
