@@ -3908,7 +3908,7 @@ function debounce(windowMs, windowFunc) {
 }
 ```
 
-You can see and experiment with this on [CodePen](). The example shows the background colour changing as long as the user is scrolling, which reverts back to white when they stop.
+You can see and experiment with this on [CodePen](https://codepen.io/leesjensen/pen/XWxVBRx). The example shows the background colour changing as long as the user is scrolling, which reverts back to white when they stop.
 
 </details>
 
