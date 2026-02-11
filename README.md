@@ -87,3 +87,10 @@ I've also reconfigured my startup to use React and Vite - found at [startup.8bit
 - **Bundled using Vite** - I've bundled my project with Vite.
 - **Components** - Each page has it's own React component.
 - **Router** - I useed React Router in my app.jsx file to handle page routing.
+
+## 🚀 React part 2: Reactivity deliverable
+
+I reviewed and deployed the Simon React part 2 code to my project - found at [simon.8bitalley.click](https://simon.8bitalley.click).
+
+- [ ] **All functionality implemented or mocked out** - I did not complete this part of the deliverable.
+- [ ] **Hooks** - I did not complete this part of the deliverable.
