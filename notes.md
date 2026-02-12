@@ -1,4 +1,4 @@
-# CS 260 Notes
+ CS 260 Notes
 
 A markdown file consisting of all my class notes for the winter 2026 semester.
 
@@ -4860,6 +4860,227 @@ console.log(s.toLowerCase());
 
 </details>
 
+<details>
+
+<summary>JavaScript Type and Construct</summary>
+
+#### JavaScript Type and Construct
+
+Deeper reading: [MDN Data Types and Structures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures)
+
+##### Declaring Variables
+
+Variables are declaring using either the `let` or `const` keyword. `let` lets you change the value of the variable, and `const` will cause an error if you try to change it.
+
+```JavaScript
+let x = 1;
+
+const y = 2;
+```
+
+Originally, JS used the keyword `var` to define variables. This causes hard-to-detect errors in the code related to variable scope. Avoid using `var` and only use `let` or `const`.
+
+##### Type
+
+There are several primitive types in JS.
+
+| Type | Meaning |
+| --- | --- |
+| `Null` | the type of variable that has not been assigned a value |
+| `Undefined` | the type of variable that has not been defined |
+| `Boolean` | true or false |
+| `Number` | a 64-bit signed number |
+| `BigInt` | a number of arbitrary magnitude |
+| `String` | a textual sequence of characters |
+| `Symbol` | a unique value |
+
+Boolean, number, and string are the types commonly thought of when creating variables. But variables can refer to the null or undefined type. Because JS doesn't enforce the declaration of a variable before it's used, it's possible for the varaible to be undefined.
+
+JS also has several object types.
+
+| Type | Use | Example |
+| --- | --- | --- |
+| `Object` | a collection of properties represented by name-value pairs. values can be of any type | `{a:3, b:'fish'}` |
+| `Function` | an object that has the ability to be called | `function a() {}` |
+| `Date` | calendar dates and times | `new Date('1995-12-17')` |
+| `Array` | an ordered sequence of any type | `[3, 'fish']` |
+| `Map` | a collection of key-value pairs that support efficient lookups | `new Map()` |
+| `JSON` | a lightweight data-interchange format used to share information across programs | `{"a":3, "b":"fish"}` |
+
+##### Common Operators
+
+When dealing with a number variable, JS supports standing math operators like add (`+`), subtract (`-`), multiply (`*`), divide (`/`), and equality (`===`). For string variables, JS supports concatenation (`+`), equality (`===`).
+
+##### Type Conversions
+
+JS is a weakly types language. This means a variable always has a type, but it can change type when it's assigned a new value, or that types can be automatically converted based upon the context. Sometimes the results of automatic conversions can be surprising if you're used to strongly typed langauges. Here are some examples.
+
+```JavaScript
+2 + '3';
+// OUTPUT: '23'
+2 * '3';
+// OUTPUT: 6
+[2] + [3];
+// OUTPUT: '23'
+true + null;
+// OUTPUT: 1
+true + undefined;
+// OUTPUT: NaN
+```
+
+Getting unexpected results is really common with the [equality](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness) operator.
+
+```JavaScript
+1 == '1';
+// OUTPUT: true
+null == undefined;
+// OUTPUT: true
+'' == false;
+// OUTPUT: true
+```
+
+These unexpected results happen in JS because is uses [complex rules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness#strict_equality_using) for defining equality based on the conversion of a type to a boolean value. Sometimes this will be called a [falsy](https://developer.mozilla.org/en-US/docs/Glossary/Falsy) or [truthy](https://developer.mozilla.org/en-US/docs/Glossary/Truthy) evaluations. To fix this, JS introduced the strict equality (`===`) and inequality (`!==`) operators. These skip the type conversions when computing equality.
+
+```JavaScript
+1 === '1';
+// OUTPUT: false
+null === undefined;
+// OUTPUT: false
+'' === false;
+// OUTPUT: false
+```
+
+Because strict equality is more intuitive, it's the preferred method and should be used in your code.
+
+Silly example to try in your console debugger:
+
+```JavaScript
+('b' + 'a' + +'a' + 'a').toLowerCase();
+// OUTPUT: banana
+```
+
+##### Conditionals
+
+JS supports many common programming language conditional constructs, including `if`, `else`, and `if else`. 
+
+```JavaScript
+if (a === 1) {
+  //...
+} else if (b === 2) {
+  //...
+} else {
+  //...
+}
+```
+
+You can also use the ternary operator, which provides a compact `if else` representation.
+
+```JavaScript
+a === 1 ? console.log(1) : console.log('not 1');
+```
+
+You can use boolean operations in the expression to create complex predicates. Common boolean operators include `&&` (and), `||` (or), and `!` (not).
+
+```JavaScript
+if (true && (!false || true)) {
+  //...
+}
+```
+
+###### Loops
+
+JS supports many common programming looping constructs. This includes `for`, `for in`, `for of`, `while`, `do while`, and `switch`. Here are some examples.
+
+**for**
+
+Notice the introduction of the common post incremental operation (`i++`) for adding one to a number.
+
+```JavaScript
+for (let i = 0; i < 2; i++) {
+  console.log(i);
+}
+// OUTPUT: 0 1
+```
+
+**do while**
+
+```JavaScript
+let i = 0;
+do {
+  console.log(i);
+  i++;
+} while (i < 2);
+// OUTPUT: 0 1
+```
+
+**while**
+
+```JavaScript
+let i = 0;
+while (i < 2) {
+  console.log(i);
+  i++;
+}
+// OUTPUT: 0 1
+```
+
+**for in**
+
+The `for in` statement iterates over the object property's name.
+
+```JavaScript
+const obj = { a: 1, b: 'fish' };
+for (const name in obj) {
+  console.log(name);
+}
+// OUTPUT: a
+// OUTPUT: b
+```
+
+For the array, the object's name is the array index.
+
+```JavaScript
+const arr = ['a', 'b'];
+for (const name in arr) {
+  console.log(name);
+}
+// OUTPUT: 0
+// OUTPUT: 1
+```
+
+**for of**
+
+The `for of` statement iterates over an iterable's (array, map, set, ...) property values.
+
+```JavaScript
+const arr = ['a', 'b'];
+for (const val of arr) {
+  console.log(val);
+}
+// OUTPUT: 'a'
+// OUTPUT: 'b'
+```
+
+**Break and continue**
+
+All the looping above allows for either a `break` or `continue` statement to abort or advance the loop.
+
+```JavaScript
+let i = 0;
+while (true) {
+  console.log(i);
+  if (i === 0) {
+    i++;
+    continue;
+  } else {
+    break;
+  }
+}
+// OUTPUT: 0 1
+```
+
+</details>
+
 ## HTTP Service
 ## Data & Authentication Services
 ## WebSocket
@@ -4873,4 +5094,8 @@ console.log(s.toLowerCase());
 <summary></summary>
 
 </details>
+```
+
+```JavaScript
+
 ```
