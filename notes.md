@@ -5213,6 +5213,41 @@ You can also add listeners directly into the HTML. For example, here is an `onCl
 
 </details>
 
+<details>
+
+<summary>Regular Expressions</summary>
+
+#### Regular Expressions
+
+Deeper reading: [MDN regular expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
+
+Regular expression support is built into JS. These are textual pattern matchers. You use a regular expression to find text in a string so you can replace it, or know that it exists.
+
+You can create a regular expression using the class constructor or a regular expression literal.
+
+```JavaScript
+const objRegex = new RegExp('ab*', 'i');
+const literalRegex = /ab*/i;
+```
+
+The `string` class has several functions that accept regular expresions, including `match`, `replace`, `search`, and `split`. For a quick test to see if tehre is a match, you can use the regular expression object's `test` function.
+
+```JavaScript
+const petRegex = /(dog)|(cat)|(bird)/gim;
+const text = 'Both cats and dogs are pets, but not rocks.';
+
+text.match(petRegex);
+// RETURNS: ['cat', 'dog']
+
+text.replace(petRegex, 'animal');
+// RETURNS: Both animals and animals are pets, but not rocks.
+
+petRegex.test(text);
+// RETURNS: true
+```
+
+</details>
+
 ## HTTP Service
 ## Data & Authentication Services
 ## WebSocket
