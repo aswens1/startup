@@ -5081,6 +5081,138 @@ while (true) {
 
 </details>
 
+<details>
+
+<summary>Document Object Model</summary>
+
+#### Document Object Model
+
+Deeper reading: 
+- [MDN Introduction to the DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction)
+- [W3C DOM Specification](https://www.w3.org/TR/REC-DOM-Level-1/level-one-core.html) - official spec is only for reference
+
+The document object model (DOM) is an object representation of the HTML elements that the browser uses to render the display. The browser exposes the DOM to external code so you can write programs that dynamically manipulate the HTML.
+
+The browser provides access to the DOM through a global varibale name `document` that points to the root element of the DOM. If you open the browser debugger console window and type the variable name `document`, you will see the DOM for the document the browser is currently reading.
+
+```
+> document
+
+<html lang="en">
+  <body>
+    <p>text1 <span>text2</span></p>
+    <p>text3</p>
+  </body>
+</html>
+```
+
+```CSS
+p {
+  color: red;
+}
+```
+
+There is a node in the DOM for everything in the HTML document. This includes elements, attributes, text, comments, whitespace. All of these nodes form a big tree, with the document node at the top.
+
+![dom](picturesForNotes/dom.jpg)
+
+##### Accessing the DOM
+
+Every element in an HTML document implements the DOM Element interface, which is derived from the DOM Node interface. The [DOM Element Interface](https://developer.mozilla.org/en-US/docs/Web/API/Element) provides the means for iterating child elements, accessing the parent element, and manipulating the element's attributes. From your JS code, you can start with the `document` variable and walk through every element in the tree.
+
+```JavaScript
+function displayElement(el) {
+  console.log(el.tagName);
+  for (const child of el.children) {
+    displayElement(child);
+  }
+}
+
+displayElement(document);
+```
+
+You can provide a CSS selector to the `querySelectorAll` function to select elements from the document. The `textContent` property contains all the element's text. You can access the textual representation of an element's HTML content with the `innerHTML` property.
+
+```JavaScript
+const listElements = document.querySelectorAll('p');
+for (const el of listElements) {
+  console.log(el.textContent);
+}
+```
+
+##### Modifying the DOM
+
+You can insert, modify, or delete the elements in the DOM. To create a new element, you first create the element on the DOM document. You can then insert the new element into the DOM tree by appending it to an existing element in the tree.
+
+```JavaScript
+function insertChild(parentSelector, text) {
+  const newChild = document.createElement('div');
+  newChild.textContent = text;
+
+  const parentElement = document.querySelector(parentSelector);
+  parentElement.appendChild(newChild);
+}
+
+insertChild('#courses', 'new course');
+```
+
+To delete elements, call the `removeChild` function on the parent element.
+
+```JavaScript
+function deleteElement(elementSelector) {
+  const el = document.querySelector(elementSelector);
+  el.parentElement.removeChild(el);
+}
+
+deleteElement('#courses div');
+```
+
+##### Injecting HTML
+
+The DOM also lets you inject entire blocks of HTML into an element. The following code finds the first `div` element in the DOM and replaces all the HTML it contains.
+
+```JavaScript
+const el = document.querySelector('div');
+el.innerHTML = '<div class="injected"><b>Hello</b>!</div>';
+```
+
+But directly injecting HTML as a block of text is a common attack from hackers. If an untrusted party can inject JS anywhere in your app, then that JS can represent itself as a user of the app. The attacker can then make requests for sensitive data, monitor activity, and steal credentials. The example below shows how the img element can be used to launch an attack as soon as the page is loaded.
+
+```JavaScript
+<img src="bogus.png" onerror="console.log('All your base are belong to us')" />
+```
+
+If you are injecting HTML, make sure it can't be manipulated by the user. Common injection paths include HTML input controls, URL parameters, and HTTP headers. Either santize any HTML that has variables, or use DOM manipulation fucntions instead of `innerHTML`.
+
+##### Event Listeners
+
+All DOM elements let you attach a function that gets called when an event occurs on the element. These functions are called [event listeners](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener). Here's an example of one that gets called when the element is clicked.
+
+```JavaScript
+const submitDataEl = document.querySelector('#submitData');
+submitDataEl.addEventListener('click', function (event) {
+  console.log(event.type);
+});
+```
+
+There are a lot of possible events you can add a listener to. This includes mouse, keyboard, scrolling, animation, video, audio, WebSocket, and clipboard events. You can see a full list on [MDN](https://developer.mozilla.org/en-US/docs/Web/Events). Here are some more commonly used ones.
+
+| Event Category | Description |
+| --- | --- |
+| Clipboard | cut, copied, pasted |
+| Focus | an element gets focus |
+| Keyboard | keys are pressed |
+| Mouse | click events |
+| Text selection | when text is selected |
+
+You can also add listeners directly into the HTML. For example, here is an `onClick` handler that is attached to a button.
+
+```HTML
+<button onclick='alert("clicked")'>click me</button>
+```
+
+</details>
+
 ## HTTP Service
 ## Data & Authentication Services
 ## WebSocket
