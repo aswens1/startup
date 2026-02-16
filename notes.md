@@ -5374,6 +5374,145 @@ function getScores() {
 
 </details>
 
+<details>
+
+<summary>Scope</summary>
+
+#### Scope
+
+Deeper reading:
+- [MDN Scope](https://developer.mozilla.org/en-US/docs/Glossary/Scope)
+- [MDN this](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)
+- [MDN Closures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures)
+
+Scope is defined as the variables that are visible in the current context of execution. JS has four different types of scope:
+1. **Global** - visible to all code
+2. **Module** - visible to all code running in a module
+3. **Function** - visible within a function
+4. **Block** - visible within a block of code delimited by curly braces
+
+##### Var
+
+Initially, JS used the keyward `var` to declare a variable. The problem is that unlike `const` or `let`, is that it ignores block scope. Variables declared with `var` are always logically hoisted at the top of the function. For example, the following code shows the same variable name being used within different enclosing scopes. However, because var ignores block scope the for loop is simply assigning a new value to `x` rather than declaring a new variable that has the same name.
+
+```JavaScript
+var x = 10;
+console.log('start', x);
+
+for (var x = 0; x < 1; x++) {
+  console.log('middle', x);
+}
+
+console.log('end', x);
+
+// OUTPUT: start 10
+//         middle 0
+//         end 1
+```
+
+Important: it rarely makes sense to use `var`. It's strongly suggested that you only use `const` and `let` unless you fully understand why you're using `var`.
+
+##### This
+
+The keyword `this` represents a variable that points to an object that contains the context within the scope of the currently executing line of code. The `this` variable is automatically declared and you can reference `this` anywhere in a JS program. Because the value of `this` depends upon the context in which it is referenced, there are three contexts where this can refer:
+
+1. **Global** - when `this` is referenced outside a function or object it refers to the `globalThis` object. This object represents the context for runtime environment. For example, when running in a browser, globalThis refers to the browser's window object.
+2. **Function** - when `this` is referenced in a function it refers to the object that owns the functions. That's either an object you defined or globalThis if the function is defined outside an object. Note that when running in JS strict mode, a global function's this variable is endefined instead of globalThis.
+3. **Object** - when `this` is referenced in an object it refers to the object
+
+```JavaScript
+'use strict';
+
+// global scope
+console.log('global:', this);
+console.log('globalThis:', globalThis);
+
+// function scope for a global function
+function globalFunc() {
+  console.log('globalFunctionThis:', this);
+}
+globalFunc();
+
+// object scope
+class ScopeTest {
+  constructor() {
+    console.log('objectThis:', this);
+  }
+
+  // function scope for an object function
+  objectFunc() {
+    console.log('objectFunctionThis:', this);
+  }
+}
+
+new ScopeTest().objectFunc();
+```
+
+Running the above code in a browser results in the following.
+
+```
+global: Window
+globalThis: Window
+globalFunctionThis: undefined
+objectThis: ScopeTest
+objectFunctionThis: ScopeTest
+```
+
+Note that if we were not using JS strict mode then GlobalFunctionThis would refer to Window.
+
+##### Closure
+
+A closure is defined as a function and its surrounding state. That means whatever variables are accessible when a function is created are available inside that function. This holds true even if you pass the function outside of the scope of its original creation.
+
+Here is an example of a function that is created as a part of an object. That means the function has access to the object's `this` pointer.
+
+```JavaScript
+globalThis.x = 'global';
+
+const obj = {
+  x: 'object',
+  f: function () {
+    console.log(this.x);
+  },
+};
+
+obj.f();
+// OUTPUT: object
+```
+
+Arrow functions are a bit different because they inherit the `this` pointer of their creation context. So if we change our previous example to return an arrow function, then the `this` pointer at the time of creation will be globalThis.
+
+```JavaScript
+globalThis.x = 'global';
+
+const obj = {
+  x: 'object',
+  f: () => console.log(this.x),
+};
+
+obj.f();
+// OUTPUT: global
+```
+
+However, if we make the function in our object that **returns** an arrow function, then the `this` pointer will be the object's `this` pointer since that was the active context at the same time the arrow function was created.
+
+```JavaScript
+globalThis.x = 'global';
+
+const obj = {
+  x: 'object',
+  make: function () {
+    return () => console.log(this.x);
+  },
+};
+
+const f = obj.make();
+f();
+// OUTPUT: object
+```
+
+</details>
+
 ## HTTP Service
 ## Data & Authentication Services
 ## WebSocket
