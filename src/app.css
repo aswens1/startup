@@ -171,6 +171,7 @@ header, footer {
 #get-started p {
     margin-bottom: 1.25rem;
     font-size: 2em;
+
 }
 
 .auth-forms {
@@ -178,6 +179,7 @@ header, footer {
     grid-template-columns: 1fr 1fr;
     gap: 3.5rem;
     margin: 2.5rem;
+
 }
 
 .auth-form {
@@ -230,12 +232,6 @@ header, footer {
 .auth-form button:active {
     transform: translateY(2px);
     box-shadow: 0 2px 0 #111;
-}
-
-@media (max-width: 700px) {
-    .auth-forms {
-        grid-template-columns: 1fr;
-    }
 }
 
 /* -------------------------------------------------- */
