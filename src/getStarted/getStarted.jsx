@@ -1,11 +1,16 @@
 import React from 'react';
 import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
+import { useNavigate, NavLink } from "react-router-dom";
 
 export function Login() {
   return (
     <>
-    <Header />
+      <header>
+        <nav className='flex pl-8 justify-left gap-8'>
+          <NavLink to="/" className="text-black !no-underline hover:no-underline">Home</NavLink>
+        </nav>
+      </header>
 
     <main className="min-h-[calc(100vh-160px)] flex flex-col justify-center items-center pt-20 pb-20">
 
