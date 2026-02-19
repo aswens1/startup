@@ -24,7 +24,7 @@ body::before {
     position: fixed;
     inset: 0;
   
-    background-image: url("/public/pppixelate.svg");
+    background-image: url("/pppixelate.svg");
     background-repeat: repeat;
     background-size: 300px 300px;
     background-position: 0 0;
@@ -169,7 +169,7 @@ header, footer {
 }
 
 #get-started p {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
     font-size: 2em;
 }
 
@@ -177,8 +177,6 @@ header, footer {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
-    margin-top: 1.5rem; 
-
 }
 
 .auth-form {
