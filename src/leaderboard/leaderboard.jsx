@@ -44,10 +44,6 @@ export function Leaderboard() {
             </div>
         </div>
     </main>
-
-
-
-      <Footer />
     </>
   );
 }

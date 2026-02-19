@@ -132,10 +132,6 @@ export function GameSelectionMenu() {
             </div>
           </div>
         </main>
-    
-
-
-    <Footer />
     </>
   );
 }

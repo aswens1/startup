@@ -14,15 +14,18 @@ import { Landing } from './landing/landing.jsx'
 export default function App() {
   return (
     <BrowserRouter>
-        <Routes>
-          <Route path='/' element={ <Landing /> } exact />
-          <Route path='/leaderboard' element={ <Leaderboard /> } />
-          <Route path='/gameMenu' element={ <GameSelectionMenu /> } />
-          <Route path='/login' element={ <Login />} />                
-          <Route path='/collabCanvas' element={ <CollaborativeCanvas /> } />
-          <Route path='/gameCanvas' element={ <GameCanvas /> } />
-          <Route path='*' element={<NotFound />} />
-        </Routes>
+      <Routes>
+        <Route path='/' element={ <Landing /> } exact />
+        <Route path='/leaderboard' element={ <Leaderboard /> } />
+        <Route path='/gameMenu' element={ <GameSelectionMenu /> } />
+        <Route path='/login' element={ <Login />} />                
+        <Route path='/collabCanvas' element={ <CollaborativeCanvas /> } />
+        <Route path='/gameCanvas' element={ <GameCanvas /> } />
+        <Route path='*' element={<NotFound />} />
+      </Routes>
+      <footer>
+          <small>&copy; <span>2026</span></small> <span>|</span> <span><a href="https://github.com/aswens1/startup" className='!no-underline text-black'>Source Code</a></span>
+      </footer>
     </BrowserRouter>
   );
 }

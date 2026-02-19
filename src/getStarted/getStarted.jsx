@@ -3,6 +3,8 @@ import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
 import { useNavigate, NavLink } from "react-router-dom";
 
+import { AuthState } from './authState.js';
+
 export function Login() {
   return (
     <>
@@ -49,7 +51,6 @@ export function Login() {
 
       </main>
 
-    <Footer />
     </>
 
   );

@@ -190,8 +190,6 @@ export function GameCanvas() {
 
       </main>
 
-      <Footer />
-
     </>
   );
 }

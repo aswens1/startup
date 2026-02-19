@@ -27,7 +27,6 @@ export function Landing() {
                 >Get Started</Link>
             </div>
         </main>
-        <Footer />
     </>
   );
 }
