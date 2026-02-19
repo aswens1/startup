@@ -18,7 +18,7 @@ export function Login() {
 
       <div className="bg-white/85 rounded-xl px-8 py-12 max-w-3xl w-full flex flex-col items-center text-center overflow-auto">
 
-        <h1 className="get-started-title" id="main-title">8 Bit Alley</h1>
+        {/* <h1 className="get-started-title" id="main-title">8 Bit Alley</h1> */}
 
           <div className="auth-forms">
               {/* <!-- login --> */}
