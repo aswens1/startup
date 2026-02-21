@@ -8,11 +8,7 @@ import { useNavigate, NavLink } from "react-router-dom";
 export function Landing() {
   return (
     <>
-      {/* <header>
-          <nav className='flex pl-8 justify-left gap-8'>
-          <NavLink to="/" className="text-black !no-underline hover:no-underline">Home</NavLink>
-          </nav>
-      </header> */}
+
         <main className="min-h-[calc(100vh-160px)] flex justify-center pt-20 pb-20">
             <div className="bg-white/85 rounded-xl px-8 py-16 max-w-3xl w-full flex justify-center flex-col items-center text-center">
                 <h1 className="font-['Jersey_10'] text-[7rem] tracking-wider leading-[0.9]" id="main-title">8 Bit Alley</h1>
