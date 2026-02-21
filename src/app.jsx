@@ -2,31 +2,127 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, NavLink } from 'react-router-dom';
+import { AuthState } from './getStarted/authState.js';
 
 import { CollaborativeCanvas } from './collabCanvas/collabCanvas.jsx';
 import { GameCanvas } from './gameCanvas/gameCanvas.jsx';
 import { Login } from './getStarted/getStarted.jsx';
 import { Leaderboard } from './leaderboard/leaderboard.jsx';
 import { GameSelectionMenu } from './selectMenu/selectMenu.jsx';
-import { Landing } from './landing/landing.jsx'
+import { Landing } from './landing/landing.jsx';
+
+// Set to false when auth is implemented to gate protected routes and nav links
+const DEBUG_SKIP_AUTH = true;
+
+function NavDropdown({ label, isAuthenticated }) {
+  const [open, setOpen] = React.useState(false);
+  const ref = React.useRef(null);
+
+  React.useEffect(() => {
+    function handleClickOutside(e) {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    }
+    if (open) {
+      document.addEventListener('click', handleClickOutside);
+      return () => document.removeEventListener('click', handleClickOutside);
+    }
+  }, [open]);
+
+  return (
+    <div className="nav-dropdown" ref={ref}>
+      <button
+        type="button"
+        className={`nav-dropdown-trigger ${open ? 'is-open' : ''}`}
+        onClick={(e) => {
+          e.stopPropagation();
+          setOpen((o) => !o);
+        }}
+        aria-expanded={open}
+        aria-haspopup="true"
+      >
+        {label}
+        <span className="nav-dropdown-chevron" aria-hidden>▾</span>
+      </button>
+      {open && (
+        <ul className="nav-dropdown-menu" role="menu">
+          {isAuthenticated && (
+            <>
+              <li><NavLink to="/dashboard" className="nav-link" onClick={() => setOpen(false)}>Dashboard</NavLink></li>
+              <li><NavLink to="/gameMenu" className="nav-link" onClick={() => setOpen(false)}>Join a Game</NavLink></li>
+              <li><NavLink to="/leaderboard" className="nav-link" onClick={() => setOpen(false)}>Leaderboard</NavLink></li>
+              <li><NavLink to="/collabCanvas" className="nav-link" onClick={() => setOpen(false)}>Collaborative Canvas</NavLink></li>
+              <li><NavLink to="/gameCanvas" className="nav-link" onClick={() => setOpen(false)}>Play the Game</NavLink></li>
+            </>
+          )}
+        </ul>
+      )}
+    </div>
+  );
+}
 
 export default function App() {
+  const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
+  const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
+  const [authState, setAuthState] = React.useState(currentAuthState);
+  const isAuthenticated = authState === AuthState.Authenticated;
+
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path='/' element={ <Landing /> } exact />
-        <Route path='/leaderboard' element={ <Leaderboard /> } />
-        <Route path='/gameMenu' element={ <GameSelectionMenu /> } />
-        <Route path='/login' element={ <Login />} />                
-        <Route path='/collabCanvas' element={ <CollaborativeCanvas /> } />
-        <Route path='/gameCanvas' element={ <GameCanvas /> } />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
-      <footer>
-          <small>&copy; <span>2026</span></small> <span>|</span> <span><a href="https://github.com/aswens1/startup" className='!no-underline text-black'>Source Code</a></span>
-      </footer>
+      <div className="app-layout">
+        <header>
+          <nav className="app-nav">
+            <NavLink to="/" className="nav-link">Home</NavLink>
+            <NavLink to="/howToPlay" className="nav-link">How to Play</NavLink>
+            <NavDropdown
+              label="More"
+              isAuthenticated={DEBUG_SKIP_AUTH || isAuthenticated}
+            />
+          </nav>
+        </header>
+
+        <main className="app-main">
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="/gameMenu" element={<GameSelectionMenu />} />
+            <Route path="/dashboard" element={<PlaceholderPage title="Dashboard" />} />
+            <Route path="/howToPlay" element={<PlaceholderPage title="How to Play" />} />
+            <Route
+              path="/login"
+              element={
+                <Login
+                  // When auth is implemented, pass: userName, authState, onAuthChange
+                />
+              }
+            />
+            <Route path="/collabCanvas" element={<CollaborativeCanvas />} />
+            <Route path="/gameCanvas" element={<GameCanvas />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
+
+        <footer>
+          <small>&copy; <span>2026</span></small> <span>|</span>{' '}
+          <span>
+            <a href="https://github.com/aswens1/startup" className="footer-link">
+              Source Code
+            </a>
+          </span>
+        </footer>
+      </div>
     </BrowserRouter>
+  );
+}
+
+function PlaceholderPage({ title }) {
+  return (
+    <div className="hero">
+      <div className="content">
+        <h1>{title}</h1>
+        <p>Placeholder — add content when ready.</p>
+      </div>
+    </div>
   );
 }
 

@@ -128,13 +128,18 @@ body::before {
 
 /*    STYLING FOR THE HEADER AND FOOTER      */
 
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 10;
-
 }
 
 footer {
@@ -152,6 +157,106 @@ header, footer {
     text-align: center;
     letter-spacing: 0.06em;
     font-size: large;
+}
+
+.app-nav {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2rem;
+    padding: 0.75rem 2rem;
+}
+
+.nav-link {
+    color: #111;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+}
+
+.nav-link.active {
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+/* Dropdown for overflow nav items */
+.nav-dropdown {
+    position: relative;
+}
+
+.nav-dropdown-trigger {
+    display: inline-flex;
+    align-items: center;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+    background: none;
+    border: none;
+    color: #111;
+    font: inherit;
+    letter-spacing: 0.06em;
+    font-size: large;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.nav-dropdown-trigger:hover {
+    text-decoration: underline;
+}
+
+.nav-dropdown-chevron {
+    display: inline-block;
+    margin-left: 0.25rem;
+    font-size: 0.75em;
+    transition: transform 0.2s ease;
+}
+
+.nav-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 12rem;
+    margin: 0.25rem 0 0 0;
+    padding: 0.5rem 0;
+    list-style: none;
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(8px);
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+    z-index: 20;
+}
+
+.nav-dropdown-menu li {
+    margin: 0;
+}
+
+.nav-dropdown-menu .nav-link {
+    display: block;
+    padding: 0.5rem 1rem;
+}
+
+.nav-dropdown-menu .nav-link:hover {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+/* Main content: padding so it isn’t hidden by fixed header/footer */
+.app-main {
+    flex: 1;
+    padding-top: 4.5rem;
+    padding-bottom: 4rem;
+}
+
+.footer-link {
+    color: #111;
+    text-decoration: none;
+}
+
+.footer-link:hover {
+    text-decoration: underline;
 }
 
 /* -------------------------------------------------- */
