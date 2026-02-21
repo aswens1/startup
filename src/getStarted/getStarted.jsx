@@ -13,17 +13,11 @@ export function Login() {
 
   return (
     <>
-      <header>
-        <nav className='flex pl-8 justify-left gap-8'>
-          <NavLink to="/" className="text-black !no-underline hover:no-underline">Home</NavLink>
-        </nav>
-      </header>
+      <main className="min-h-0 flex-1 flex flex-col items-center py-10 px-4">
 
-      <main className="min-h-[calc(100vh-160px)] flex justify-center pt-20 pb-20">
+      <div className="bg-white/85 rounded-xl px-6 py-8 md:px-8 md:py-10 max-w-4xl w-full flex flex-col items-center text-center min-h-0 flex-1 overflow-y-auto max-h-[calc(100vh-12rem)]">
 
-      <div className="bg-white/85 rounded-xl px-8 py-12 max-w-3xl w-full flex flex-col items-center text-center overflow">
-
-          <div className="auth-forms">
+          <div className="auth-forms grid grid-cols-1 md:grid-cols-2 max-w-4xl">
               {/* <!-- login --> */}
               <div>
                   <form action="/login" method="post" className="auth-form">
