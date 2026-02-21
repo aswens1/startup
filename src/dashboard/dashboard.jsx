@@ -1,19 +1,53 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Header } from '../components/header.jsx';
-import { Footer } from '../components/footer.jsx';
-import { useNavigate, NavLink } from "react-router-dom";
+import { React, useState, useEffect } from 'react';
 
 
-export function Dashboard() {
+function StatCard({ value, label }) {
+  return (
+    <div className="bg-white rounded-xl shadow-md px-6 py-6 flex flex-col items-center min-w-[120px]">
+      <div className="text-3xl font-bold">{value}</div>
+      <div className="text-sm mt-2 opacity-70">{label}</div>
+    </div>
+  );
+}
+
+export function Dashboard({ userName }) {
+
+  // stats are stored locally for now, start at zero
+
+  const [stats, setStats] = useState({
+    pixels: 0,
+    gamesPlayed: 0,
+    winRate: 0,
+    streak: 0,
+  });
+
+  useEffect(() => {
+    const savedStats = localStorage.getItem(`game_stats_${userName}`);
+
+    if (savedStats) {
+      setStats(JSON.parse(savedStats));
+    } else {
+      localStorage.setItem(`game_stats_${userName}`, JSON.stringify(stats));
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem(`game_stats_${userName}`, JSON.stringify(stats));
+  }, [stats, userName]);
+
   return (
     <>
-
-        <main className="min-h-[calc(100vh-160px)] flex justify-center pt-20 pb-20">
-            <div className="bg-white/85 rounded-xl px-8 py-16 max-w-3xl w-full flex justify-center flex-col items-center text-center">
-                Welcome to 8bit alley!
+      <main className="min-h-[calc(100vh-160px)] flex justify-center pt-20 pb-20">
+          <div className="bg-white/85 rounded-xl px-8 py-16 max-w-3xl w-full flex justify-start flex-col items-center text-center">
+            <h1 className="font-['Jersey_10']">Hi {userName}!</h1>
+            <div className="flex flex-wrap justify-center gap-6">
+              <StatCard value={stats.pixels} label="Pixels Placed" />
+              <StatCard value={stats.gamesPlayed} label="Games Played" />
+              <StatCard value={stats.winRate} label="Win Rate" />
+              <StatCard value={stats.streak} label="Streak" />
             </div>
-        </main>
+          </div>
+      </main>
     </>
   );
 }

@@ -101,7 +101,7 @@ export default function App() {
             <Route path="/" element={<Landing />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/gameMenu" element={<GameSelectionMenu />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard userName={userName} />} />
             <Route path="/howToPlay" element={<PlaceholderPage title="How to Play" />} />
             <Route
               path='/login'
