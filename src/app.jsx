@@ -2,7 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 
-import { BrowserRouter, Route, Routes, NavLink } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, NavLink, useNavigate } from 'react-router-dom';
 import { AuthState } from './getStarted/authState.js';
 
 import { CollaborativeCanvas } from './collabCanvas/collabCanvas.jsx';
@@ -11,9 +11,7 @@ import { Login } from './getStarted/getStarted.jsx';
 import { Leaderboard } from './leaderboard/leaderboard.jsx';
 import { GameSelectionMenu } from './selectMenu/selectMenu.jsx';
 import { Landing } from './landing/landing.jsx';
-
-// Set to false when auth is implemented to gate protected routes and nav links
-const DEBUG_SKIP_AUTH = true;
+import { Dashboard } from './dashboard/dashboard.jsx';
 
 function NavDropdown({ label, isAuthenticated }) {
   const [open, setOpen] = React.useState(false);
@@ -61,23 +59,40 @@ function NavDropdown({ label, isAuthenticated }) {
   );
 }
 
+
 export default function App() {
   const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
   const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
   const [authState, setAuthState] = React.useState(currentAuthState);
   const isAuthenticated = authState === AuthState.Authenticated;
 
+  const navigate = useNavigate();
+
+  function logout() {
+    localStorage.removeItem('userName');
+    setUserName('');
+    setAuthState(AuthState.Unauthenticated);
+    navigate('/');
+  }
+  
+
   return (
-    <BrowserRouter>
       <div className="app-layout">
         <header>
           <nav className="app-nav">
             <NavLink to="/" className="nav-link">Home</NavLink>
             <NavLink to="/howToPlay" className="nav-link">How to Play</NavLink>
-            <NavDropdown
-              label="More"
-              isAuthenticated={DEBUG_SKIP_AUTH || isAuthenticated}
-            />
+            {authState === AuthState.Authenticated && (
+              <NavDropdown label="More" isAuthenticated={isAuthenticated}/>
+            )}
+
+            {authState === AuthState.Authenticated && (
+              <button
+                onClick={() => logout()}
+                className='nav-link'
+                style={{ background:'none', border:'none', cursor:'pointer' }}
+                >Logout</button>
+            )}
           </nav>
         </header>
 
@@ -86,13 +101,18 @@ export default function App() {
             <Route path="/" element={<Landing />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/gameMenu" element={<GameSelectionMenu />} />
-            <Route path="/dashboard" element={<PlaceholderPage title="Dashboard" />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/howToPlay" element={<PlaceholderPage title="How to Play" />} />
             <Route
-              path="/login"
+              path='/login'
               element={
                 <Login
-                  // When auth is implemented, pass: userName, authState, onAuthChange
+                  userName={userName}
+                  authState={authState}
+                  onAuthChange={(userName, authState) => {
+                    setAuthState(authState);
+                    setUserName(userName);
+                  }}
                 />
               }
             />
@@ -111,7 +131,6 @@ export default function App() {
           </span>
         </footer>
       </div>
-    </BrowserRouter>
   );
 }
 
