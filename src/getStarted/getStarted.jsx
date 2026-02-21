@@ -1,4 +1,3 @@
-import { Authenticated } from './authenticated.jsx';
 import { Unauthenticated } from './unauthenticated.jsx';
 import { AuthState } from './authState.js';
 import { useNavigate } from 'react-router-dom';
