@@ -46,7 +46,7 @@ export function GameSelectionMenu() {
                         <div className="game-title">{game.name}</div>
                         <div className="meta">
                           <span>Game Type:</span> {game.type}<br />
-                          <span>Players:</span> {game.players}<br />
+                          <span>Players:</span> {game.players} / {game.maxPlayers}<br />
                           <span>Teams:</span> {game.teams}<br />
                           <span>Colour Scheme:</span> {game.colours}<br />
                           <span>Status:</span> {game.status}                          
@@ -64,7 +64,25 @@ export function GameSelectionMenu() {
             <h1 className="font-['Jersey_10'] text-3xl md:text-[4rem]">Create a Game</h1>
 
             <div className="overflow-y-auto max-h-80 md:max-h-96 p-4 mb-4 text-left flex-1 min-h-0">
-              <form action="/createGame" method="post" className="grid grid-cols-1 gap-5 md:gap-7" id="create-game">
+              <form onSubmit={(e) => {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                
+                const newGame = {
+                  id: Date.now(),
+                  name: formData.get('gameName'),
+                  type: formData.get('gameType'),
+                  teams: formData.get('numberOfTeams'),
+                  players: 0,
+                  maxPlayers: 20,
+                  status: 'Waiting for players',
+                  colours: 'Default'
+                };
+
+                setGames(prev => [...prev, newGame]);
+
+                e.target.reset();
+              }} className="grid grid-cols-1 gap-5 md:gap-7" id="create-game">
                 <div className="create-game-section">
                   <label htmlFor="game-name">Game Name:</label>
                   <input className="input w-full" type="text" id="game-name" name="gameName" required />
