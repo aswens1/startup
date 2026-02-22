@@ -1,7 +1,22 @@
-import React from 'react';
+import { React, use, useEffect, useState } from 'react';
 import '../app.css';
 
 export function GameSelectionMenu() {
+
+  const [games, setGames] = useState([]);
+
+  useEffect(() => {
+    const savedGames = localStorage.getItem(`games`);
+    if (savedGames) {
+      setGames(JSON.parse(savedGames));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(`games`, JSON.stringify(games));
+  }, [games]);
+
+
   return (
     <main className="min-h-0 flex-1 flex flex-col items-center py-10 px-4">
       <div
@@ -14,66 +29,32 @@ export function GameSelectionMenu() {
 
             <form action="gamePlayCanvas.html" method="get" className="flex flex-col min-h-0 flex-1">
               <div className="overflow-y-auto max-h-80 md:max-h-96 p-4 mb-4 text-left space-y-4 flex-shrink-0">
-                <div className="game-option">
-                  <label className="game-card">
-                    <input type="radio" id="game1" name="game" value="pixel-chaos" />
-                    <div className="game-info">
-                      <div className="game-title">Mock Game 1</div>
-                      <div className="meta">
-                        <span>Game Type:</span> Pixel Chaos<br />
-                        <span>Players:</span> 12 / 20<br />
-                        <span>Teams:</span> 4<br />
-                        <span>Colour Scheme:</span> Neon<br />
-                        <span>Status:</span> In Progress
+                
+                {games.length === 0 && (
+                  <div className="opacity-75 text-center">Create a new game to start playing!</div>
+                )}
+
+                {games.map((game, index) => (
+                  <div className="game-option">
+                    <label className="game-card">
+                      <input
+                        type='radio'
+                        name='game'
+                        value={game.id}  
+                      />
+                      <div className="game-info">
+                        <div className="game-title">{game.name}</div>
+                        <div className="meta">
+                          <span>Game Type:</span> {game.type}<br />
+                          <span>Players:</span> {game.players}<br />
+                          <span>Teams:</span> {game.teams}<br />
+                          <span>Colour Scheme:</span> {game.colours}<br />
+                          <span>Status:</span> {game.status}                          
+                        </div>
                       </div>
-                    </div>
-                  </label>
-                </div>
-                <div className="game-option">
-                  <label className="game-card">
-                    <input type="radio" id="game2" name="game" value="retro-wall" />
-                    <div className="game-info">
-                      <div className="game-title">Mock Game 2</div>
-                      <div className="meta">
-                        <span>Game Type:</span> Retro Wall<br />
-                        <span>Players:</span> 6 / 10<br />
-                        <span>Teams:</span> 2<br />
-                        <span>Colour Scheme:</span> 8-Bit Retro<br />
-                        <span>Status:</span> Waiting for Players
-                      </div>
-                    </div>
-                  </label>
-                </div>
-                <div className="game-option">
-                  <label className="game-card">
-                    <input type="radio" id="game3" name="game" value="color-riot" />
-                    <div className="game-info">
-                      <div className="game-title">Mock Game 3</div>
-                      <div className="meta">
-                        <span>Game Type:</span> Color Riot<br />
-                        <span>Players:</span> 18 / 30<br />
-                        <span>Teams:</span> None (Free Draw)<br />
-                        <span>Colour Scheme:</span> High Contrast<br />
-                        <span>Status:</span> Almost Full
-                      </div>
-                    </div>
-                  </label>
-                </div>
-                <div className="game-option">
-                  <label className="game-card">
-                    <input type="radio" id="game4" name="game" value="color-riot" />
-                    <div className="game-info">
-                      <div className="game-title">Mock Game 4</div>
-                      <div className="meta">
-                        <span>Game Type:</span> Color Riot<br />
-                        <span>Players:</span> 18 / 30<br />
-                        <span>Teams:</span> None (Free Draw)<br />
-                        <span>Colour Scheme:</span> High Contrast<br />
-                        <span>Status:</span> Almost Full
-                      </div>
-                    </div>
-                  </label>
-                </div>
+                    </label>
+                  </div>  
+                ))}
               </div>
               <button className="get-started-btn flex-shrink-0 mt-auto" type="submit">Join Selected Game</button>
             </form>
