@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 
 function StatCard({ value, label }) {
@@ -46,6 +47,15 @@ export function Dashboard({ userName }) {
               <StatCard value={stats.winRate} label="Win Rate" />
               <StatCard value={stats.streak} label="Streak" />
             </div>
+
+            <Link to="/gameMenu"
+              className="mt-8 font-['Jersey_10'] text-3xl tracking-widest px-10 py-3 
+              border-4 border-black rounded-lg 
+              shadow-[0_6px_0_#111] 
+              hover:-translate-y-1 hover:shadow-[0_8px_0_#111] 
+              active:translate-y-1 transition
+              !no-underline text-black !hover:no-underline"
+              >Play a Game!</Link>
           </div>
       </main>
     </>
