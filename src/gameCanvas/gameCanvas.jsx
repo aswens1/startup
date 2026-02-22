@@ -1,16 +1,19 @@
-import React from 'react';
+import { React, useState } from 'react';
 import { Footer } from '../components/footer.jsx';
 import '../canvas.css';
 import { Link } from 'react-router-dom';
 
 
 export function GameCanvas() {
+
+  const gridSize = 20;
+
   return (
     <>
     <main className="relative w-screen h-screen pt-16">
-      <div className="grid grid-cols-50 grid-rows-50 w-max h-max"></div>
+      {/* <div className="grid grid-cols-50 grid-rows-50 w-max h-max"></div> */}
 
-        <section id="canvas-area" className="absolute inset-0 bg-white overflow-auto">
+        {/* <section id="canvas-area" className="absolute inset-0 bg-white overflow-auto">
             <div className="pixel-grid">
                 <div className="pixel"></div><div className="pixel"></div><div className="pixel"></div><div className="pixel"></div><div className="pixel"></div><div className="pixel"></div>
                 <div className="pixel"></div><div className="pixel"></div><div className="pixel"></div><div className="pixel"></div><div className="pixel"></div><div className="pixel"></div>
@@ -153,7 +156,17 @@ export function GameCanvas() {
                 <div className="pixel"></div><div className="pixel"></div><div className="pixel"></div><div className="pixel"></div><div className="pixel"></div><div className="pixel"></div>
                 <div className="pixel"></div><div className="pixel"></div><div className="pixel"></div><div className="pixel"></div><div className="pixel"></div><div className="pixel"></div>
             </div>
-        </section>
+        </section> */}
+
+        <div className="pixel-grid"
+          style={{ display: "grid", 
+          gridTemplateColumns: `repeat(${gridSize}, 20px)`,
+          gridTemplateRows: `repeat(${gridSize}, 20px)`
+        }}>
+          { Array.from({ length: gridSize * gridSize }).map((_, index) => (
+            <div key={index} className="pixel"></div>
+          ))}
+        </div>
 
         <aside id="control-panel" className="fixed right-0 top-1/2 transform -translate-y-1/2 bg-white/90 backdrop-blur-md p-4 rounded-l-lg shadow-lg w-64 z-20">
             <div className="panel-section">

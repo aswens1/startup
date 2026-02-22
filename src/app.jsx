@@ -102,7 +102,7 @@ export default function App() {
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/gameMenu" element={<GameSelectionMenu />} />
             <Route path="/dashboard" element={<Dashboard userName={userName} />} />
-            <Route path="/howToPlay" element={<PlaceholderPage title="How to Play" />} />
+            <Route path="/howToPlay" element={<HowToPlay />} />
             <Route
               path='/login'
               element={
@@ -134,15 +134,30 @@ export default function App() {
   );
 }
 
-function PlaceholderPage({ title }) {
+// function HowToPlay() {
+//   return (
+//     <div className="hero">
+//       <div className="content">
+//         <h1>{title}</h1>
+//         <p>Placeholder — add content when ready.</p>
+//       </div>
+//     </div>
+//   );
+// }
+
+function HowToPlay() {
   return (
-    <div className="hero">
-      <div className="content">
-        <h1>{title}</h1>
-        <p>Placeholder — add content when ready.</p>
-      </div>
-    </div>
-  );
+    <>
+      <main className="min-h-[calc(100vh-160px)] flex justify-center pt-20 pb-20">
+        <div className="bg-white/85 rounded-xl px-8 py-16 max-w-3xl w-full flex justify-start flex-col text-left">
+          <h1 className='text-center'>How to Play</h1>
+          <p className='text-lg'>Welcome to 8 Bit Alley! Login to get started!</p>
+          <p>The first thing you'll see is the dashboard! This displays your stats: number of pixels coloured, games played, win rate, and streak.</p>
+          <p>Click 'Play a Game' to go to the game menu! Here, you can browse existing games and join them, or create one yourself!</p>
+        </div>
+      </main>
+    </>
+  )
 }
 
 function NotFound() {
