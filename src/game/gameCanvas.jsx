@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { GameEngine } from "./gameEngine";
 import { CaptureMode } from "./modes/captureMode";
 import { useParams } from 'react-router-dom';
@@ -37,9 +37,12 @@ function ColorButtons({ colors, selectedColor, setSelectedColor }) {
   );
 }
 
+
+
 export function GameCanvas() {
 
   const { gameId } = useParams();
+  const navigate = useNavigate();
 
   const gridSize = 20;
 
@@ -62,6 +65,21 @@ export function GameCanvas() {
     setBoard(prevBoard => 
       engine.handleMove(prevBoard, row, col, selectedColor)
     );
+  }
+
+  function LeaveGame() {
+    const savedGames = JSON.parse(localStorage.getItem('games') || '[]');
+    const currentGame = JSON.parse(localStorage.getItem('currentGame'));
+    if (!currentGame) return;
+  
+    const updatedGames = savedGames.map(game => 
+      game.id === currentGame.id
+      ? { ...game, players: Math.max(game.players - 1, 0), status: 'Waiting for Players'}
+      : game 
+    );
+    localStorage.setItem('games', JSON.stringify(updatedGames));
+    localStorage.removeItem('currentGame');
+    navigate('/gameMenu');
   }
 
   return (
@@ -118,7 +136,7 @@ export function GameCanvas() {
 
           <Link to='/leaderboard' className='w-full bg-gray-300 hover:bg-gray-400 rounded py-2 mb-2
           block text-center no-underline text-black'>Leaderboard</Link>
-          <button className="w-full bg-gray-300 hover:bg-gray-400 rounded py-2">Leave Game</button>
+          <button className="w-full bg-gray-300 hover:bg-gray-400 rounded py-2" onClick={LeaveGame}>Leave Game</button>
 
         </div>
 

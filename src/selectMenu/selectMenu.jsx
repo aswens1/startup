@@ -2,6 +2,10 @@ import { React, use, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../app.css';
 import { GAME_MODES } from '../game/gameModes';
+import { GameEngine } from '../game/gameEngine';
+
+// this will be the api call to assign random colours
+const PLAYER_COLORS = ["#ef4444", "#3b82f6", "#22c55e", "#facc15"]
 
 export function GameSelectionMenu() {
 
@@ -21,72 +25,89 @@ export function GameSelectionMenu() {
     localStorage.setItem(`games`, JSON.stringify(games));
   }, [games]);
 
+  const joinGame = () => {
+    if (!selectedGameId) return;
+
+    setGames(prevGames =>
+      prevGames.map(game =>
+        game.id === selectedGameId
+        ? {
+          ...game,
+          players: game.players + 1,
+          status:
+            game.players + 1 >= game.maxPlayers ? 'Full' : 'Waiting for Players',
+        }
+        : game 
+      )
+    );
+
+    const game = games.find(g => g.id === selectedGameId);
+    const color = PLAYER_COLORS[game?.players || 0];
+
+    localStorage.setItem('currentGame', JSON.stringify({ id: selectedGameId, color }));
+    navigate(`/game/${selectedGameId}`);
+  }
+
+  const createGame = e => {
+    e.preventDefault();
+    const formData = new formData(e.target);
+
+    const maxPlayers = Number(formData.get('maxPlayers') || 4);
+
+    // fixed type for capture. if i get this one super good ill add other game modes too
+    const newGame = {
+      id: Date.now(),
+      name: formData.get('gameName'),
+      type: 'capture',
+      players: 0,
+      maxPlayers: maxPlayers,
+      status: 'Waiting for Players',
+    };
+
+    setGames(prev => [...prev, newGame]);
+    e.target.reset();
+  }
 
   return (
     <main className="min-h-0 flex-1 flex flex-col items-center py-10 px-4">
-      <div
-        className="bg-white/85 rounded-xl px-6 py-8 md:px-8 md:py-10 max-w-5xl w-full flex flex-col items-center text-center min-h-0 flex-1 overflow-y-auto max-h-[calc(100vh-12rem)]"
-      >
+      <div className="bg-white/85 rounded-xl px-6 py-8 md:px-8 md:py-10 max-w-5xl w-full flex flex-col items-center text-center min-h-0 flex-1 overflow-y-auto max-h-[calc(100vh-12rem)]">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 w-full max-w-4xl">
-
           <div className="flex flex-col min-h-0">
+
+            {/* JOIN GAME  */}
             <h1 className="font-['Jersey_10'] text-3xl md:text-[4rem] mb-0">Join a Game</h1>
+            <div className="overflow-y-auto max-h-80 md:max-h-96 p-4 mb-4 text-left space-y-4 flex-shrink-0">
+              {games.length === 0 && (
+                <div className="opacity-75 text-center">Create a new game to start playing!</div>
+              )}
 
-            <form 
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (!selectedGameId) return;
-
-              setGames(prevGames => 
-                prevGames.map(game =>
-                  game.id === selectedGameId
-                  ? {
-                    ...game,
-                    players: game.players + 1,
-                    status:
-                      game.players + 1 >= game.maxPlayers
-                      ? 'Full'
-                      : 'Waiting for Players'
-                  }
-                  : game 
-                ));
-                navigate(`/game/${selectedGameId}`);
-            }}
-              className="flex flex-col min-h-0 flex-1">
-              <div className="overflow-y-auto max-h-80 md:max-h-96 p-4 mb-4 text-left space-y-4 flex-shrink-0">
-                
-                {games.length === 0 && (
-                  <div className="opacity-75 text-center">Create a new game to start playing!</div>
-                )}
-
-                {games.map((game, index) => (
-                  <div className="game-option">
-                    <label className="game-card">
-                      <input
-                        type='radio'
-                        name='game'
-                        value={game.id}
-                        checked={selectedGameId === game.id}
-                        onChange={() => setSelectedGameId(game.id)}
-                      />
-                      <div className="game-info">
-                        <div className="game-title">{game.name}</div>
-                        <div className="meta">
-                          <span>Game Type:</span> {game.type}<br />
-                          <span>Players:</span> {game.players} / {game.maxPlayers}<br />
-                          <span>Teams:</span> {game.teams}<br />
-                          <span>Colour Scheme:</span> {game.colours}<br />
-                          <span>Status:</span> {game.status}                          
-                        </div>
+              {games.map(game => (
+                <div className="game-option" key={game.id}>
+                  <label className={`game-card ${game.players >= game.maxPlayers ? 'opacity-50 pointer-events-none' : ''}`}>
+                    <input
+                      type="radio"
+                      name="game"
+                      value={game.id}
+                      checked={selectedGameId === game.id}
+                      onChange={() => setSelectedGameId(game.id)}
+                    />
+                    <div className="game-info">
+                      <div className="game-title">{game.name}</div>
+                      <div className="meta">
+                        <span>Players:</span> {game.players} / {game.maxPlayers}<br />
+                        <span>Status:</span> {game.status}
                       </div>
-                    </label>
-                  </div>  
-                ))}
-              </div>
-              <button className="get-started-btn flex-shrink-0 mt-auto" type="submit">Join Selected Game</button>
-            </form>
+                    </div>
+                  </label>
+                </div>
+              ))}
+
+              <button className="get-started-btn w-full flex-shrink-0 mt-auto" onClick={joinGame}>Join Selected Game</button>
+
+            </div>
           </div>
 
+          {/* CREATE GAME */}
           <div className="flex flex-col min-h-0">
             <h1 className="font-['Jersey_10'] text-3xl md:text-[4rem]">Create a Game</h1>
 
@@ -101,7 +122,7 @@ export function GameSelectionMenu() {
                   type: formData.get('gameType'),
                   teams: formData.get('numberOfTeams'),
                   players: 0,
-                  maxPlayers: 20,
+                  maxPlayers: 4,
                   status: 'Waiting for players',
                   colours: 'Default'
                 };
