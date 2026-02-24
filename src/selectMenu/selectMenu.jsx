@@ -112,30 +112,16 @@ export function GameSelectionMenu() {
             <h1 className="font-['Jersey_10'] text-3xl md:text-[4rem]">Create a Game</h1>
 
             <div className="overflow-y-auto max-h-80 md:max-h-96 p-4 mb-4 text-left flex-1 min-h-0">
-              <form onSubmit={(e) => {
-                e.preventDefault();
-                const formData = new FormData(e.target);
-                
-                const newGame = {
-                  id: Date.now(),
-                  name: formData.get('gameName'),
-                  type: formData.get('gameType'),
-                  teams: formData.get('numberOfTeams'),
-                  players: 0,
-                  maxPlayers: 4,
-                  status: 'Waiting for players',
-                  colours: 'Default'
-                };
 
-                setGames(prev => [...prev, newGame]);
+              <form onSubmit={createGame} className="grid grid-cols-1 gap-5 md:gap-7" id="create-game">
 
-                e.target.reset();
-              }} className="grid grid-cols-1 gap-5 md:gap-7" id="create-game">
                 <div className="create-game-section">
                   <label htmlFor="game-name">Game Name:</label>
                   <input className="input w-full" type="text" id="game-name" name="gameName" required />
                 </div>
-                <div className="create-game-section">
+
+                {/* UNCOMMENT IF I ADD MORE GAME TYPES. IT'S FIXED AT 1 FOR NOW */}
+                {/* <div className="create-game-section">
                   <label htmlFor="game-type">Game Type:</label>
                   <select className="input w-full" id="game-type" name="gameType" required>
                     <option></option>
@@ -145,10 +131,10 @@ export function GameSelectionMenu() {
                       </option>
                     ))}
                   </select>
-                </div>
+                </div> */}
                 <div className="create-game-section">
-                  <label htmlFor="number-of-teams">Number of Teams:</label>
-                  <input className="input w-full" type="number" id="number-of-teams" name="numberOfTeams" required />
+                  <label htmlFor="max-players">Max Players (2-4):</label>
+                  <input className="input w-full" type="number" id="max-players" name="maxPlayers" min={2} max={4} defaultValue={4} required />
                 </div>
                 <button className="get-started-btn" type="submit">Create Game</button>
               </form>
