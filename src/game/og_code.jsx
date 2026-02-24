@@ -60,12 +60,23 @@ function ColorButtons({ colors, selectedColor, setSelectedColor }) {
   );
 }
 
+function pixelClick(row, col) {
+  if (!selectedColor) return;
+
+  setBoard(prevBoard => {
+    const newBoard = prevBoard.map(r => [...r]);
+    newBoard[row][col] = selectedColor;
+    return newBoard
+  });
+}
 
 export function GameCanvas() {
 
   const gridSize = 20;
 
-  
+  const [board, setBoard] = useState(
+    Array(gridSize).fill(null).map(() => Array(gridSize).fill(null))
+  )
 
   const [availableColors, setAvailableColors] = useState([
     "#ef4444",
@@ -86,20 +97,28 @@ export function GameCanvas() {
           width: 'min(90vh, 90vw, 700px, calc(100vw - 4rem), calc(100vh - 5rem))',
         }}
       >
-      <div className="h-full w-full bg-white rounded-xl shadow-lg overflow-hidden">
-        <div
-          className="grid h-full w-full"
-          style={{
-            gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
-            gridTemplateRows: `repeat(${gridSize}, 1fr)`
-          }}
-        >
-          {Array.from({ length: gridSize * gridSize }).map((_, index) => (
-            <div key={index} className="border border-gray-200" />
-          ))}
+        <div className="h-full w-full rounded-xl">
+          <div
+            className="grid"
+            style={{
+              gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
+              width: "min(80vh, 80vw)",
+              aspectRatio: "1/1",
+              // gridTemplateRows: `repeat(${gridSize}, 1fr)`
+            }}
+          >
+            { board.map((row, rowIndex ) =>
+            row.map((cellColor, colIndex) => 
+            <div 
+            key={`${rowIndex}-${colIndex}`}
+            onClick={() => pixelClick(rowIndex, colIndex)}
+            className="border border-gray-200"
+            style={{backgroundColor: cellColor || "white "}} 
+            />
+            ))}
+          </div>
         </div>
       </div>
-    </div>
 
 
 
