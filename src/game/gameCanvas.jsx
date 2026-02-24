@@ -1,7 +1,8 @@
 import { React, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { GameEngine } from "./game/GameEngine";
-import { CaptureMode } from "./game/modes/CaptureMode";
+import { GameEngine } from "./gameEngine";
+import { CaptureMode } from "./modes/captureMode";
+import { useParams } from 'react-router-dom';
 
 const engine = new GameEngine(CaptureMode);
 
@@ -37,6 +38,8 @@ function ColorButtons({ colors, selectedColor, setSelectedColor }) {
 }
 
 export function GameCanvas() {
+
+  const { gameId } = useParams();
 
   const gridSize = 20;
 
@@ -100,7 +103,6 @@ export function GameCanvas() {
              shadow-lg w-64 z-20 flex-col">
         <div className="panel-section">
           <h2 className="text-xl font-bold mb-4">Controls</h2>
-          <p>Player: Player1</p>
           <p>Active Players: 12</p>
           <p>Teams: 2</p>
           <p>Status: in progress</p>

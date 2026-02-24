@@ -1,10 +1,14 @@
 import { React, use, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../app.css';
 import { GAME_MODES } from '../game/gameModes';
 
 export function GameSelectionMenu() {
 
+  const navigate = useNavigate();
+
   const [games, setGames] = useState([]);
+  const [selectedGameId, setSelectedGameId] = useState(null);
 
   useEffect(() => {
     const savedGames = localStorage.getItem(`games`);
@@ -28,7 +32,27 @@ export function GameSelectionMenu() {
           <div className="flex flex-col min-h-0">
             <h1 className="font-['Jersey_10'] text-3xl md:text-[4rem] mb-0">Join a Game</h1>
 
-            <form action="gamePlayCanvas.html" method="get" className="flex flex-col min-h-0 flex-1">
+            <form 
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (!selectedGameId) return;
+
+              setGames(prevGames => 
+                prevGames.map(game =>
+                  game.id === selectedGameId
+                  ? {
+                    ...game,
+                    players: game.players + 1,
+                    status:
+                      game.players + 1 >= game.maxPlayers
+                      ? 'Full'
+                      : 'Waiting for Players'
+                  }
+                  : game 
+                ));
+                navigate(`/game/${selectedGameId}`);
+            }}
+              className="flex flex-col min-h-0 flex-1">
               <div className="overflow-y-auto max-h-80 md:max-h-96 p-4 mb-4 text-left space-y-4 flex-shrink-0">
                 
                 {games.length === 0 && (
@@ -41,7 +65,9 @@ export function GameSelectionMenu() {
                       <input
                         type='radio'
                         name='game'
-                        value={game.id}  
+                        value={game.id}
+                        checked={selectedGameId === game.id}
+                        onChange={() => setSelectedGameId(game.id)}
                       />
                       <div className="game-info">
                         <div className="game-title">{game.name}</div>

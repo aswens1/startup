@@ -117,7 +117,7 @@ export default function App() {
               }
             />
             <Route path="/collabCanvas" element={<CollaborativeCanvas />} />
-            <Route path="/gameCanvas" element={<GameCanvas />} />
+            <Route path="/game/:gameId" element={<GameCanvas />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
