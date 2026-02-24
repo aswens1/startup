@@ -1,5 +1,9 @@
 import { React, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { GameEngine } from "./game/GameEngine";
+import { CaptureMode } from "./game/modes/CaptureMode";
+
+const engine = new GameEngine(CaptureMode);
 
 function ColorButtons({ colors, selectedColor, setSelectedColor }) {
   return (
@@ -52,11 +56,9 @@ export function GameCanvas() {
   function pixelClick(row, col) {
     if (!selectedColor) return;
   
-    setBoard(prevBoard => {
-      const newBoard = prevBoard.map(r => [...r]);
-      newBoard[row][col] = selectedColor;
-      return newBoard
-    });
+    setBoard(prevBoard => 
+      engine.handleMove(prevBoard, row, col, selectedColor)
+    );
   }
 
   return (

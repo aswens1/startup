@@ -1,5 +1,6 @@
 import { React, use, useEffect, useState } from 'react';
 import '../app.css';
+import { GAME_MODES } from '../game/gameModes';
 
 export function GameSelectionMenu() {
 
@@ -90,10 +91,12 @@ export function GameSelectionMenu() {
                 <div className="create-game-section">
                   <label htmlFor="game-type">Game Type:</label>
                   <select className="input w-full" id="game-type" name="gameType" required>
-                    <option value=""></option>
-                    <option value="filler1">filler type 1</option>
-                    <option value="filler2">filler type 2</option>
-                    <option value="filler3">filler type 3</option>
+                    <option></option>
+                    {Object.entries(GAME_MODES).map(([key, mode]) => (
+                      <option key={key} value={key}>
+                        {mode.label}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div className="create-game-section">

@@ -6,7 +6,7 @@ import { BrowserRouter, Route, Routes, NavLink, useNavigate } from 'react-router
 import { AuthState } from './getStarted/authState.js';
 
 import { CollaborativeCanvas } from './collabCanvas/collabCanvas.jsx';
-import { GameCanvas } from './gameCanvas/gameCanvas.jsx';
+import { GameCanvas } from './game/gameCanvas.jsx';
 import { Login } from './getStarted/getStarted.jsx';
 import { Leaderboard } from './leaderboard/leaderboard.jsx';
 import { GameSelectionMenu } from './selectMenu/selectMenu.jsx';
