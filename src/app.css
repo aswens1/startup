@@ -470,3 +470,21 @@ table thead th {
         0 6px 0 #111,
         0 10px 20px rgba(0, 0, 0, 0.15);
 }
+
+/* -------------------------------------------------- */
+/* canvas styling */
+
+.canvas-main {
+    margin: 0;
+    padding: 0;
+
+    position: relative;
+    overflow: hidden;
+    font-family: "Noto Sans Mono", sans-serif;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+    background-color: #e8e3da;
+}
