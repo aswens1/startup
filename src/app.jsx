@@ -49,7 +49,7 @@ function NavDropdown({ label, isAuthenticated }) {
               <li><NavLink to="/dashboard" className="nav-link" onClick={() => setOpen(false)}>Dashboard</NavLink></li>
               <li><NavLink to="/gameMenu" className="nav-link" onClick={() => setOpen(false)}>Join a Game</NavLink></li>
               <li><NavLink to="/leaderboard" className="nav-link" onClick={() => setOpen(false)}>Leaderboard</NavLink></li>
-              <li><NavLink to="/collabCanvas" className="nav-link" onClick={() => setOpen(false)}>Collaborative Canvas</NavLink></li>
+              {/* <li><NavLink to="/collabCanvas" className="nav-link" onClick={() => setOpen(false)}>Collaborative Canvas</NavLink></li> */}
               <li><NavLink to="/gameCanvas" className="nav-link" onClick={() => setOpen(false)}>Play the Game</NavLink></li>
             </>
           )}
@@ -116,7 +116,7 @@ export default function App() {
                 />
               }
             />
-            <Route path="/collabCanvas" element={<CollaborativeCanvas />} />
+            {/* <Route path="/collabCanvas" element={<CollaborativeCanvas />} /> */}
             <Route path="/game/:gameId" element={<GameCanvas />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -18,19 +18,33 @@ export function Dashboard({ userName }) {
   const [stats, setStats] = useState({
     pixels: 0,
     gamesPlayed: 0,
-    winRate: 0,
+    wins: 0,
     streak: 0,
   });
 
   useEffect(() => {
-    const savedStats = localStorage.getItem(`game_stats_${userName}`);
+    const key = `game_stats_${userName}`;
+    const savedStats = localStorage.getItem(key);
 
     if (savedStats) {
       setStats(JSON.parse(savedStats));
     } else {
-      localStorage.setItem(`game_stats_${userName}`, JSON.stringify(stats));
+      const defaultStats = {
+        pixels: 0,
+        gamesPlayed: 0,
+        wins: 0,
+        streak: 0,
+      };
+
+      const mergedStats = {
+        ...defaultStats,
+        ...savedStats,
+      };
+      
+      setStats(mergedStats);
+      localStorage.setItem(key, JSON.stringify(mergedStats));
     }
-  });
+  }, [userName]);
 
   useEffect(() => {
     localStorage.setItem(`game_stats_${userName}`, JSON.stringify(stats));
@@ -44,8 +58,8 @@ export function Dashboard({ userName }) {
             <div className="flex flex-wrap justify-center gap-6">
               <StatCard value={stats.pixels} label="Pixels Placed" />
               <StatCard value={stats.gamesPlayed} label="Games Played" />
-              <StatCard value={stats.winRate} label="Win Rate" />
-              <StatCard value={stats.streak} label="Streak" />
+              <StatCard value={stats.wins ?? 0} label="Wins" />
+              {/* <StatCard value={stats.streak} label="Streak" /> */}
             </div>
 
             <Link to="/gameMenu"

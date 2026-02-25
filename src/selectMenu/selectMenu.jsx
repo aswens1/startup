@@ -50,7 +50,7 @@ export function GameSelectionMenu() {
 
   const createGame = e => {
     e.preventDefault();
-    const formData = new formData(e.target);
+    const formData = new FormData(e.target);
 
     const maxPlayers = Number(formData.get('maxPlayers') || 4);
 
