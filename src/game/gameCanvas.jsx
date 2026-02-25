@@ -166,7 +166,7 @@ export function GameCanvas() {
     
     botIntervalRef.current = setInterval(() => {
       placeRandomBotPixel();
-    }, 2000); //every 2 sec
+    }, 1000); //every 2 sec
 
     return () => {
       clearInterval(botIntervalRef.current);
