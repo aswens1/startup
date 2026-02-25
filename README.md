@@ -92,5 +92,5 @@ I've also reconfigured my startup to use React and Vite - found at [startup.8bit
 
 I reviewed and deployed the Simon React part 2 code to my project - found at [simon.8bitalley.click](https://simon.8bitalley.click).
 
-- [ ] **All functionality implemented or mocked out** - I did not complete this part of the deliverable.
-- [ ] **Hooks** - I did not complete this part of the deliverable.
+- **All functionality implemented or mocked out** - All of my web app has been mocked out or works properly. To mock websocket, a random pixel is placed every second as a pretend opponent. All user information is stored in local storage.
+- **Hooks** - I used useEffect all over the place to move stats from page to page, and to paint the pixels.
