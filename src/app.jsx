@@ -50,7 +50,7 @@ function NavDropdown({ label, isAuthenticated }) {
               <li><NavLink to="/gameMenu" className="nav-link" onClick={() => setOpen(false)}>Join a Game</NavLink></li>
               <li><NavLink to="/leaderboard" className="nav-link" onClick={() => setOpen(false)}>Leaderboard</NavLink></li>
               {/* <li><NavLink to="/collabCanvas" className="nav-link" onClick={() => setOpen(false)}>Collaborative Canvas</NavLink></li> */}
-              <li><NavLink to="/gameCanvas" className="nav-link" onClick={() => setOpen(false)}>Play the Game</NavLink></li>
+              {/* <li><NavLink to="/gameCanvas" className="nav-link" onClick={() => setOpen(false)}>Play the Game</NavLink></li> */}
             </>
           )}
         </ul>
