@@ -154,6 +154,7 @@ function HowToPlay() {
           <p className='text-lg'>Welcome to 8 Bit Alley! Login to get started!</p>
           <p>The first thing you'll see is the dashboard! This displays your stats: number of pixels coloured, games played, win rate, and streak.</p>
           <p>Click 'Play a Game' to go to the game menu! Here, you can browse existing games and join them, or create one yourself!</p>
+          <p>Our main game style is Capture the Canvas! Click pixels to try and cover as much of the canvas with your colour as you can. The player with the most pixels at the end of the game wins!</p>
         </div>
       </main>
     </>

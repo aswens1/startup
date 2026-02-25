@@ -41,9 +41,9 @@ export function Leaderboard() {
                 <table className="w-full border-separate border-spacing-x-6 table-fixed">
                     <thead className="text-xl border-b">
                         <tr>
-                            <th className="w-1/2 text-left px-6 py-4">Rank</th>
-                            <th className="w-1/2 text-left px-6 py-4">Username</th>
-                            <th className="w-1/2 text-left px-6 py-4">Pixels Placed</th>
+                            <th className="w-1/4 text-left px-6">Rank</th>
+                            <th className="w-1/2 text-center px-6">Username</th>
+                            <th className="w-1/4 text-right px-6">Pixels Placed</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -55,7 +55,7 @@ export function Leaderboard() {
                             </tr>
                         ) : (
                             players.map((player, index) => (
-                                <tr key={player.userName}>
+                                <tr key={`${player.userName}-${index}`}>
                                     <td>{index + 1}</td>
                                     <td>{player.userName}</td>
                                     <td>{player.pixelsPlaced}</td>

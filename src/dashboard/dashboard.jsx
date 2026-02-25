@@ -62,14 +62,26 @@ export function Dashboard({ userName }) {
               {/* <StatCard value={stats.streak} label="Streak" /> */}
             </div>
 
-            <Link to="/gameMenu"
-              className="mt-8 font-['Jersey_10'] text-3xl tracking-widest px-10 py-3 
-              border-4 border-black rounded-lg 
-              shadow-[0_6px_0_#111] 
-              hover:-translate-y-1 hover:shadow-[0_8px_0_#111] 
-              active:translate-y-1 transition
-              !no-underline text-black !hover:no-underline"
+            <div className="flex gap-6 mt-8">
+              <Link to="/gameMenu"
+                className="font-['Jersey_10'] text-3xl tracking-widest px-10 py-3 
+                border-4 border-black rounded-lg 
+                shadow-[0_6px_0_#111] 
+                hover:-translate-y-1 hover:shadow-[0_8px_0_#111] 
+                active:translate-y-1 transition
+                !no-underline text-black !hover:no-underline"
               >Play a Game!</Link>
+
+              <Link to="/leaderboard"
+                className="font-['Jersey_10'] text-3xl tracking-widest px-10 py-3 
+                border-4 border-black rounded-lg 
+                shadow-[0_6px_0_#111] 
+                hover:-translate-y-1 hover:shadow-[0_8px_0_#111] 
+                active:translate-y-1 transition
+                !no-underline text-black !hover:no-underline"
+              >Leaderboard!</Link>
+            </div>
+        
           </div>
       </main>
     </>

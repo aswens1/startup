@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { GameEngine } from "./gameEngine";
 import { CaptureMode } from "./modes/captureMode";
@@ -153,6 +153,50 @@ export function GameCanvas() {
   const goToDashboard = () => {
     localStorage.removeItem('currentGame');
     navigate('/dashboard');
+  }
+
+  // WEBSOCKET MOCK -> place random pixel every 2 secs
+
+  const [botColor, setBotColor] = useState(null);
+
+  const botIntervalRef = useRef(null);
+
+  useEffect(() => {
+    if (gameOver || !botColor) return;
+    
+    botIntervalRef.current = setInterval(() => {
+      placeRandomBotPixel();
+    }, 2000); //every 2 sec
+
+    return () => {
+      clearInterval(botIntervalRef.current);
+    };
+  }, [gameOver, botColor]);
+
+  useEffect(() => {
+    if (playerColor) {
+      setBotColor(getBotColor(playerColor));
+    }
+  }, [playerColor]);
+
+
+  function placeRandomBotPixel() {
+    if (gameOver || !botColor) return;
+    const randomRow = Math.floor(Math.random() * gridSize);
+    const randomCol = Math.floor(Math.random() * gridSize);
+
+    const color = botColor;
+
+    setBoard(prev => engine.handleMove(prev, randomRow, randomCol, color));
+  }
+
+  function getBotColor() {
+    const COLORS = ["#ef4444", "#3b82f6", "#22c55e", "#facc15"];
+
+    const available = COLORS.filter(color => color !== playerColor);
+
+  
+    return available[Math.floor(Math.random() * available.length)];
   }
 
   return (
