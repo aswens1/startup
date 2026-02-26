@@ -5679,6 +5679,123 @@ Internally, you can have as many web services running as you want. However, you 
 
 ### HTTP
 
+Deeper reading: [MDN An Overview of HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview)
+
+Hypertext Transfer Protocol (`HTTP`) is how the web talks. When a web browser makes a request to a web server, it uses the HTTP protocol. 
+
+When a web client (like a browser) and a web server talk, they exchange HTTP requests and responses. The browser makes an HTTP request and the server will generate an HTTP response. You can see the HTTP exchange by using the browser's debugger or by using a console tool like `curl`. For example, you can make the following request in your terminal.
+
+```curl -v -s http://info.cern.ch/hypertext/WWW/Helping.html```
+
+##### Request
+
+The HTTP request for the command above looks like this.
+
+``` 
+GET /hypertext/WWW/Helping.html HTTP/1.1
+Host: info.cern.ch
+Accept: text/html
+```
+
+An HTTP request has this general syntax.
+```
+<verb> <url path, parameters, anchor> <version>
+[<header key: value>]*
+[
+
+  <body>
+]
+```
+
+The first line contains the `verb` of the request, followed by the path, parameters, anchor of the URL, and finally the version of HTTP being used. The following lines are optional headers that are defined by key value pairs. After the headers, you have an optional body. The body start is delimited from the headers by two new lines.
+
+In the example above, we are asking to `GET` a resource found at the path `hypertext/WWW/Helping.html`. The version used by the request is `HTTP/1.1`. This is followed by two headers. The first specifies the request host (domain name). The second specifies what type of resource the client will accept. The resource type is always a [MIME type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) as defined by IANA. In this case we are asking for HTML.
+
+##### Response
+
+The response to the request above looks like this.
+
+```
+HTTP/1.1 200 OK
+Date: Tue, 06 Dec 2022 21:54:42 GMT
+Server: Apache
+Last-Modified: Thu, 29 Oct 1992 11:15:20 GMT
+ETag: "5f0-28f29422b8200"
+Accept-Ranges: bytes
+Content-Length: 1520
+Connection: close
+Content-Type: text/html
+
+<TITLE>Helping -- /WWW</TITLE>
+<NEXTID 7>
+<H1>How can I help?</H1>There are lots of ways you can help if you are interested in seeing
+the <A NAME=4 HREF=TheProject.html>web</A> grow and be even more useful...
+```
+
+An HTTP response has the following syntax.
+
+```
+<version> <status code> <status string>
+[<header key: value>]*
+[
+
+  <body>
+]
+```
+
+The response syntax is similar to the request syntax. The major differene is that the first like represents the version and the status of the response.
+
+Understanding the meaning of common HTTP verbs, status codes, and headers is important. You will use them in developing a web app.
+
+#### Verbs
+
+There are several verbs that describe what the HTTP request is asking for. Here are the most common ones.
+
+| Verb | Meaning |
+| --- | --- |
+| GET | get the requested resource. this can represent a request to get a single resouce or a resource representing a list of resources. |
+| POST | create a new resource. the body of the request contains the resource. the response should include a unique ID of the newly created resource |
+| PUT | update a resource. either the URL path, HTTP header, or body must contain the unique ID of the resource being updated. The body of the request should contain the updated resource. the body of the response may contain the resulting updated resource. |
+| DELETE | delete a resource. either the URL path or HTTP header must contain a unique ID of the resource to delete. |
+| OPTIONS | get metadata about a resource. usually only HTTP headers are returned. the resource itself is not returned |
+
+#### Status Codes
+
+It's important to use the standard HTTP status codes in your HTTP responses so the client of a request knows how to interpret it. The codes are split into 5 blocks.
+
+- 1xx - informational
+- 2xx - success
+- 3xx - redirect to another location, or that the previously cached resource is still valid
+- 4xx - client errors. request is invalid
+- 5xx - server errors. the request cannot be satisfied due to an error on the server
+
+Within those ranges are some of the more common codes. See [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) for a full list of codes.
+
+| Code | Text | Meaning |
+| --- | --- | --- |
+| 100 | Continue | The service is working on the request |
+| 200 | Success | The requested resource was found and returned as appropriate. |
+| 201 | Created | The request was successful and a new resource was created. |
+| 204 | No Content| The request was successful but no resource is returned. |
+| 304 | Not Modified | The cached version of the resource is still valid. |
+| 307 | Permanent Redirect | The resource is no longer at the requested location. The new location is specified in the response location header. |
+| 308 | Temporary Redirect | The resource is temporarily located at a different location. The temporary location is specified in the response location header. |
+| 400 | Bad request | The request was malformed or invalid. |
+| 401 | Unauthorized | The request did not provide a valid authentication token. |
+| 403 | Forbidden | The provided authentication token is not authorized for the resource. |
+| 404 | Not found | An unknown resource was requested. |
+| 408 | Request timeout | The request takes too long. |
+| 409 | Conflict | The provided resource represents an out of date version of the resource. |
+| 418 | [I'm a teapot](https://en.wikipedia.org/wiki/Hyper_Text_Coffee_Pot_Control_Protocol) | The service refuses to brew coffee in a teapot. |
+| 429 | Too many requests | The client is making too many requests in too short of a time period. |
+| 500 | Internal server error | The server failed to properly process the request. |
+| 503 | Service unavailable | The server is temporarily down. The client should try again with an exponential back off. |
+
+#### Headers
+
+
+
+
 </details>
 
 ## Data & Authentication Services
