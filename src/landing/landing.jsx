@@ -20,6 +20,8 @@ export function Landing() {
               active:translate-y-1 transition
               !no-underline text-black !hover:no-underline"
               >Get Started</Link>
+              
+              <p className='pt-12'>Note: While this app is reactive to screen sizes, for best results, please play on full screen.</p>
           </div>
       </main>
     </>
