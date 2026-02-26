@@ -134,17 +134,6 @@ export default function App() {
   );
 }
 
-// function HowToPlay() {
-//   return (
-//     <div className="hero">
-//       <div className="content">
-//         <h1>{title}</h1>
-//         <p>Placeholder — add content when ready.</p>
-//       </div>
-//     </div>
-//   );
-// }
-
 function HowToPlay() {
   return (
     <>
@@ -155,6 +144,7 @@ function HowToPlay() {
           <p>The first thing you'll see is the dashboard! This displays your stats: number of pixels coloured, games played, win rate, and streak.</p>
           <p>Click 'Play a Game' to go to the game menu! Here, you can browse existing games and join them, or create one yourself!</p>
           <p>Our main game style is Capture the Canvas! Click pixels to try and cover as much of the canvas with your colour as you can. The player with the most pixels at the end of the game wins!</p>
+          <p>Check the leaderboard to see how many pixels you placed and how you rank against other users!</p>
         </div>
       </main>
     </>
