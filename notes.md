@@ -5557,7 +5557,7 @@ app.get('/time', (req, res) => {
 });
 ```
 
-### Web Service Gateways
+#### Web Service Gateways
 
 Since it's easy to build web services, it's common to find multiple web services running on the same computing device. There is a difference between a **web server** (the physical computing device), and a **web service** (provides a web application functionality).
 
@@ -5569,15 +5569,59 @@ We can resolve this by introducing a service gateway (sometimes called a reverse
 
 Our web server will use a web service application called `Caddy` as the gateway to our services.
 
-### Microservices
+#### Microservices
 
 Microservices are web services that provide a single functional purpose. By partitioning larger functionality into small logical chunks, you can develop and manage them independently from other functionality in a larger system. They can also handle large fluctuations in user demand by running more and more stateless copies of the microservice from multiple virtual servers hosted in a dynamic cloud environment.
 
 For example, one microservice for generating your genealogical family tree might be able to handle 1,000 users concurrently. To support 1 million users, you just deploy 1,000 instances of the service running on scalable virtual hardware.
 
-### Serverless
+#### Serverless
 
 The idea of microservices evolved into the world of `serverless` functionality where the server is conceptually removed from the architecture and you just write code that represents single service endpoint. That endpoint is loaded through a gatewaythat maps a web request to the endpoint. The gateway automatically scales the hardware needed to host the serverless endpoint based on demand. This reduces what the web app developer needs to think about down to a single independent endpoint.
+
+</details>
+
+<details>
+
+<summary>Web Services Introduction</summary>
+
+### Web Services Introduction
+
+Right now, your entire app is loaded from your web server and runs on the user's browser. It starts when the browser requests the `index.html` file from the web server. The `index.html` then referenes other HTML, CSS, JS, or image files. All the files that run on the browser make up the `frontend` of your app.
+
+When the frontend requests the app files from the web server, it's using the HTTPS protocol. All web programming requests between devices use HTTPS to exchange data. 
+
+We can make requests to external services running anywhere in the world from our frontend JS. This lets us get external data, like an inspirational quote, that we can then inject into the DOM for the user to read. To make a web service request, we supply the URL of the web service to the `fetch` function that is built into the browser.
+
+The next step in building a full stack web app is to create our own web service. Our web service will provide the static frontend files along with functions to handle the `fetch` requests for things like storing data persistently, providing security, running tasks, executing application logic you don't want your user to see, and communicating with other users. The functionality provided by your web service represents the `backend` of your app.
+
+In general, the functions provided by a web service are called `endpoints`, or sometimes APIs. You access the web service endpoints from your frontend JS with the fetch function. 
+
+The backend web service can also use `fetch` to make requests to other web services.
+
+</details>
+
+<details>
+
+<summary>URL</summary>
+
+### URL
+
+</details>
+
+<details>
+
+<summary>Ports</summary>
+
+### Ports
+
+</details>
+
+<details>
+
+<summary>HTTP</summary>
+
+### HTTP
 
 </details>
 
