@@ -5514,6 +5514,73 @@ f();
 </details>
 
 ## HTTP Service
+
+<details>
+
+<summary>Web Servers</summary>
+
+### Web Servers
+
+Web servers are computing devices that hosts a web service that knows how to accept incoming internet connections and speak to the HTTP application protocol.
+
+#### Monolithic Web Servers
+
+In the early days of web programming, you had to buy massive, complex, expensive, software programs that could serve up HTML files and then install it on a hardware device. The package of server hardware and software was considered the web server because the web service software was the only thing running on the server. Eventually, open source web servers became available that made it easy to host a website. 
+
+Examples of web server software includes Apache HTML server, Nginx, or Microsoft IIS. However, the web server software was still a separate program from the content or application it hosted.
+
+#### Combining Web and Application Services
+
+Today, most modern programming languages include libraries that make it easy to serve web content. This removed the requirement to have a separate program for *hosting* your application. Instead, your app is also the web service.
+
+For example, here is a simple HTTP service in JavaScrip that loads up HTML content from a **public** directory.
+
+```JavaScript
+const express = require('express');
+const app = express();
+
+// Serve static files from the 'public' directory
+app.use(express.static('public'));
+
+app.listen(80);
+```
+
+##### Web Service Endpoints
+
+Being able to easily create web services means that we can completely drop the monolithic web server concept and only build web support right into the app. We canalso add web accessible methods -- endpoints -- that provide functionality beyond simply serving up static HTML files. 
+
+For example, by adding three lines of code, we can add an endpoint that returns the current time when you add path `/time` to the browser URL.
+
+```JavaScript
+app.get('/time', (req, res) => {
+  res.json({ time: new Date().toDateString() });
+});
+```
+
+### Web Service Gateways
+
+Since it's easy to build web services, it's common to find multiple web services running on the same computing device. There is a difference between a **web server** (the physical computing device), and a **web service** (provides a web application functionality).
+
+Every web server allows for access to multiple services by referring to a different **port number** for each service. A port is similar to a house address on a given street, and the server is the street. In our example before, the JS web service was assigned port 80. A user could then talk to the image service on port 3000 and the file service on port 3002. But this makes it difficult for the user of the services to remember what port number matches which service.
+
+We can resolve this by introducing a service gateway (sometimes called a reverse proxy), that is a simple web service that listens on the common HTTP port 443. The gateway looks at the request URL and maps it to the other services running on different ports.
+
+![webServersGateway](picturesForNotes/webServersGateway.jpg)
+
+Our web server will use a web service application called `Caddy` as the gateway to our services.
+
+### Microservices
+
+Microservices are web services that provide a single functional purpose. By partitioning larger functionality into small logical chunks, you can develop and manage them independently from other functionality in a larger system. They can also handle large fluctuations in user demand by running more and more stateless copies of the microservice from multiple virtual servers hosted in a dynamic cloud environment.
+
+For example, one microservice for generating your genealogical family tree might be able to handle 1,000 users concurrently. To support 1 million users, you just deploy 1,000 instances of the service running on scalable virtual hardware.
+
+### Serverless
+
+The idea of microservices evolved into the world of `serverless` functionality where the server is conceptually removed from the architecture and you just write code that represents single service endpoint. That endpoint is loaded through a gatewaythat maps a web request to the endpoint. The gateway automatically scales the hardware needed to host the serverless endpoint based on demand. This reduces what the web app developer needs to think about down to a single independent endpoint.
+
+</details>
+
 ## Data & Authentication Services
 ## WebSocket
 ## Security
