@@ -6046,6 +6046,58 @@ The downside of the flexibility is that the client has significant power to cons
 
 </details>
 
+<details>
+
+<summary>Node Web Service</summary>
+
+### Node Web Service
+
+With JS, we can write code that listens on a network port (like 80, 443, 3000, 8080), receives HTTP requests, processes them, and then responds. We can use this to create a simple web service that we can execute using Node.js.
+
+First, create your project.
+
+```
+➜ mkdir webservicetest
+➜ cd webservicetest
+➜ npm init -y
+```
+
+Now, open VS Code and create a file named `index.js`. Paste the following into the file and save.
+
+```JavaScript
+const http = require('http');
+const server = http.createServer(function (req, res) {
+  res.writeHead(200, { 'Content-Type': 'text/html' });
+  res.write(`<h1>Hello Node.js! [${req.method}] ${req.url}</h1>`);
+  res.end();
+});
+
+server.listen(8080, () => {
+  console.log(`Web service listening on port 8080`);
+});
+```
+
+This uses the Node.js built-in `http` package to create our HTTP server using the `http.createServer` function, along with a callback function that takes a request (`req`) and a response (`res`) object. That function is called whenever the server recieves an HTTP request. In our example, the callback always returns the same HTML snippet, with a status code of 200 and a Content-Type header, no matter what request is made. Basically, this is just a simple dynamically generated HTML page. A real web service would examine the HTTP path and return meaningful content based on the purpose of the endpoints.
+
+The `server.listen` call starts listening on port 8080 and blocks until the program is terminated.
+
+We execute the program by going back to the console window and running Node.js to execute our index.js file. If the service starts correctly, then it should look like this:
+
+```
+➜ node index.js
+Web service listening on port 8080
+```
+
+Now, you can open your browser and point it to `localhost:8080` and view the result. The interaction between the JS, node, and the browser looks like this. 
+
+Use the different URL paths in the browser and note that it will echo the HTTP method and path back in the document. You can kill the process by pressing `CTRL-C` in the console. 
+
+You can also start up Node and execute the `index.js` code directly in VS Code. Open index.js in VS Code and press the 'F5' key. This should aks you what program you want to run. Select `node.js`. This starts up Node.js with the `index.js` file, but also attaches a debugger so you can set breakpoints and step through each line of code.
+
+Make sure you complete the above steps! For the rest of the course, you will execute your code using Node.js to run your backend and serve up your frontend code to the browser. This means you won't use the `VS Code Live Server extention` for your frontend.
+
+</details>
+
 ## Data & Authentication Services
 ## WebSocket
 ## Security
