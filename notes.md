@@ -5848,6 +5848,65 @@ HTTP continually evolves to increase performance and support new types of applic
 
 </details>
 
+<details>
+
+<summary>Fetch</summary>
+
+### Fetch
+
+Further reading: [MDN Using the Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
+
+The ability to make HTTP requests from JS is one of the main technologies that changed the web from static content pages to a web app that fully interacts with the user. Microsoft introduced the first API for making HTTP requests from JS with the [XMLHttpRequest API](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest).
+
+Today, the [fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) is the prefered way to make HTTP requests. The `fetch` function is built into the browser's JS runtime. This means you can call it from JS code running in a browser.
+
+The basic usage of fetch takes an URL and returns a promise. The promise `then` function takes a callback function that is asynchronously called when the requested URL content is obtained. If the returned content is of the type `application/JSON`, you can use the `json` function on the response to convert it to a JS object.
+
+The following example makes a fetch request to get and display an inspirational quote. If the method is unspecified, it defaults to GET.
+
+```JavaScript
+fetch('https://quote.cs260.click')
+  .then((response) => response.json())
+  .then((jsonResponse) => {
+    console.log(jsonResponse);
+  });
+```
+
+**Response** 
+
+```JavaScript
+{
+  author: 'Kyle Simpson',
+  quote: "There's nothing more permanent than a temporary hack."
+}
+```
+
+To do a POST request, you populate the options parameter with the HTTP method and headers.
+
+```JavaScript
+fetch('https://jsonplaceholder.typicode.com/posts', {
+  method: 'POST',
+  body: JSON.stringify({
+    title: 'test title',
+    body: 'test body',
+    userId: 1,
+  }),
+  headers: {
+    'Content-type': 'application/json; charset=UTF-8',
+  },
+})
+  .then((response) => response.json())
+  .then((jsonResponse) => {
+    console.log(jsonResponse);
+  });
+```
+
+#### Codepen
+
+Here is a [codepen](https://codepen.io/leesjensen/pen/ExRoqPz) for more practise.
+
+</details>
+
 ## Data & Authentication Services
 ## WebSocket
 ## Security
