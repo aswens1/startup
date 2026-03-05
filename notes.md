@@ -6098,6 +6098,261 @@ Make sure you complete the above steps! For the rest of the course, you will exe
 
 </details>
 
+<details>
+
+<summary>Express</summary>
+
+### Express
+
+Deeper reading: [MDN Express/Node Instruction](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/Introduction)
+
+To build a production-ready application, you need a framework with a bit more functionality for easily implementing a full web service. This is where the Node package `Express` comes in. 
+
+Express provides support for:
+1. Routing requests for service endpoints
+2. Manipulating HTTP requests with JSON body content
+3. Generating HTTP responses
+4. Using `middleware` to add functionality
+
+Express was created by TJ Holowaychuk is is maintainted by the [Open.js Foundation](https://openjsf.org/).
+
+Everything in Express revolves around creating and using HTTP routing and middleware functions. You create an Express app by using NPM to install the Express package and then calling the `express` constructor to create the Express app and listening for the HTTP requests on a desired port.
+
+```
+➜ npm install express
+```
+
+```JavaScript
+const express = require('express');
+const app = express();
+
+app.listen(8080);
+```
+
+With the `app` object, you can now add HTTP routing and middleware functions to the app.
+
+#### Defining Routes
+
+HTTP endpoints are implemented in Express by defining routes that call a function based on an HTTP path. The Express `app` object supports all the HTTP verbs as functions on the object. For example, if you want to have a route function that handles an HTTP GET request for the URL path `/store/provo` you would call the `get` method on the app.
+
+```JavaScript
+app.get('/store/provo', (req, res, next) => {
+  res.send({ name: 'provo' });
+});
+```
+
+The `get` function takes two parameters, a URL path matching pattern, and a callback function that is invoked when the pattern matches. The path matching parameter is used to match agianst the URL path of an incoming HTTP request.
+
+The callback function has 3 parameters that represent the HTTP request object (`req`), the HTTP response object (`res`), and the `next` routing function that Express expects to be called if this routing function wants anotehr function to generate a response.
+
+The Express `app` compares the routing function patterns in the order that they are added to the Express `app` object. So if you have two routing functions with patterns that both match, the first one that was added will be called and given the next matching function in the `next` parameter.
+
+In the above example, we hard coded the store name to be `provo`. A real store endpoint would allow any store name to be provided as a parameter in the path. Express supports path parameters by prefixing the parameters name with a colon (`:`). Express creates a map of path parameters and populates it with the matching values found in the URL path. You can then reference the parameters using the `req.params` object. Using this pattern you can reqrite our getStore endpoint as follows.
+
+```JavaScript
+app.get('/store/:storeName', (req, res, next) => {
+  res.send({ name: req.params.storeName });
+});
+```
+
+If we run our JS using `node`, we can see the result when we make an HTTP request using `curl`.
+
+```
+➜ curl localhost:8080/store/orem
+{"name":"orem"}
+```
+
+If you wanted an endpoint that used the POST or DELETE verb, then you use the `post` or `delete` function on the Express `app` object.
+
+The route path can also include a limited wildcard syntax or even full regular expressions in path pattern. Here are a couple route functions using different pattern syntax.
+
+```JavaScript
+// Wildcard - matches /store/x and /star/y
+app.put('/st*suffix/:storeName', (req, res) => res.send({ update: req.params.storeName, prefix: req.params.suffix }));
+
+// Pure regular expression
+app.delete(/\/store\/(.+)/, (req, res) => res.send({ delete: req.params[0] }));
+```
+
+In these examples, the `next` parameter was ommitted. Since we are not calling `next`, we do not need to include it as a parameter. However, if you do not call `next`, then no following middleware functions will be invoked for the request.
+
+#### Using Middleware
+
+Deeper reading: [Express Middleware](https://expressjs.com/en/resources/middleware.html)
+
+The standard [Mediator/Middleware](https://www.patterns.dev/posts/mediator-pattern/) design pattern has two pieces: a mediator and a middleware. Middleware represents componentized pieces of functionality. The mediator loads the middleware components and determines their order of execution. When a request comes to the mediator, it then passes the request around to the middleware components. Following this pattern, Express is the mediator, and middleware functions are the middleware components.
+
+Express comes with a standard set of middleware functions. These provide functionality like routing, authentication, CORS, sessions, serving static web files, cookies, and logging. Some middleware functions are provided by default, and others must be installed using NPM before you can use them. You can also write your own middleware functions and use them with Express.
+
+A middleware functions looks a lot like a routing function. This is because routing functions are also middleware functions. The only difference is that routing functions are only called if the associated pattern matches. Middleware functions are always called for every HTTP request unless a preceeding middleware function doesn't call `next`. A middleware function has the following pattern:
+
+```JavaScript
+function middlewareName(req, res, next)
+```
+
+The middleware function parameters represent the HTTP request object (`req`), the HTTP response object (`res`), and the `next` middleware function to pass processing to. You should usually call the `next` function after completing processing so that the enxt middleware function can execute.
+
+![webServicesMiddleware](picturesForNotes/webServicesMiddleware.jpg)
+
+##### Creating Your Own Middleware
+
+As an example of writing your own, you can create a function that logs out the URL of the request and passes on processing to the next middleware function.
+
+```JavaScript
+app.use((req, res, next) => {
+  console.log(req.originalUrl);
+  next();
+});
+```
+
+Remember that the order that your add your middleware to the Express app object controls the order that the middleware functions are called. Any middleware that doesn't call the `next` function after processing stops the middleware chain from continuing.
+
+##### Builtin Middleware
+
+You can also use a built-in middleware function. Here is an example using the `static` middleware function. This middleware responds with static files, found in a given directory, that matches the request URL.
+
+```JavaScript
+app.use(express.static('public'));
+```
+
+Now if you create a subdirectory in your project and name it `public`, you can serve up any static content that you would like. For example, you could create an `index.html` file that is the default content for your web service. Then when you call your web service without any path, the `index.html` file will be returned.
+
+##### Third Party Middleware
+
+You can also use third party middleware functions by using NPM to install the package and including the package in your JS with the `requre` function. The following example uses the `cookie-parser` package to simplify the generation and access of cookies.
+
+```
+➜ npm install cookie-parser
+```
+
+```JavaScript
+const cookieParser = require('cookie-parser');
+
+app.use(cookieParser());
+
+app.post('/cookie/:name/:value', (req, res) => {
+  res.cookie(req.params.name, req.params.value);
+  res.send({ cookie: `${req.params.name}:${req.params.value}` });
+});
+
+app.get('/cookie', (req, res) => {
+  res.send({ cookie: req.cookies });
+});
+```
+
+It's common for middleware functions to add fields and functions to the `req` and `res` objects so that other middleware can access the functionality they provide. You can see this happening when the `cookie-parser` middleware adds the `req.cookies` object for reading cookies, and also adds the `res.cookie` function in order to make it easy to add a cookie to a response.
+
+You can use Curl to experiment with the cookie code with these commands:
+
+```
+➜ curl -c cookies.txt -X POST localhost:3000/cookie/type/chocolate
+{"cookie":"type:chocolate"}
+
+➜ curl -b cookies.txt localhost:3000/cookie
+{"cookie":{"type":"chocolate"}}
+```
+
+#### Error Handling Middleware
+
+You can also add middleware for handling errors that occur. Error middleware looks similar to other middleware functions, but it takes an additional `err` parameter that contains the error.
+
+```JavaScript
+function errorMiddlewareName(err, req, res, next)
+```
+
+If you wanted to add a simple error handler for anything that might go wrong while processing HTTP requests, you can add the following.
+
+```JavaScript
+app.use(function (err, req, res, next) {
+  res.status(500).send({ type: err.name, message: err.message });
+});
+```
+
+We can test if our error middleware is getting used by adding a new endpoint that generates an error.
+
+```JavaScript
+app.get('/error', (req, res, next) => {
+  throw new Error('Trouble in river city');
+});
+```
+
+Now if we use `curl` to call our error endpoint, we can see that the response comes from the error middleware.
+
+```
+➜ curl localhost:8080/error
+{"type":"Error","message":"Trouble in river city"}
+```
+
+#### Putting it all Together
+
+Here is a full example.
+
+```JavaScript
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const app = express();
+
+// Third party middleware - Cookies
+app.use(cookieParser());
+
+app.post('/cookie/:name/:value', (req, res) => {
+  res.cookie(req.params.name, req.params.value);
+  res.send({ cookie: `${req.params.name}:${req.params.value}` });
+});
+
+app.get('/cookie', (req, res) => {
+  res.send({ cookie: req.cookies });
+});
+
+// Creating your own middleware - logging
+app.use((req, res, next) => {
+  console.log(req.originalUrl);
+  next();
+});
+
+// Built in middleware - Static file hosting
+app.use(express.static('public'));
+
+// Routing middleware
+
+// Get store endpoint
+app.get('/store/:storeName', (req, res) => {
+  res.send({ name: req.params.storeName });
+});
+
+// Update store endpoint
+app.put('/st*suffix/:storeName', (req, res) => res.send({ update: req.params.storeName, prefix: req.params.suffix }));
+
+// Delete store endpoint
+app.delete(/\/store\/(.+)/, (req, res) => res.send({ delete: req.params[0] }));
+
+// Error middleware
+app.get('/error', (req, res, next) => {
+  throw new Error('Trouble in river city');
+});
+
+app.use(function (err, req, res, next) {
+  res.status(500).send({ type: err.name, message: err.message });
+});
+
+// Listening to a network port
+const port = 8080;
+app.listen(port, function () {
+  console.log(`Listening on port ${port}`);
+});
+```
+
+#### Debugging an Express Web Service
+
+With the above code, you can set a breakpint inside the getStore endpoint callback and another on the `app.listen` call. The debugger should stop on the `listen` call where you can inspect the `app` variable. If you continue debugging and open the browser to `localhost:8080/store/provo`, it should hid the breakpoint on the endpoint. Here you can inspect the `req` object. You should be able to see what the HTTP method is, what parameters are provided, and what the current path is. If you continue, the browser should display the JSON object that you returned from your endpoint.
+
+Make another request from our browser, but this time include some query parameters like `http://localhost:8080/store/orem?order=2`. Requesting that URL should cause your breakpoint to hit where you can see the URL changes in the req object.
+
+Now, press `F11` to continue instead of `F5`, and tep into the `res.send` function. This takes you out of your code and into the Express code that sends the response. Because your installed the Express package with NPM, all of Express's source code is sitting in the `node_modules` directory. You can set breakpoints there, examine variables, and step into function. This is a good way to learn how to code. 
+
+
+</details>
+
 ## Data & Authentication Services
 ## WebSocket
 ## Security
