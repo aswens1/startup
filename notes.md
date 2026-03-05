@@ -6353,6 +6353,140 @@ Now, press `F11` to continue instead of `F5`, and tep into the `res.send` functi
 
 </details>
 
+<details>
+
+<summary>JavaScript Modules</summary>
+
+### JavaScript Modules
+
+Deeper reading: [MDN JavaScript Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
+
+JS modules allow for the partitioning and sharing of code. Initially, JS had no support for modules. Node.js, a server side JS execution application, introduced modules in order to support the import of packages of JS from third party providers.
+
+JS got full module support with ES6, and they've become the standard module representation as [browser support](https://caniuse.com/es6-module-dynamic-import) for ES modules is now almost universal.
+
+Modules can be confusing, but they are important. Node.js modules are called CommonJS modules, and JS modules are called ES modules. The import and export syntax for ES modules is the major difference between the two formats. 
+
+#### Common JS Modules
+
+Modules create a file-based scope for the code they represent, so you must explicitly `export` the objects from one file and then `import` them into another file. To import a module with CommonJS you use the format:
+
+```JavaScript
+const X = require('y');
+```
+
+For example, the following imports the Express library that was installed using NPM, and an object named DB that was exported from the local file `./database.js`.
+
+```JavaScript
+const express = require('express');
+const DB = require('./database.js')
+```
+
+If you want to export from your own code, then you use the `module.exports` global variable. For example, here is a simple module that exports a function that displays an alert.
+
+```JavaScript
+function alertDisplay(msg) {
+  alert(msg);
+}
+
+module.exports = {
+  alertDisplay,
+};
+```
+
+#### ES Modules
+
+In order to use ES Modules with Node.js, you need to specify this in your package.json like this:
+
+```JSON
+{
+  "name": "service",
+  "version": "1.0.0",
+  "description": "This demonstrates a service for a web application.",
+  "type": "module",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
+```
+
+To import a module with ES modules, you use the format:
+
+```JavaScript
+import X from 'y';
+```
+
+For example, the following imports use the Express package that was installed using NPM.
+
+```JavaScript
+import express from 'express';
+
+express().listen(3000);
+```
+
+If you want to export something from your own code, then you would use the `export` keyword. For example, here is a module that exports a function that displays an alert.
+
+**alert.js**
+
+```JavaScript
+export function alertDisplay(msg) {
+  console.log(msg);
+}
+```
+
+You can import the module's exported function into another module using the `import` keyword.
+
+**main.js**
+
+```JavaScript
+import { alertDisplay } from './alert.js';
+
+alertDisplay('called from main.js');
+```
+
+#### ES Modules in the Browser
+
+When you use ES modules in the browser via HTML script references, things get a little complicated. The key thing to understand is that modules can only be called from other modules. You can't access JS contained in a module from the global scope that your non-module JS is executing in.
+
+From HTML, you can specify that you're using an ES module by including a `type` attribute with the value of `module` in the `script` element. You can then import and use other modules. This is shown in the following example.
+
+**index.html**
+
+```HTML
+<script type="module">
+  import { alertDisplay } from './alert.js';
+  alertDisplay('module loaded');
+</script>
+```
+
+If we want to use a module in the global scope that our HTML or other non-module JS is executing in, we must leak it into the global scope. We do this either by attaching an event handler or explicitly adding a function to the global window object. In the example below, we expose the `alertDisplay` imported module function by attaching it to the global JS `window` object so that it can be called from the button `onClick` handler. We also expost the module function by attaching a `keypress` event.
+
+**index.html**
+
+```HTML
+<html>
+  <body>
+    <script type="module">
+      import { alertDisplay } from './alert.js';
+      window.btnClick = alertDisplay;
+
+      document.body.addEventListener('keypress', function (event) {
+        alertDisplay('Key pressed');
+      });
+    </script>
+    <button onclick="btnClick('button clicked')">Press me</button>
+  </body>
+</html>
+```
+
+Now if the button is pushed or a key is pressed, our ES module function will be called.
+
+##### ES Modules with Web Frameworks
+
+Fortunately, when you use a web framework bundler to generate your web app distribution code, you usually don't have to worry about differentiating between global scope and ES module scope. The bundler will inject all the necessary syntax to connect your HTML to your modules. Historically, this was done by removing the modules and placing all the JS in a namespaced gloabl partition. Now that ES modules are supported on most browsers, the bundler will expose the ES module directly.
+
+</details>
+
 ## Data & Authentication Services
 ## WebSocket
 ## Security
