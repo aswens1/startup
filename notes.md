@@ -6619,6 +6619,160 @@ If you run `pm2 ls` again, you should see your web service listed. You can now a
 
 </details>
 
+<details>
+
+<summary>Troubleshoot a 502 Status Code</summary>
+
+### Troubleshoot a 502 Status Code
+
+Deeper reading: [Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+
+You may encounter a `502` status when you deploy simon or your Startup to your prod environment. This error means Caddy can't load your HTTP service. This happens when your code is missing files, crashes when it's running, or doesn't start correctly. This causes PM2 to stop running your service.
+
+To understand a `502` code, you need to ssh into your prod environment and preform some troubleshooting. Here are some steps to get you started.
+
+Important: before trying to debug a 502 problem, make sure you can run your code in your development environment. Then make sure you can deploy simon to your prod environment. If Simon deploys but your startup doesn't, find the difference.
+
+#### General Steps
+
+1. SSH into your prod environment in a bash terminal using this command:
+
+```bash
+ssh -i <path to your pem file> ubuntu@<your domain name>
+```
+
+Example:
+
+```bash
+ssh -i ~/Desktop/CS260/production.pem ubuntu@cs260.click
+```
+
+2. Navigate to the affected service directory. (Example: `cd services/<startup or simon>`)
+
+3. List the files in the directory using `ls`. Check if all files that need to be there are there.
+
+4. Make sure your JS file containing the code to start your node server is named `index.js` (all lowercase).
+
+5. Check that your file structure is correct. For example, you should have a node_modules dirrectory, a public folder with frontend code, server files in project root directory, and the proper configuration files.
+
+6. Chcek to see if the port listed in `index.js` is correct for the service. (3000 for Simon, 4000 for startup)
+
+If you edited anything to fix the problem in your prod environment, run `pm2 restart <service>` to restart your service and check your browser. Make sure you replace `<service>` with the service you're trying to fix. For examle, `pm2 restart startup`. If your web service appears, you're finished.
+
+#### Additional Steps
+
+Sometimes the above steps aren't enough to fix the issue. Here are some more steps.
+
+1. While still in your prod environment and in the affected service directory, run `node index.js`.
+
+Example:
+
+```bash
+cd ~/services/startup
+node index.js
+```
+
+2. If an error message appears in the terminal, read it carefully and fix the problem.
+
+- If a node module is missing, you need to install the module (`npm install <module>`) in your dev environment and redeploy.
+- If a file is missing or a file path is incorrect, move the file to the proper location/fix the fil path in your dev environment and redeploy.
+
+3. If no error message appears, then you can verify that the server is reachable from your browser. If that works, press `ctrl c` to stop the node server from running. This means the problem is with how PM2 is configured to run your service. Check to see what PM2 is running with the command `pm2 describe <service>`. 
+
+Example:
+
+```
+pm2 describe startup
+ Describing process with id 1 - name startup
+┌───────────────────┬──────────────────────────────────────────┐
+│ status            │ errored                                  │
+│ name              │ startup                                  │
+│ namespace         │ default                                  │
+│ version           │ N/A                                      │
+│ restarts          │ 67                                       │
+│ uptime            │ 7D                                       │
+│ script path       │ /home/ubuntu/services/startup/index.js   │
+│ script args       │ 4000 startup                             │
+│ error log path    │ /home/ubuntu/.pm2/logs/startup-error.log │
+│ out log path      │ /home/ubuntu/.pm2/logs/startup-out.log   │
+│ pid path          │ /home/ubuntu/.pm2/pids/startup-1.pid     │
+│ interpreter       │ node                                     │
+│ interpreter args  │ N/A                                      │
+│ script id         │ 1                                        │
+│ exec cwd          │ /home/ubuntu/services/startup            │
+│ exec mode         │ fork_mode                                │
+│ node.js version   │ 18.16.0                                  │
+│ node env          │ N/A                                      │
+│ watch & reload    │ ✘                                        │
+│ unstable restarts │ 0                                        │
+│ created at        │ 2024-04-15T20:34:56.546Z                 │
+└───────────────────┴──────────────────────────────────────────┘
+```
+
+This should give you an idea of why PM2 isn't starting your service correctly. For example, the status is `errored` and it's expecting to find the main JS file in `services/startup/index.js` running on port 4000. Check that all those assumptions are true.
+
+After fixing the problem and redeploying, check to see if the service comes up. If it doesn't repeat the steps to find another error.
+
+These steps should resolve most issues, but not all.
+
+Important: fixing a problem on your prod server is only a temporary solution. You need to fix is in your project so that it deploys correctly the next time. Usually this means your backend service isn't configured correctly. For example, if you don't have a `package.json` in your **service** directory, then you need to add that to your project and redeploy.
+
+#### Common Issues for Each Deliverable
+
+##### Service
+
+- Incorrect file structure
+- Incorrect file/folder names
+- Missing a `package.json` NPM configuration file in your project `service` directory
+- Incorrect port listed in `index.js`
+- Missing node modukes: express, cookie-parser
+
+While in your dev environment, your directory structure should look similar to Simon's. Your frontend code should be in the root of your project and your backend code should be in a directory named `service`. Your frontend and backend are two different applications, so they should have their own `package.json` files that configure their dependencies.
+
+This is the project structure your code should have in your deployment environment.
+
+```
+.
+├── deployService.sh
+├── index.html       // Frontend application code
+├── index.jsx
+├── package.json     // Frontend NPM package configuration
+├── public
+│   └── *            // Images and other static files your frontend uses
+├── src
+│   └── *            // Frontend React source code files
+├── service          // Backend service code
+│   ├── index.js
+│   └── package.json // backend NPM package configuration
+└── vite.config.js   // Configuration to route api calls to backend during development
+```
+
+This is the structure your app should have once it's bundled and deployed to your prod environment.
+
+```
+.
+├── index.js       // Backend service code
+├── package.json
+├── node_modules   // Backend module dependencies
+└── public
+    ├── index.html // Frontend application
+    └── assets     // Frontend bundled code
+```
+
+##### Login/DB
+
+- Missing `dbConfig.json` file (file not imported correctly or not located with all the other server files)
+- Missing connection to MongoDB due to IP rules not being set to `allow access from anywhere`
+- Missing node modules: bcryptjs, uuid, mongodb, express, cookie-parser
+
+##### Websocket
+
+- Missing `peerProxy.js` file (if using a separate file for backend websocket)
+- Incorrect path to file location of `peerProxy.js`
+- Missing node modules: ws, bcrypt, uuid, mongodb, express, cookie-parser
+
+</details>
+
 ## Data & Authentication Services
 ## WebSocket
 ## Security
