@@ -6838,6 +6838,26 @@ This all means that you need to test services you want to use before you include
 
 </details>
 
+<details>
+
+<summary>Authorization Services</summary>
+
+### Authorization Services
+
+If your app is going to remember a user's data, then it needs a way to uniquely associate the data with a particular credential. This usually means you `authenticate` a user by asking for information, like an email address and password. You then remember, for a period of time, that the user is authenticated by storing an `authentication token` on the user's device. That's often stored as a [cookie]() that's passed back to your web service on each request. The service can now associate data that the user supplies with a unique identifier that corresponds to their auth token.
+
+It's important to define what a user is `authorized` to do on your web app. You might have different roles in your app like administrators, editors, and customers. Once you have the ability to authenticate a user and store info about them, you can also store the authorization for the user. A simple app might just have a single field that represents the role. The service code would use that role to allow, limit, or prevent what a service endpoint does. A complex app will usually have very powerful authorization representation that controls the user's access to every part of the app. For example, an editor role might have authorization only to work on content that they created or were invited to.
+
+Authentication and authorization can get really complex really fast. It's also a primary target for a hacker. If they can bypass the authentication or escalate what they are authorized to do, then they can gain control of your app. Additionally, constantly forcing users to authenticate in a secure way causes to users to not want to use an app. This creates opposing priorities: keep the system secure or make it easy to use.
+
+Many service providers and package developers have created solutions to remove complexity. Assuming you are using a trusted, well-tested service, this is a good option because it removes the cost of building, testing, and managing that critical infrastructure yourself.
+
+Authorization services often use standard protocols for authenticating and authorizing. These include standards like [OAuth](https://en.wikipedia.org/wiki/OAuth), [SAML](https://en.wikipedia.org/wiki/Security_Assertion_Markup_Language), and [OIDC](https://en.wikipedia.org/wiki/OpenID). Additionally, they usually support things like `Single Sign On` (SSO) and Federated Login. Single sign on allows a user to use the same credentials for multiple web apps. For example, you can log in to GitHub using your google credentials. Federated logins allow a user to log in once, and then the authentication token is reused automatically to log the user in to multiple websites. For example, logging in to Gmail allows you to use Google Docs and YouTube without logging in again.
+
+You can experiment with different authorization services like [AWS Cognito](https://aws.amazon.com/cognito/) or [Google Firebase](https://firebase.google.com/docs/auth).
+
+</details>
+
 ## Data & Authentication Services
 ## WebSocket
 ## Security
