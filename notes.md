@@ -6773,6 +6773,71 @@ This is the structure your app should have once it's bundled and deployed to you
 
 </details>
 
+<details>
+
+<summary>SOP and CORS</summary>
+
+### SOP and CORS
+
+Deeper reading:
+- [MDN Same Origin Policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy)
+- [MDN Cross Origin Resource Sharing](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+
+You should always be thinking of security when working with the web. When website architecture and browser clients were in their infancy, they allowed JS to make requests from one domain while displaying a website from a different domain, called cross-origin requests.
+
+Consider the following example: An attacker sends out an email with a link to a hacker website (`byu.iinstructure.com`) that's similar to the real website. If the hacker website could request anything from the real website, then it can make itself appear and act like the real website. All it needs to do is request images, html, and login endpoints from the course's website and display the results on the hacker website. This gives the hacker access to everything the user did.
+
+`Same Origin Policy` (SOP) was created to combat this. Simply stated, SOP only allows JS to make requests to a domain if it is the same domain the the user is viewing. A request from `byu.iinstructure.com` for service endpoints made to `byu.instructure.com` would fail because the domains don't match. This provides significant security, and introduces complications when building web apps. For example, if you want to build a service that any web app can use would also violate SOP and fail. In order to address this, the concept of Cross Origin Resource Sharing (CORS) was invented.
+
+CORS lets the client (like the browser) specify the origin of a request and let the server respond with what origins are allowed. The server may say that all origins are allowed (like if they are a general purpose image provider), or only a specific origin is allowed (like if they're a bank's authentication service). If the server doesn't specify what origin is allowed, the browser assumes it has to be the same.
+
+Returning to the original example, the HTTP request from the hacker site (`byu.iinstructure.com`) to the course's authentication service (`byu.instructure.com`) would look like this:
+
+```
+GET /api/auth/login HTTP/2
+Host: byu.instructure.com
+Origin: https://byu.iinstructure.com
+```
+
+In response, the course website would return:
+
+```
+HTTP/2 200 OK
+Access-Control-Allow-Origin: https://byu.instructure.com
+```
+
+The browser can then see that the actual origin of the request doesn't match the allowed origin, so the browser blocks the response and generates an error.
+
+With CORS, it's the browser that's protecting the user from accessing the course website's auth endpoint from the wrong origin. CORS is only meant to alert the user that something nefarious is being attempted. A hacker can still proxy requests through their own server to the course website and completely igore the `Access-Control-Allow-Origin` header. Therefore, the course website needs to implement its own precautions to stop a hacker.
+
+#### Using Third Party Services
+
+When you make requests to your own web services, you're always on the same origin so you won't violate SOP. But if you want to make requests to a different domain than the one your web app is hosted on, then you need to make sure that domain allows requests defined by the `Access-Control-Allow-Origin` header it returns. For example, if I have JS in my web app loaded from `cs260.click` that makes a fetch request for an image from the website `i.picsum.photos`, the browser will fail the request with an HTTP status code of 403 and an error message that CORS has blocked the request.
+
+This happens because `i.picsum.photos` doesn't return an `Access-Control-Allow-Origin` header. Without a header, the browser assumes that all requests have to be from the same origin. 
+
+If your web app instead makes a service request to `icanhazdadjoke.com` to get a joke, that request will succeed because it will return an `Access-Control-Allow-Origin` header with a value of `*`, meaning that any origin can make requests to this service.
+
+```
+HTTP/2 200
+access-control-allow-origin: *
+
+Did you hear about the bread factory burning down? They say the business is toast.
+```
+
+This would've also succeeded if the HTTP header explicitly listed your web app domain. For example, if you make your request from the origin `cs260.click`, the following response would also satisfy CORS.
+
+```
+HTTP/2 200
+access-control-allow-origin: https://cs260.click
+
+I’ll tell you something about German sausages, they’re the wurst
+```
+
+This all means that you need to test services you want to use before you include them in your app. Make sure they response with `*` or your calling origin. If they don't you won't be able to use them.
+
+</details>
+
 ## Data & Authentication Services
 ## WebSocket
 ## Security
