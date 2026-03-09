@@ -1,7 +1,8 @@
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
-const express = require('express');
 const uuid = require('uuid');
+
+const express = require('express');
 const app = express();
 
 const authCookieName = 'token';
