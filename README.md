@@ -98,3 +98,14 @@ I've also implemented and mocked out functionality on my project - found at [sta
 - **Hooks** - I used useEffect all over the place to move stats from page to page, and to paint the pixels and display a progress bar.
 
 For demonstration purposes, the game timer is only set to 30 seconds.
+
+## 🚀 Service deliverable
+
+I reviewed and deployed the Simon service code to my project - found at [simon.8bitalley.click](https://simon.8bitalley.click).
+
+- [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
+- [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
+- [ ] **Calls to third party endpoints** - I did not complete this part of the deliverable.
+- [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
+- [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
+- [ ] **Supports registration, login, logout, and restricted endpoint** - I did not complete this part of the deliverable.
