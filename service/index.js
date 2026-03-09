@@ -107,6 +107,11 @@ apiRouter.post('/stats', verifyAuth, (req, res) => {
   res.send(newStats);
 });
 
+apiRouter.get('/leaderboard', verifyAuth, (req, res) => {
+    const sorted = [...stats].sort((a, b) => b.pixels - a.pixels);
+    res.send(sorted);
+});
+
 // Default error handler
 app.use(function (err, req, res, next) {
   res.status(500).send({ type: err.name, message: err.message });

@@ -7,25 +7,25 @@ export function Leaderboard() {
     const [players, setPlayers] = useState([]);
 
     useEffect(() => {
-        const allKeys = Object.keys(localStorage);
 
-        const statsKeys = allKeys.filter(key => key.startsWith('game_stats_'));
-    
-        const leaderboardData = statsKeys.map(key => {
-            const userName = key.replace('game_stats_', '');
-            const stats = JSON.parse(localStorage.getItem(key))
-    
-            return {
-                userName,
-                pixelsPlaced: stats?.pixels || 0,
-            };
-        }).filter(player => player.userName && player.userName.trim() !== '');
+        async function loadLeaderboard() {
+            try {
+                const response = await fetch('/api/leaderboard', {
+                    credentials: 'include',
+                });
+                const data = await response.json();
 
+                const leaderboardData = data.map(player => ({
+                    userName: player.userName,
+                    pixelsPlaced: player.pixels || 0,
+                }));
+                setPlayers(leaderboardData);
+            } catch (err) {
+                console.error("Failed to load leaderboard", err);
+            }
+        }
 
-        leaderboardData.sort((a, b) => 
-        b.pixelsPlaced - a.pixelsPlaced);
-
-        setPlayers(leaderboardData);
+        loadLeaderboard();
     }, []);
 
   return (
