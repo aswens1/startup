@@ -105,7 +105,7 @@ I reviewed and deployed the Simon service code to my project - found at [simon.8
 
 - [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
 - [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
-- [ ] **Calls to third party endpoints** - I did not complete this part of the deliverable.
-- [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Supports registration, login, logout, and restricted endpoint** - So far, my app supports registration, login, and logout.
+- [ ] **Calls to third party endpoints** - In progress -> API call will be made to randomly assign a colour scheme.
+- [ ] **Backend service endpoints** - I currently have endpoints for `/auth/create`, `/auth/login`, `/auth/logout`, `/stats/:userName`, `/stats`, and `/leaderboard`.
+- [ ] **Frontend calls service endpoints** - Mocked functionality for login/register, logout, and saving game stats have been replaced with calls to the server endpoints.
+- [ ] **Supports registration, login, logout, and restricted endpoint** - So far, my app supports registration, login, logout, and game play stats being saved to the dashboard and the leaderboard.
