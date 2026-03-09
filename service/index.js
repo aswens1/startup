@@ -9,7 +9,8 @@ const authCookieName = 'token';
 
 // The scores and users are saved in memory and disappear whenever the service is restarted.
 let users = [];
-let scores = [];
+let scores = []; // high scores for leaderboard
+let stats = [];
 
 // The service port. In production the front-end code is statically hosted by the service on the same port.
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
@@ -73,15 +74,37 @@ const verifyAuth = async (req, res, next) => {
   }
 };
 
-// GetScores
-apiRouter.get('/scores', verifyAuth, (_req, res) => {
-  res.send(scores);
+// get stats for a user
+apiRouter.get('/stats/:userName', verifyAuth, (_req, res) => {
+  const userStats = stats.find((s) => s.userName === _req.params.userName);
+
+  if (userStats) {
+    res.send(userStats);
+  } else {
+    res.send({
+        userName: req.params.userName,
+        pixels: 0,
+        gamesPlayed: 0,
+        wins: 0,
+        streak: 0,
+    });
+  }
 });
 
-// SubmitScore
-apiRouter.post('/score', verifyAuth, (req, res) => {
-  scores = updateScores(req.body);
-  res.send(scores);
+// save/update stats
+apiRouter.post('/stats', verifyAuth, (req, res) => {
+    const newStats = req.body;
+
+    const existing = stats.find((s) => s.userName === newStats.userName);
+
+    if (existing) {
+        existing.pixels += newStats.pixels;
+        existing.gamesPlayed += newStats.gamesPlayed;
+        existing.wins += newStats.wins;
+    } else {
+        stats.push(newStats)
+    }
+  res.send(newStats);
 });
 
 // Default error handler

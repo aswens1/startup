@@ -122,27 +122,33 @@ export function GameCanvas() {
   useEffect(() => {
     if (!gameOver || !winner || statsUpdated) return;
 
-    const storedStats = JSON.parse(localStorage.getItem(`game_stats_${userName}`));
+    async function updateStats() {
+      let pixelsPainted = 0;
 
-    storedStats.gamesPlayed += 1;
+      board.forEach(row => 
+        row.forEach(cell => {
+          if (cell === playerColor) pixelsPainted++;
+        })
+      );
 
-    if (winner === playerColor) {
-      storedStats.wins += 1;
+      const statsUpdate = {
+        userName: userName,
+        pixels: pixelsPainted,
+        gamesPlayed: 1,
+        wins: winner === playerColor ? 1 : 0,
+        streak: 0,
+      };
+
+      await fetch(`/api/stats`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(statsUpdate),
+      });
+
+      setStatsUpdated(true);
     }
-
-    let pixelsPainted = 0;
-
-    board.forEach(row =>
-      row.forEach(cell => {
-        if (cell === playerColor) pixelsPainted++;
-      })
-    );
-
-    storedStats.pixels += pixelsPainted;
-
-    localStorage.setItem(`game_stats_${userName}`, JSON.stringify(storedStats));
-
-    setStatsUpdated(true);
+    updateStats();
   }, [gameOver, winner, playerColor, statsUpdated]);
 
   const goToMenu = () => {
@@ -279,7 +285,7 @@ export function GameCanvas() {
         {/* Player Color */}
         <div>
           <p className="text-sm uppercase tracking-wide opacity-60">
-            Your Color
+            Your Colour
           </p>
           <div
             className="w-8 h-8 rounded-lg border mt-1"

@@ -13,6 +13,28 @@ function StatCard({ value, label }) {
 
 export function Dashboard({ userName }) {
 
+  async function getStats(userName) {
+    const response = await fetch(`/api/stats/${userName}`, {
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to load stats");
+    }
+    return await response.json();
+  }
+
+  async function saveStats(userName, stats) {
+    const payload = { userName, ...stats };
+
+    await fetch(`/api/stats`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(payload),
+      credentials: 'include',
+    });
+  }
+
   // stats are stored locally for now, start at zero
 
   const [stats, setStats] = useState({
@@ -23,32 +45,21 @@ export function Dashboard({ userName }) {
   });
 
   useEffect(() => {
-    const key = `game_stats_${userName}`;
-    const savedStats = localStorage.getItem(key);
-
-    if (savedStats) {
-      setStats(JSON.parse(savedStats));
-    } else {
-      const defaultStats = {
-        pixels: 0,
-        gamesPlayed: 0,
-        wins: 0,
-        streak: 0,
-      };
-
-      const mergedStats = {
-        ...defaultStats,
-        ...savedStats,
-      };
-      
-      setStats(mergedStats);
-      localStorage.setItem(key, JSON.stringify(mergedStats));
+    async function loadStats() {
+      try {
+        const stats = await getStats(userName);
+        setStats(stats);
+      } catch {
+        setStats({
+          pixels: 0,
+          gamesPlayed: 0,
+          wins: 0,
+          streak: 0,
+        });
+      }
     }
-  }, [userName]);
-
-  useEffect(() => {
-    localStorage.setItem(`game_stats_${userName}`, JSON.stringify(stats));
-  }, [stats, userName]);
+    loadStats();
+    }, [userName]);
 
   return (
     <>
