@@ -108,4 +108,4 @@ I reviewed and deployed the Simon service code to my project - found at [simon.8
 - [ ] **Calls to third party endpoints** - I did not complete this part of the deliverable.
 - [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
 - [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Supports registration, login, logout, and restricted endpoint** - I did not complete this part of the deliverable.
+- [ ] **Supports registration, login, logout, and restricted endpoint** - So far, my app supports registration, login, and logout.
