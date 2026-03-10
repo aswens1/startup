@@ -11,6 +11,7 @@ const authCookieName = 'token';
 let users = [];
 let scores = []; // high scores for leaderboard
 let stats = [];
+let games = [];
 
 // The service port. In production the front-end code is statically hosted by the service on the same port.
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
@@ -107,9 +108,51 @@ apiRouter.post('/stats', verifyAuth, (req, res) => {
   res.send(newStats);
 });
 
+// sets leaderboard
 apiRouter.get('/leaderboard', verifyAuth, (req, res) => {
     const sorted = [...stats].sort((a, b) => b.pixels - a.pixels);
     res.send(sorted);
+});
+
+// get games
+apiRouter.get('/games', verifyAuth, (req, res) => {
+  res.send(games);
+});
+
+// create games
+apiRouter.post('/games', verifyAuth, (req, res) => {
+  const game = {
+    id: Date.now(),
+    name: req.body.name,
+    type: req.body.type,
+    players: 0,
+    maxPlayers: req.body.maxPlayers,
+    status: "Waiting for Players",
+  };
+
+  games.push(game);
+  res.send(game);
+});
+
+// join game
+apiRouter.post('/games/:id/join', verifyAuth, (req, res) => {
+  const game = games.find(g => g.id == req.params.id);
+
+  if (!game) {
+    return res.status(404).send({ msg: "Game not found" });
+  }
+
+  if (game.players >= game.maxPlayers) {
+    return res.status(400).send({ msg: "Game is full" });
+  }
+
+  games.players++;
+
+  if (game.players >= game.maxPlayers) {
+    game.status = "Full";
+  }
+
+  res.send(game);
 });
 
 // Default error handler
