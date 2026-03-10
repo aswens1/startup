@@ -14,57 +14,74 @@ export function GameSelectionMenu() {
   const [games, setGames] = useState([]);
   const [selectedGameId, setSelectedGameId] = useState(null);
 
+  // useEffect(() => {
+  //   const savedGames = localStorage.getItem(`games`);
+  //   if (savedGames) {
+  //     setGames(JSON.parse(savedGames));
+  //   }
+  // }, []);
+
   useEffect(() => {
-    const savedGames = localStorage.getItem(`games`);
-    if (savedGames) {
-      setGames(JSON.parse(savedGames));
+    async function loadGames() {
+      const response = await fetch('/api/games', {
+        credentials: 'include',
+      });
+
+      const data = await response.json();
+      setGames(data);
     }
+
+    loadGames();
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem(`games`, JSON.stringify(games));
-  }, [games]);
+  // useEffect(() => {
+  //   localStorage.setItem(`games`, JSON.stringify(games));
+  // }, [games]);
 
-  const joinGame = () => {
+  const joinGame = async () => {
     if (!selectedGameId) return;
 
-    setGames(prevGames =>
-      prevGames.map(game =>
-        game.id === selectedGameId
-        ? {
-          ...game,
-          players: game.players + 1,
-          status:
-            game.players + 1 >= game.maxPlayers ? 'Full' : 'Waiting for Players',
-        }
-        : game 
+    const response = await fetch(`/api/games/${selectedGameId}/join`, {
+      method: 'POST',
+      credentials: 'include',
+    });
+
+    const updatedGame = await response.json();
+
+    setGames(prev =>
+      prev.map(game =>
+        game.id === updatedGame.id ? updatedGame : game
       )
     );
 
-    const game = games.find(g => g.id === selectedGameId);
-    const color = PLAYER_COLORS[game?.players || 0];
+    const color = PLAYER_COLORS[updatedGame.players - 1];
 
     localStorage.setItem('currentGame', JSON.stringify({ id: selectedGameId, color }));
     navigate(`/game/${selectedGameId}`);
   }
 
-  const createGame = e => {
+  const createGame = async e => {
     e.preventDefault();
+
     const formData = new FormData(e.target);
 
-    const maxPlayers = Number(formData.get('maxPlayers') || 4);
-
-    // fixed type for capture. if i get this one super good ill add other game modes too
     const newGame = {
-      id: Date.now(),
       name: formData.get('gameName'),
       type: 'capture',
-      players: 0,
-      maxPlayers: maxPlayers,
-      status: 'Waiting for Players',
+      maxPlayers: Number(formData.get('maxPlayers') || 4),
     };
 
-    setGames(prev => [...prev, newGame]);
+    const response = await fetch('/api/games', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify(newGame),
+    });
+
+    const createdGame = await response.json();
+
+    setGames(prev => [...prev, createdGame]);
+
     e.target.reset();
   }
 
