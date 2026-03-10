@@ -39,7 +39,7 @@ I am going to use the required technologies in the following ways.
 - **HTML** - HTML will be used for the core structureand organisation by creating the pages for the login/sign up, lobby/collaborative canvas, gameplay pages, and the leaderboards.
 - **CSS** - CSS will be used to style the pixel grids, UI panels, and controls. It will also be used to animate pixel changes and help with a responsive layout based on screen size.
 - **React** - React will be used to break the UI into reusable compenents, manages the page connections, and handles reactive updates to pixel and gameplay.
-- **Service** - Service will be used to handle authentication, endpoints for the current board state, accepts and validates pixels, and supplies leaderboard data. I will also use the [Colormind API](http://colormind.io/api-access/) to randomise the pixel colour for teams in game play. 
+- **Service** - Service will be used to handle authentication, endpoints for the current board state, accepts and validates pixels, and supplies leaderboard data. I will also use the [The Color API](https://www.thecolorapi.com/) to randomise the pixel colour for teams in game play. 
 - **DB/Login** - The Database will store accounts and auth information, saves the pixel data for each board, and stores game boards and leaderboard stats.
 - **WebSocket** - WebSocket will be used to update boards in real-time to other players when a pixel is changed, sends board resets and game state changes, and enables live multiplayer interactions.
 
@@ -105,7 +105,7 @@ I reviewed and deployed the Simon service code to my project - found at [simon.8
 
 - **Node.js/Express HTTP service** - I've installed Express with NPM, with the default port set to 4000.
 - **Static middleware for frontend** - Simple endpoints in `service/index`.
-- **Calls to third party endpoints** - In progress -> API call will be made to randomly assign a colour scheme.
-- **Backend service endpoints** - I currently have endpoints for `/auth/create`, `/auth/login`, `/auth/logout`, `/stats/:userName`, `/stats`, and `/leaderboard`.
-- **Frontend calls service endpoints** - Mocked functionality for login/register, logout, and saving game stats have been replaced with calls to the server endpoints.
-- **Supports registration, login, logout, and restricted endpoint** - So far, my app supports registration, login, logout, and game play stats being saved to the dashboard and the leaderboard.
+- **Calls to third party endpoints** - API call made to [The Color API](https://www.thecolorapi.com/) to generate a random set of colour's for each game.
+- **Backend service endpoints** - I have endpoints for `/auth/create`, `/auth/login`, `/auth/logout`, `/stats/:userName`, `/stats`, `/leaderboard`, `/games` (for getting and creating), and `/games/:id/join`.
+- **Frontend calls service endpoints** - Mocked functionality for login/register, logout, creating and joining games, and saving game stats have been replaced with calls to the server endpoints.
+- **Supports registration, login, logout, and restricted endpoint** - So far, my app supports registration, login, logout, creating and joining games, and saving gameplay stats to the dashboard and the leaderboard.
