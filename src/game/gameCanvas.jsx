@@ -182,10 +182,10 @@ export function GameCanvas() {
   useEffect(() => {
     if (playerColor) {
       setBotColor(getBotColor(playerColor));
-    }
+}
   }, [playerColor]);
 
-
+  
   function placeRandomBotPixel() {
     if (gameOver || !botColor) return;
     const randomRow = Math.floor(Math.random() * gridSize);
@@ -200,8 +200,8 @@ export function GameCanvas() {
     const COLORS = ["#ef4444", "#3b82f6", "#22c55e", "#facc15"];
 
     const available = COLORS.filter(color => color !== playerColor);
-
-  
+      
+    
     return available[Math.floor(Math.random() * available.length)];
   }
 

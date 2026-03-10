@@ -83,7 +83,7 @@ apiRouter.get('/stats/:userName', verifyAuth, (_req, res) => {
     res.send(userStats);
   } else {
     res.send({
-        userName: req.params.userName,
+        userName: _req.params.userName,
         pixels: 0,
         gamesPlayed: 0,
         wins: 0,
@@ -116,32 +116,43 @@ apiRouter.get('/leaderboard', verifyAuth, (req, res) => {
 
 // get games
 apiRouter.get('/games', verifyAuth, (req, res) => {
-  res.send(games);
+  const activeGames = games.filter(g => g.players < g.maxPlayers);
+  res.send(activeGames);
 });
 
 // create games
 apiRouter.post('/games', verifyAuth, async (req, res) => {
 
   const maxPlayers = req.body.maxPlayers;
+  let palette = [];
 
-  const requestBody = {
-    mode: "transformer",
-    num_colors: maxPlayers,
-    temperature: "1.2",
-    num_results: 5,
-    adjacency: [],
-    palette: Array(maxPlayers).fill("-"),
-  };
+  try {
+    const requestBody = {
+      mode: "transformer",
+      num_colors: maxPlayers,
+      temperature: "1.2",
+      num_results: 5,
+      adjacency: [],
+      palette: Array(maxPlayers).fill("-"),
+    };
 
-  const response = await fetch("https://api.huemint/color", {
-    method: "POST",
-    headers: { "Content-type": "application/json" },
-    body: JSON.stringify(requestBody)
-  });
+    const response = await fetch("https://api.huemint.com/color", {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(requestBody)
+    });
 
-  const data = await response.json();
+    const data = await response.json();
 
-  const palette = data.results[0].palette;
+    palette = data.result[0].palette;
+
+  } catch (err) {
+    console.log("Huemint failed, using fallback colours");
+
+    palette = Array.from({ length: maxPlayers }, () => 
+      "#" + Math.floor(Math.random()*16777215).toString(16)
+    );
+  }
 
   const game = {
     id: Date.now(),
@@ -159,6 +170,7 @@ apiRouter.post('/games', verifyAuth, async (req, res) => {
 
 // join game
 apiRouter.post('/games/:id/join', verifyAuth, (req, res) => {
+
   const game = games.find(g => g.id == req.params.id);
 
   if (!game) {
@@ -169,13 +181,17 @@ apiRouter.post('/games/:id/join', verifyAuth, (req, res) => {
     return res.status(400).send({ msg: "Game is full" });
   }
 
-  games.players++;
+  const playerIndex = game.players;
+
+  const assignedColor = game.colors[playerIndex];
+
+  game.players++;
 
   if (game.players >= game.maxPlayers) {
     game.status = "Full";
   }
 
-  res.send(game);
+  res.send({ game, color: assignedColor });
 });
 
 // Default error handler

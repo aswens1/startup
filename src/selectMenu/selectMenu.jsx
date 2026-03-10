@@ -4,22 +4,12 @@ import '../app.css';
 import { GAME_MODES } from '../game/gameModes';
 import { GameEngine } from '../game/gameEngine';
 
-// this will be the api call to assign random colours
-const PLAYER_COLORS = ["#ef4444", "#3b82f6", "#22c55e", "#facc15"]
-
 export function GameSelectionMenu() {
 
   const navigate = useNavigate();
 
   const [games, setGames] = useState([]);
   const [selectedGameId, setSelectedGameId] = useState(null);
-
-  // useEffect(() => {
-  //   const savedGames = localStorage.getItem(`games`);
-  //   if (savedGames) {
-  //     setGames(JSON.parse(savedGames));
-  //   }
-  // }, []);
 
   useEffect(() => {
     async function loadGames() {
@@ -34,10 +24,6 @@ export function GameSelectionMenu() {
     loadGames();
   }, []);
 
-  // useEffect(() => {
-  //   localStorage.setItem(`games`, JSON.stringify(games));
-  // }, [games]);
-
   const joinGame = async () => {
     if (!selectedGameId) return;
 
@@ -46,17 +32,18 @@ export function GameSelectionMenu() {
       credentials: 'include',
     });
 
-    const updatedGame = await response.json();
+    const data = await response.json();
+
+    const game = data.game;
+    const color = data.color;
 
     setGames(prev =>
-      prev.map(game =>
-        game.id === updatedGame.id ? updatedGame : game
+      prev.map(g =>
+        g.id === game.id ? game : g
       )
     );
 
-    const color = PLAYER_COLORS[updatedGame.players - 1];
-
-    localStorage.setItem('currentGame', JSON.stringify({ id: selectedGameId, color }));
+    localStorage.setItem('currentGame', JSON.stringify({ id: selectedGameId, color, colors: game.colors }));
     navigate(`/game/${selectedGameId}`);
   }
 
@@ -113,6 +100,15 @@ export function GameSelectionMenu() {
                       <div className="meta">
                         <span>Players:</span> {game.players} / {game.maxPlayers}<br />
                         <span>Status:</span> {game.status}
+                      </div>
+                      <div className="flex gap-2 mt-2">
+                        {game.colors.map((color, i) => (
+                          <div
+                            key={i}
+                            className="w-4 h-4 rounded"
+                            style={{ backgroundColor: color }}
+                          />
+                        ))}
                       </div>
                     </div>
                   </label>

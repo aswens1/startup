@@ -103,9 +103,9 @@ For demonstration purposes, the game timer is only set to 30 seconds.
 
 I reviewed and deployed the Simon service code to my project - found at [simon.8bitalley.click](https://simon.8bitalley.click).
 
-- [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
-- [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
-- [ ] **Calls to third party endpoints** - In progress -> API call will be made to randomly assign a colour scheme.
-- [ ] **Backend service endpoints** - I currently have endpoints for `/auth/create`, `/auth/login`, `/auth/logout`, `/stats/:userName`, `/stats`, and `/leaderboard`.
-- [ ] **Frontend calls service endpoints** - Mocked functionality for login/register, logout, and saving game stats have been replaced with calls to the server endpoints.
-- [ ] **Supports registration, login, logout, and restricted endpoint** - So far, my app supports registration, login, logout, and game play stats being saved to the dashboard and the leaderboard.
+- **Node.js/Express HTTP service** - I've installed Express with NPM, with the default port set to 4000.
+- **Static middleware for frontend** - Simple endpoints in `service/index`.
+- **Calls to third party endpoints** - In progress -> API call will be made to randomly assign a colour scheme.
+- **Backend service endpoints** - I currently have endpoints for `/auth/create`, `/auth/login`, `/auth/logout`, `/stats/:userName`, `/stats`, and `/leaderboard`.
+- **Frontend calls service endpoints** - Mocked functionality for login/register, logout, and saving game stats have been replaced with calls to the server endpoints.
+- **Supports registration, login, logout, and restricted endpoint** - So far, my app supports registration, login, logout, and game play stats being saved to the dashboard and the leaderboard.
