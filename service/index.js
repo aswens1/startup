@@ -120,14 +120,37 @@ apiRouter.get('/games', verifyAuth, (req, res) => {
 });
 
 // create games
-apiRouter.post('/games', verifyAuth, (req, res) => {
+apiRouter.post('/games', verifyAuth, async (req, res) => {
+
+  const maxPlayers = req.body.maxPlayers;
+
+  const requestBody = {
+    mode: "transformer",
+    num_colors: maxPlayers,
+    temperature: "1.2",
+    num_results: 5,
+    adjacency: [],
+    palette: Array(maxPlayers).fill("-"),
+  };
+
+  const response = await fetch("https://api.huemint/color", {
+    method: "POST",
+    headers: { "Content-type": "application/json" },
+    body: JSON.stringify(requestBody)
+  });
+
+  const data = await response.json();
+
+  const palette = data.results[0].palette;
+
   const game = {
     id: Date.now(),
     name: req.body.name,
     type: req.body.type,
     players: 0,
-    maxPlayers: req.body.maxPlayers,
+    maxPlayers: maxPlayers,
     status: "Waiting for Players",
+    colors: palette,
   };
 
   games.push(game);
