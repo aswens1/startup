@@ -103,9 +103,11 @@ For demonstration purposes, the game timer is only set to 30 seconds.
 
 I reviewed and deployed the Simon service code to my project - found at [simon.8bitalley.click](https://simon.8bitalley.click).
 
+I've also implemented the service and endpoints. All functionality calls these endpoints in the service subdirectory - found at [startup.8bitalley.click](https://startup.8bitalley.click/)
+
 - **Node.js/Express HTTP service** - I've installed Express with NPM, with the default port set to 4000.
 - **Static middleware for frontend** - Simple endpoints in `service/index`.
 - **Calls to third party endpoints** - API call made to [The Color API](https://www.thecolorapi.com/) to generate a random set of colour's for each game.
 - **Backend service endpoints** - I have endpoints for `/auth/create`, `/auth/login`, `/auth/logout`, `/stats/:userName`, `/stats`, `/leaderboard`, `/games` (for getting and creating), and `/games/:id/join`.
 - **Frontend calls service endpoints** - Mocked functionality for login/register, logout, creating and joining games, and saving game stats have been replaced with calls to the server endpoints.
-- **Supports registration, login, logout, and restricted endpoint** - So far, my app supports registration, login, logout, creating and joining games, and saving gameplay stats to the dashboard and the leaderboard.
+- **Supports registration, login, logout, and restricted endpoint** - My app supports registration, login, logout, creating and joining games, and saving gameplay stats to the dashboard and the leaderboard.
