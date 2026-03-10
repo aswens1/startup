@@ -127,27 +127,25 @@ apiRouter.post('/games', verifyAuth, async (req, res) => {
   let palette = [];
 
   try {
-    const requestBody = {
-      mode: "transformer",
-      num_colors: maxPlayers,
-      temperature: "1.2",
-      num_results: 5,
-      adjacency: [],
-      palette: Array(maxPlayers).fill("-"),
-    };
+    const randomHex = Math.floor(Math.random() * 16777215)
+    .toString(16).padStart(6, "0");
 
-    const response = await fetch("https://api.huemint.com/color", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(requestBody)
-    });
+    const response = await fetch(`https://www.thecolorapi.com/scheme?hex=${randomHex}&mode=analogic&count=${maxPlayers}`);
 
     const data = await response.json();
 
-    palette = data.result[0].palette;
+    palette = data.colors
+      .map(c => c.hex.value)
+      .slice(0, maxPlayers);
+
+    while (palette.length < maxPlayers) {
+      palette.push(
+        "#" + Math.floor(Math.random() * 16777215).toString(16).padStart(6, "0")
+      );
+    }
 
   } catch (err) {
-    console.log("Huemint failed, using fallback colours");
+    console.log("Color API failed, using fallback colours");
 
     palette = Array.from({ length: maxPlayers }, () => 
       "#" + Math.floor(Math.random()*16777215).toString(16)

@@ -172,7 +172,7 @@ export function GameCanvas() {
     
     botIntervalRef.current = setInterval(() => {
       placeRandomBotPixel();
-    }, 1000); //every 2 sec
+    }, 1000); //every 1 sec
 
     return () => {
       clearInterval(botIntervalRef.current);
@@ -196,12 +196,15 @@ export function GameCanvas() {
     setBoard(prev => engine.handleMove(prev, randomRow, randomCol, color));
   }
 
-  function getBotColor() {
-    const COLORS = ["#ef4444", "#3b82f6", "#22c55e", "#facc15"];
+  function getBotColor(playerColor) {
+    const currentGame = JSON.parse(localStorage.getItem('currentGame'));
 
-    const available = COLORS.filter(color => color !== playerColor);
-      
-    
+    if (!currentGame || !currentGame.colors) return null;  
+  
+    const available = currentGame.colors.filter(color => color !== playerColor);
+  
+    if (available.length === 0) return null;
+  
     return available[Math.floor(Math.random() * available.length)];
   }
 
