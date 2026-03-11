@@ -7532,6 +7532,266 @@ If it's not quite working, [here](https://github.com/webprogramming260/webprogra
 </details>
 
 ## Data & Authentication Services
+
+<details>
+
+<summary>Deployment</summary>
+
+### Deployment
+
+It's important to separate where you develop your app from where the producrion release of your app is made publically available. There are usually more environments than this, like staging, internal testing, and external testing environments. If your company wants 3rd party security certification like SOC2 compliance, they require that these environments are all separated from each other. A developer won't have access to the production environment to prevent them from manipulating an entire company asset. Instead, automated integration processess (continuous integration (`CI`) processes) can checkout the code, [lint it](https://www.freecodecamp.org/news/what-is-linting-and-how-can-it-save-you-time/), test it, stage it, test some more, and if everything works, **deploy** the app to the production environment and notify the different departments that it's been released.
+
+![deploymentEnvironments](picturesForNotes/deploymentEnvironments.png)
+
+In this course, we use and manage both the development environment (personal computer) and the production environment (AWS server). Never consider your production environment as a place to develop or experiment with your app. You can shel into the production environment to configure your server or to debug, but the deployment of your app should be done using an automated CI process. Here we use a simple console shell script.
+
+![deploymentSimple](picturesForNotes/deploymentSimple.png)
+
+#### Automating Your Deployment
+
+Automated deployment processes are reproducible. You can't accidentally delete a file or misconfigure something. Also, having an automated script lets you iterate quickly because it's much easier to deploy your code. You can add a small feature, deploy it to production, and get feedback within seconds.
+
+Our scripts change with each new technology we deploy. Initially, they just copied a directory of HTML files, but soon they include the ability to modify the configuragtion of your web server, run transpiler tools, and bundle your code into a deployable package.
+
+You can run a deployment script from a console window in your dev environment with a command like this.
+
+```sh
+./deployService.sh -k ~/prod.pem -h yourdomain.click -s simon
+```
+
+The `-k` parameter provides the credential file necessary to access your prod environment. The `-h` parameter is the domain name of your prod environment. The `-s` parameter represents the name of the application you're deploying (in this case `simon` or `startup`).
+
+You can view the [entire file here](https://github.com/webprogramming260/simon-service/blob/main/deployService.sh), but below will have each step explained. The better you understand the script, the easier it is to track down and fix problems that arise.
+
+```sh
+while getopts k:h:s: flag
+do
+    case "${flag}" in
+        k) key=${OPTARG};;
+        h) hostname=${OPTARG};;
+        s) service=${OPTARG};;
+    esac
+done
+
+if [[ -z "$key" || -z "$hostname" || -z "$service" ]]; then
+    printf "\nMissing required parameter.\n"
+    printf "  syntax: deployService.sh -k <pem key file> -h <hostname> -s <service>\n\n"
+    exit 1
+fi
+
+printf "\n----> Deploying $service to $hostname with $key\n"
+```
+
+Next, the script copies all the applicable source files into a distribution directory (`dist`) in preparation for copying that directory to your prod server.
+
+```sh
+# Step 1
+printf "\n----> Build the distribution package\n"
+rm -rf dist
+mkdir dist
+cp -r application dist
+cp *.js dist
+cp package* dist
+```
+
+The target directory on your prod enviroment is deleted so that a new one can replace it. This is done by executing commands remotely using the secure shell program (`ssh`).
+
+```sh
+# Step 2
+printf "\n----> Clearing out previous distribution on the target\n"
+ssh -i $key ubuntu@$hostname << ENDSSH
+rm -rf services/${service}
+mkdir -p services/${service}
+ENDSSH
+```
+
+The distribution directory is then copied to the prod environment using the secure copy program (`scp`).
+
+```sh
+# Step 3
+printf "\n----> Copy the distribution package to the target\n"
+scp -r -i $key dist/* ubuntu@$hostname:services/$service
+```
+
+Then, we use `ssh` again to execute some commands on the prod environment. This installs the node packages with `npm install` and restarts the service daemon (`PM2`) that runs our web app in the prod environment.
+
+```sh
+# Step 4
+printf "\n----> Deploy the service on the target\n"
+ssh -i $key ubuntu@$hostname << ENDSSH
+cd services/${service}
+npm install
+pm2 restart ${service}
+ENDSSH
+```
+
+Finally, we clean up our dev environment by deleting the distribution package.
+
+```sh
+# Step 5
+printf "\n----> Removing local copy of the distribution package\n"
+rm -rf dist
+```
+
+Doing this by hand everytime you had to deploy would be a huge pain, and you'd probably make a bunch of mistakes.
+
+You can learn more about shell scripting [with this tutorial](https://ryanstutorials.net/bash-scripting-tutorial/bash-script.php). Shell scripting is a powerful tool for automating common dev tasks and is worth adding to your bucket of skills.
+
+</details>
+
+<details>
+
+<summary>Storage Services</summary>
+
+### Storage Services
+
+Web apps commonly need to store files associated with the app or the users of the app. This includes files like images, user uploads, documents, and movies. Files usually have an ID, some metadata, and the bytes representing the file itself. These can be stored using a database service, but that is usually overkill and a simpler solution can be cheaper.
+
+Storing files directly on your server is a bad idea for multiple reasons.
+
+1. Your server has limited drive space. If your server runs out of drive space, your entire app will fail.
+
+2. You should consider your server as being ephemeral, or temporary. It can be thrown away and replaced by a copy at any point. If you start storing files on your server, then your server has state that can't be easily replaced.
+
+3. You need backup copies of app and user files. If you only have one copy of your files on your server, then they will disappear when your server disappears, and you should always assume your server will disappear.
+
+Here is a table of major cloud storage providors that offer programmatic access, including links to their docs, info about their free tiers, and the amount of storage included.
+
+| Provider | Documentation | Free Tier | Free Storage Included |
+| --- | --- | --- | --- |
+| Amazon S3 | [Documentation](https://docs.aws.amazon.com/s3/index.html) | Yes | 5 GB for 12 months |
+| Google Cloud Storage | [Documentation](https://cloud.google.com/storage/docs) | Yes | 5 GB |
+| Microsoft Azure Storage | [Documentation](https://docs.microsoft.com/en-us/azure/storage/) | Yes | 5 GB for 12 months |
+| IBM Cloud Object Storage | [Documentation](https://cloud.ibm.com/docs/cloud-object-storage) | Yes | Lite plan with 25 GB |
+| MinIO | [Documentation](https://min.io/docs/) | No | N/A |
+| OpenStack Swift | [Documentation](https://docs.openstack.org/swift/latest/) | No | N/A |
+
+#### AWS S3
+
+We already use AWS for our server, so we'll look closer at [AWS S3](https://aws.amazon.com/s3/). S3 has the following advantages.
+
+1. Unlimited capacity
+2. Only pay for the storage you use
+3. Optimized for global access
+4. Keeps multiple redundant copies of every file
+5. You can version the files
+6. Performant
+7. Supports metadata tags
+8. Make your files publically available directly from S3
+9. Keep your files private and only accessible from your app
+
+We won't be using any storage service for the Simon project. If you wat to use S3 as a storage service for your startup, then you need to learn how to use the Amazon SDK. The [AWS website](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/getting-started-nodejs.html) has detailed info on using AWS S3 with Node.js. The steps you need to take generally include:
+
+1. Creating a S3 bucket to store your data in
+2. Getting credentials so your app can access the bucket
+3. [Using](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/setting-credentials-node.html) the credentials in your app
+4. Using the [SDK](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/javascript_s3_code_examples.html) to write, list, read, and delete files from the bucket
+
+Important: don't use your credentials in your code. If you check your credentials into your GitHub repo, they will be stolen and used by hackers to take over your AWS account. This can result in significant monetary damage to you.
+
+##### Example S3 Usage
+
+As a simple example that uses S3, you first need to install the AWS packages.
+
+```sh
+npm install @aws-sdk/client-s3 @aws-sdk/credential-providers
+```
+
+**Getting Credentials**
+
+Next you need to obtain your AWS credentials that lets you access S3. When you are running in your prod environment, you can change the role that your S3 server is running to allow S3 access. In your dev environment, you need to obtain AWS access keys and store them in the `~/.aws/credentials` file. You can write values to the credential file using the AWS CLI with the following command:
+
+```sh
+aws configure
+```
+
+Whatever method you use, the AWS SDK will attempt to find the credentials by looking for them in all of the standard places when you call `fromIni()`. You then pass the credentials to the service you want to use. In the case below, we create an `S3Client`.
+
+```JavaScript
+const s3 = new S3Client({
+  credentials: fromIni(),
+});
+```
+
+**Writing and Reading a File**
+
+Once you've authenticated with AWS, you're ready to make any request that your AMI role allows. In the example below, we execute the `PutObject` and `GetObject` commands. The parameters of each of these calls specify the bucket and the file that we want to use. When we read the object data from S3, we use the `transformToString` function to convert the object data back into the actual file.
+
+```JavaScript
+import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
+import { fromIni } from '@aws-sdk/credential-providers';
+
+const s3 = new S3Client({
+  credentials: fromIni(),
+});
+
+const bucketName = 'your-bucket-name-here';
+
+async function uploadFile(fileName, fileContent) {
+  const command = new PutObjectCommand({
+    Bucket: bucketName,
+    Key: fileName,
+    Body: fileContent,
+  });
+  return s3.send(command);
+}
+
+async function readFile(fileName) {
+  const command = new GetObjectCommand({
+    Bucket: bucketName,
+    Key: fileName,
+  });
+  const { Body } = await s3.send(command);
+  return Body.transformToString();
+}
+
+await uploadFile('test.txt', 'Hello S3!');
+const data = await readFile('test.txt');
+
+console.log(data);
+```
+
+Now you can run the code and see the result.
+
+```sh
+node service.js
+Hello S3!
+```
+
+</details>
+
+<details>
+
+<summary>Uploading Files</summary>
+
+### Uploading Files
+
+</details>
+
+<details>
+
+<summary> Data Services</summary>
+
+### Data Services
+
+</details>
+
+<details>
+
+<summary>Backend Testing</summary>
+
+### Backend Testing
+
+</details>
+
+<details>
+
+<summary>Frontend Testing</summary>
+
+### Frontend Testing
+
+</details>
+
 ## WebSocket
 ## Security
 ## Assorted Topics
