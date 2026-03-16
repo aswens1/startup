@@ -7891,6 +7891,313 @@ Instead, you want to use a dedicated storage service that has durability guarant
 
 ### Data Services
 
+[MongoDB Atlas Setup](https://youtu.be/f75muk9W-Jc)
+
+Web apps need to store application and user data persistently. This can mean many things, but it's usually a representation of complex interrelated objects. This includes user profile, organizational structure, game play info, usage history, billing info, peer relationship, library catalogue, etc.
+
+Historically, SQL databases served as the general purpose data service solution. Starting around 2010, specialty data services that better support document, graph, JSON, time, sequence, and key-value pair data began to take significant roles in apps from major companies. These data services are often called NoSQL solutions, since they don't use the general purpose relational database paradigms popularized by SQL databases. However, they all have different underlying data structures, strengths, and weaknesses. This means you should not simply split all of the possible data services into two narrowly defined boxes of SQL and NoSQL, when you're considering which service to use for your app.
+
+Here is a list of some popular data services.
+
+| Service | Specialty |
+| --- | --- |
+| MySQL | relational queries |
+| Redis | memory cached objects |
+| ElasticSearch | ranked free test |
+| MongoDB | JSON objects |
+| DynamoDB | key value pairs |
+| Neo4J | graph based data |
+| InfluxDB | time series data |
+
+#### MongoDB
+
+For this project, we'll use `MongoDB`. Mongo increases developer productivity by using JSON objects as its core data model. This makes it easy to have an app that uses JSON from the top to the bottom of the tech stack. A mongo database is made of one or more collections that each contain JSON documents. You can think of a collection as a large array of JS objects, each with a unique ID. The following is a sample collection of houses for rent.
+
+```JavaScript
+[
+  {
+    _id: '62300f5316f7f58839c811de',
+    name: 'Lovely Loft',
+    summary: 'A charming loft in Paris',
+    beds: 1,
+    last_review: {
+      $date: '2022-03-15T04:06:17.766Z',
+    },
+    price: 3000,
+  },
+  {
+    _id: '623010b97f1fed0a2df311f8',
+    name: 'Infinite Views',
+    summary: 'Modern home with infinite views from the infinity pool',
+    property_type: 'House',
+    beds: 5,
+    price: 250,
+  },
+];
+```
+
+Unlike with relational databases that require a rigid table definition where each column is strictly typed and defined before hand, Mongo has no strict scheme requirements. Each document in the collection usually follows a similar schema, but each document my have specialised fields that are present and common fields that are missing. This lets the schema of a collection morph organically as the data model of the app evolves. To add a new field to a Mongo collection, you insert the field into the documents as desired. If the field isn't present, or has a different type in some documents, then the document doesn't match the query criteria when the field is referenced.
+
+The query syntax for Mongo follows a JS. Consider the following queries on the houses collection above.
+
+```JavaScript
+// find all houses
+db.house.find();
+
+// find houses with two or more bedrooms
+db.house.find({ beds: { $gte: 2 } });
+
+// find houses that are available with less than three beds
+db.house.find({ status: 'available', beds: { $lt: 3 } });
+
+// find houses with either less than three beds or less than $1000 a night
+db.house.find({ $or: [(beds: { $lt: 3 }), (price: { $lt: 1000 })] });
+
+// find houses with the text 'modern' or 'beach' in the summary
+db.house.find({ summary: /(modern|beach)/i });
+```
+
+#### MongoDB Atlas
+
+All major cloud providors offer multiple data services. For this class, we will use the data service from MongoDB called [Atlas](https://www.mongodb.com/atlas/database). No credit card of payment is needed to set up, as long as you stick to the shared cluster environment.
+
+[MongoDB Atlas Sign Up](https://www.mongodb.com/atlas/database)
+
+Important: This [video tutorial]() will walk you through the process of creating your account and seeting up your database. Some of the Atlas interface may be slightly different, but the basic concepts shoul all be there. The main steps needs are:
+
+1. Create your account.
+2. Create a database cluster.
+3. Create your root database user credentials. Remember these for later
+4. Set network access to your database to be available from anywhere.
+5. Copy the connection string and use the info in your code.
+6. Save the connection and credential info in your production and development environments as instructed above.
+
+You can always find the connection string to your Atlas cluster by pressing the `Connect` button from your Database -> DataServices view.
+
+#### Keeping Your Keys Out of Your Code
+
+You need to protect your credentials for connecting to your Mongo database. One common mistake is to check them into your code and then post to a public GitHub repo. Instead, you can load you credentials when the app executes. One common way to do that is to have a JSON configuration file that ontains the credentials that you dynamically load into the JS that makes the database connection. You then use the configuration file in your development environment and deploy it to your prod environment, but NEVER commit it to GitHub.
+
+#### Using MongoDB in Your App
+
+Deeper reading: [MongoDB Tutorial](https://www.mongodb.com/developer/languages/javascript/node-crud-tutorial/)
+
+The first step is to install the `mongodb` package using NPM.
+
+```sh
+mkdir testMongo && cd testMongo
+npm init -y
+npm install mongodb
+```
+
+Store your configuration info in the project.
+
+1. Create a file named `dbConfig.json`.
+2. Insert your MongoDB credentials (that you got from the connection string when you created your Mongo instance) into the `dbConfig.json` file in JSON format using this example:
+
+```JSON
+{
+  "hostname": "cs260.abcdefg.mongodb.net",
+  "userName": "myMongoUserName",
+  "password": "toomanysecrets"
+}
+```
+
+Note: make sure you include `dbConfig.json` in your `.gitignore` file so it doens't get pushed to GitHub.
+
+Now you can make a file named `database.js`. In the file, you import your databas credentials and use the `MongoClient` object to make a client connection to the database server. This requires a username, password, and the hostname of the database server. With the client connection, you can get a database object and from that a collection object. The collection object allows you to insert, and query for, documents.
+
+```JavaScript
+const { MongoClient } = require('mongodb');
+const config = require('./dbConfig.json');
+
+const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
+
+const client = new MongoClient(url);
+const db = client.db('rental');
+const collection = db.collection('house');
+
+async function main() {
+  try {
+    // add all the following database code here
+    
+  } finally {
+    client.close();
+  }
+}
+
+main();
+```
+
+##### Insert
+
+You don't jave to do anything special to insert a JS object as a Mongo document. You just call the `insertOne` function on the collection object and pass it the JS object. When you insert a document, Mongo will automatically create them for you if the database or collection doesn't exist. When the document is inserted into the collection, it will automatically be assigned a unique ID.
+
+```JavaScript
+const house = {
+  name: 'Beachfront views',
+  summary: 'From your bedroom to the beach, no shoes required',
+  property_type: 'Condo',
+  beds: 1,
+};
+const insertResult = await collection.insertOne(house);
+```
+
+##### Query
+
+To query documents, you use the `find` function on the collection object. Note that the find function is asynchronous and so we use the `await` keyword to wait for the promise to resolve before we write them out to the console.
+
+```JavaScript
+const cursor = collection.find();
+const rentals = await cursor.toArray();
+rentals.forEach((i) => console.log(i));
+```
+
+If you don't supply any parameters to the `find` function, it will return all documents in the collection. In this case, we will only get back the single fdocument that we previously inserted. Notice that the automatically generated ID is returned with the document.
+
+##### Output
+
+```JavaScript
+[
+  {
+    _id: new ObjectId('639a96398f8de594e198fc13'),
+    name: 'Beachfront views',
+    summary: 'From your bedroom to the beach, no shoes required',
+    property_type: 'Condo',
+    beds: 1,
+  },
+];
+```
+
+You can provide a query and options to the `find` function. In the example below, we query for a `property_type` of Condo that has less than tw obedrooms. We also specify the options to sort by desecnding **name**, and limit our results to the first 10 documents.
+
+```JavaScript
+const query = { property_type: 'Condo', beds: { $lt: 2 } };
+const options = {
+  sort: { name: -1 },
+  limit: 10,
+};
+
+const cursor = collection.find(query, options);
+const rentals = await cursor.toArray();
+rentals.forEach((i) => console.log(i));
+```
+
+The query matches the document that we previously inserted and so we get the same result as before.
+
+##### Updated
+
+You can update any record by providing a query and the fields you want to update. The `updateMany` function will update everything that matches the query. `updateOne` will only update the first matching document.
+
+```JavaScript
+const query = { property_type: 'Condo', beds: { $lt: 2 } };
+await collection.updateMany(query, { $set: { beds: 2 } });
+```
+
+##### Delete
+
+You can delete documents the same way you update them.
+
+```JavaScript
+const query = { property_type: 'Condo', beds: { $lt: 2 } };
+await collection.deleteMany(query);
+```
+
+You can also delete a single document with `deleteOne` and providing the document's ID as the query.
+
+```JavaScript
+const insertResult = await collection.insertOne(house);
+
+const deleteQuery = { _id: insertResult.insertedId };
+await collection.deleteOne(deleteQuery);
+```
+
+There is a lot more functionality that MongoDB provides, but this is enough to get started. There are tutorials on their [website](https://www.mongodb.com/docs/).
+
+##### Testing the Connection on Startup
+
+It's nice to know that your connection string is correct before your app tries to access any data. We can do that when the app starts by making an asynchronous request to ping the database. If that fails, then either the connection string is incorrect, the credentials are invalid, or the network isn't working. The following is an example of testing the connection.
+
+```JavaScript
+try {
+  await db.command({ ping: 1 });
+  console.log(`DB connected to ${config.hostname}`);
+} catch (ex) {
+  console.log(`Error with ${url} because ${ex.message}`);
+  process.exit(1);
+}
+```
+
+If you server isn't starting, check your logs to see if an exception was thrown.
+
+#### Complete Example
+
+```JavaScript
+const { MongoClient } = require('mongodb');
+const config = require('./dbConfig.json');
+
+const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
+
+// Connect to the database cluster
+const client = new MongoClient(url);
+const db = client.db('rental');
+const collection = db.collection('house');
+
+async function main() {
+  try {
+    // Test that you can connect to the database
+    await db.command({ ping: 1 });
+    console.log(`DB connected to ${config.hostname}`);
+  } catch (ex) {
+    console.log(`Connection failed to ${url} because ${ex.message}`);
+    process.exit(1);
+  }
+
+  try {
+    // Insert a document
+    const house = {
+      name: 'Beachfront views',
+      summary: 'From your bedroom to the beach, no shoes required',
+      property_type: 'Condo',
+      beds: 1,
+    };
+    await collection.insertOne(house);
+
+    // Query the documents
+    const query = { property_type: 'Condo', beds: { $lt: 2 } };
+    const options = {
+      sort: { name: -1 },
+      limit: 10,
+    };
+    const cursor = collection.find(query, options);
+    const rentals = await cursor.toArray();
+    rentals.forEach((i) => console.log(i));
+
+    // Delete documents
+    await collection.deleteMany(query);
+  } catch (ex) {
+    console.log(`Database (${url}) error: ${ex.message}`);
+  } finally {
+    await client.close();
+  }
+}
+
+main();
+```
+
+Running the above example should return something like the following if everything is working correctly.
+
+```JavaScript
+DB connected to cs260.3452434.mongodb.net
+{
+_id: new ObjectId("639b51b74ef1e953b884ca5b"),
+name: 'Beachfront views',
+summary: 'From your bedroom to the beach, no shoes required',
+property_type: 'Condo',
+beds: 1
+}
+```
+
 </details>
 
 <details>
