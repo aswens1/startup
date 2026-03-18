@@ -236,13 +236,19 @@ async function createUser(email, password) {
     password: passwordHash,
     token: uuid.v4(),
   };
-  users.push(user);
+  await DB.addUser(user);
 
   return user;
 }
 
 async function findUser(field, value) {
   if (!value) return null;
+
+  if (field === 'email') {
+    return await DB.getUser(value);
+  } else if (field === 'token') {
+    return await DB.getUserByToken(value);
+  }
 
   return users.find((u) => u[field] === value);
 }
