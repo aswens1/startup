@@ -122,7 +122,7 @@ apiRouter.get('/games', verifyAuth, async (req, res) => {
 
   const allGames = await DB.getGames();
 
-  const activeGames = allGames.filter(g => g.players < g.maxPlayers);
+  const activeGames = allGames.filter(g => g.players.length < g.maxPlayers);
   res.send(activeGames);
 });
 
@@ -162,7 +162,7 @@ apiRouter.post('/games', verifyAuth, async (req, res) => {
     id: Date.now(),
     name: req.body.name,
     type: req.body.type,
-    players: 0,
+    players: [],
     maxPlayers: maxPlayers,
     status: "Waiting for Players",
     colors: palette,
@@ -175,29 +175,52 @@ apiRouter.post('/games', verifyAuth, async (req, res) => {
 // join game
 apiRouter.post('/games/:id/join', verifyAuth, async (req, res) => {
 
+  const user = await findUser('token', req.cookies[authCookieName]);
   const game = await DB.getGameById(Number(req.params.id));
 
   if (!game) {
     return res.status(404).send({ msg: "Game not found" });
   }
 
-  if (game.players >= game.maxPlayers) {
+  if (game.players.length >= game.maxPlayers) {
     return res.status(400).send({ msg: "Game is full" });
   }
 
-  const playerIndex = game.players;
-
+  const playerIndex = game.players.length;
   const assignedColor = game.colors[playerIndex];
 
-  game.players++;
+  game.players.push({
+    userId: user.email,
+    color: assignedColor,
+  });
 
-  if (game.players >= game.maxPlayers) {
+  if (game.players.length >= game.maxPlayers) {
     game.status = "Full";
   }
 
   await DB.updateGame(game);
   res.send({ game, color: assignedColor });
 });
+
+// leave game
+
+apiRouter.post('/games/:id/leave', verifyAuth, async (req, res) => {
+  const user = await findUser('token', req.cookies[authCookieName]);
+  const game = await DB.getGameById(Number(req.params.id));
+
+  if (!game) {
+    return res.status(404).send({ msg: "Game not found" });
+  }
+
+  game.players = game.players.filter(p => p.userId !== user.email);
+
+  if (game.players.length < game.maxPlayers) {
+    game.status = "Waiting for Players";
+  }
+
+  await DB.updateGame(game);
+  res.send(game);
+})
 
 // Default error handler
 app.use(function (err, req, res, next) {

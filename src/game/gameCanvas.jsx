@@ -36,14 +36,16 @@ export function GameCanvas() {
     setBoard(prev => engine.handleMove(prev, row, col, playerColor));
   };
 
-  const leaveGame = () => {
-    const savedGames = JSON.parse(localStorage.getItem('games') || '[]');
-    const updatedGames = savedGames.map(game => 
-      game.id === Number(gameId)
-      ? {...game, players: Math.max(game.players - 1, 0), status: 'Waiting for Players'}
-      : game
-    );
-    localStorage.setItem('games', JSON.stringify(updatedGames));
+  const leaveGame = async () => {
+    try {
+      await fetch(`/api/games/${gameId}/leave`, {
+        method: 'POST',
+        credentials: 'include',
+      });
+    } catch (err) {
+      console.error("Failed to leave game", err);
+    }
+    
     localStorage.removeItem('currentGame');
     navigate('/gameMenu');
   };
@@ -230,21 +232,6 @@ export function GameCanvas() {
             ))
           )}
         </div>
-
-        {/* <aside className="fixed right-0 top-1/2 -translate-y-1/2 bg-white/90 p-4 rounded-l-lg shadow-lg w-64">
-          <h2 className="text-xl font-bold mb-4">Controls</h2>
-          <p>Player Color:</p>
-          <div
-            className="w-8 h-8 rounded-xl border"
-            style={{ backgroundColor: playerColor }}
-          />
-          <button
-            className="w-full bg-gray-300 hover:bg-gray-400 rounded py-2 mt-4"
-            onClick={leaveGame}
-          >
-            Leave Game
-          </button>
-        </aside> */}
 
       <aside className="fixed right-0 top-1/2 -translate-y-1/2 
         bg-white/90 backdrop-blur-md p-5 rounded-l-xl 

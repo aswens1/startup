@@ -90,7 +90,7 @@ export function GameSelectionMenu() {
 
               {games.map(game => (
                 <div className="game-option" key={game.id}>
-                  <label className={`game-card ${game.players >= game.maxPlayers ? 'opacity-50 pointer-events-none' : ''}`}>
+                  <label className={`game-card ${game.players.length >= game.maxPlayers ? 'opacity-50 pointer-events-none' : ''}`}>
                     <input
                       type="radio"
                       name="game"
@@ -101,7 +101,7 @@ export function GameSelectionMenu() {
                     <div className="game-info">
                       <div className="game-title">{game.name}</div>
                       <div className="meta">
-                        <span>Players:</span> {game.players} / {game.maxPlayers}<br />
+                        <span>Players:</span> {game.players.length} / {game.maxPlayers}<br />
                         <span>Status:</span> {game.status}
                       </div>
                       <div className="flex gap-2 mt-2">
