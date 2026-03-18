@@ -5,6 +5,7 @@ const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostna
 const client = new MongoClient(url);
 const db = client.db('startup');
 const userCollection = db.collection('user');
+const gameCollection = db.collection('games');
 const scoreCollection = db.collection('score');
 
 // This will asynchronously test the connection and exit the process if it fails
@@ -38,10 +39,31 @@ async function updateUserRemoveAuth(user) {
   await userCollection.updateOne({ email: user.email }, { $unset: { token: 1 } });
 }
 
+async function createGame(game) {
+  await gameCollection.insertOne(game);
+  return game;
+}
+
+async function getGames() {
+  return gameCollection.find().toArray();
+}
+
+async function getGameById(id) {
+  return gameCollection.findOne({ id: id});
+}
+
+async function updateGame(game) {
+  await gameCollection.updateOne({ id: game.id }, { $set: game });
+}
+
 module.exports = {
   getUser,
   getUserByToken,
   addUser,
   updateUser,
   updateUserRemoveAuth,
+  createGame,
+  getGames,
+  getGameById,
+  updateGame,
 };
