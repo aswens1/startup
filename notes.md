@@ -8206,6 +8206,313 @@ beds: 1
 
 ### Backend Testing
 
+Unit test driven development (TDD) for testing service endpoints is a common industry practise. Testing services is usually easier than writing UI tests because it doesn't require a browser. However, it still takes effort to learn how to write tests that are effective and efficient. Making this a standard part of your dev process will give you a significant advantage as you progress in your professional career.
+
+There are a lot of good testing packages that work with Express driven services, as shown by the [State of JS](https://2021.stateofjs.com/en-US/libraries/testing/) survey. We're going to use the reigning champion [Jest](https://jestjs.io/).
+
+#### Getting a Service to Test
+
+To get started with Jest, we need a simple web server. We can reuse the **Login** app that we built when discussing auth services. This is a simple React app that provides register, login, logout, and a single **getMe** secure endpoint. Copy the code from the [Login instruction](https://github.com/webprogramming260/webprogramming/blob/main/instruction/webServices/login/exampleCode/login/service) and run NPM isntall. The code should have two files: `package.json` and `service.js`.
+
+```
+├── package.json
+└── service.js
+```
+
+#### Reconfiguring the Service for Test
+
+To let Jest start up the HTTP server when running tests, we initialize the app a bit differently than before. Normally, we would have just started listening on the Express `app` object after we defined our endpoints. Instead, we **export** the Express `app` object from our `server.js` file and then import the app object in the `index.js` file that is used to run the service.
+
+**service.js**
+
+```JavaScript
+const express = require('express');
+const app = express();
+
+// ... service code
+
+module.exports = app;
+```
+
+**index.js**
+
+```JavaScript
+const app = require('./service');
+
+const port = 3000;
+app.listen(port, function () {
+  console.log(`Listening on port ${port}`);
+});
+```
+
+Breaking up the definition of the service from the starting of the service lets us start the service both when we run normally, but also when using our testing framework.
+
+![Endpoint testing](picturesForNotes/endpointTestingJest.jpg)
+
+You can verify the service is working by running the service in the VS Code debugger and pressing F5 while viewing the `index.js` file. Then open a browser and go to `http://localhost:3000/api/user/me`. This should return that you're unauthorized. Stop the debugging session once you have demonstrated the service is working correctly.
+
+#### Creating the First Test
+
+Jest looks for any tests in any file with the suffix `.test.js`. Let's make a file named `service.test.js` and create a basic Jest `test` function. Note that your don't need to include a `require` statement to import Jest functions into your code. Jest will automatically import itself when it discovers a test file.
+
+```JavaScript
+test('that equal values are equal', () => {
+  expect(false).toBe(true);
+});
+```
+
+The `test` function takes a description as the first parameter. The description is meant to be human readable. In this case, it's "test that equal values are equal". The second parameter is the function to call. Our function calls the Jest `expect` function and chains it to the `toBe` funciton. You can read this as "expect false to be true", which is not true, but we want to see our first test fail the first time we run it. We'll fix this later so we can show what happens when a test succeeds.
+
+To run the test, we need to install the Jest package using NPM. From the console, install the package. The `-D` parameter tells NPM to install Jest as a development package. This keeps it from being included when we do production release builds.
+
+```sh
+npm install jest -D
+```
+
+Now, replace the `scripts` section of the `package.json` file with a new command that will run our tests with Jest.
+
+```JSON
+"scripts": {
+  "test": "jest"
+},
+```
+
+Now we can run the `test` command and our test will execute. Notice that Jest shows exactly where the test failed and what expected values were not received.
+
+```sh
+➜ npm run test
+
+ FAIL  ./service.test.js
+  ✕ that unequal values are not equal (1 ms)
+
+  ● that unequal values are not equal
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      3 |
+      4 | test('that unequal values are not equal', () => {
+    > 5 |   expect(false).toBe(true);
+        |                 ^
+      6 | });
+      7 |
+      8 | // describe('endpoints', () => {
+
+      at Object.toBe (service.test.js:5:17)
+
+Tests:       1 failed, 1 total
+```
+
+We can fix our test by rewriting it so that the expevted value matches the provided value.
+
+**service.test.js**
+
+```JavaScript
+test('that equal values are equal', () => {
+  expect(true).toBe(true);
+});
+```
+
+This time the test will pass.
+
+```sh
+➜  npm run test
+
+ PASS  ./service.test.js
+  ✓ that equal values are equal (1 ms)
+
+Tests:       1 passed, 1 total
+```
+
+This example didn't actually test any of our code, but it demonstrates how easy it is to write tests. A real test function would call code in your program.
+
+#### Testing Endpoints
+
+To test our endpoints, we need another NPM package so we can make HTTP requests without sending them over the network. This is done with the `supertest` NPM package. Install this as a development dependency.
+
+```sh
+npm install supertest -D
+```
+
+Now we can alter `services.test.js` to import the login service and `supertest` so we can mock out HTTP requests.
+
+To make an HTTP request, you pass the service `app` to the supertest `request` function and chain on the HTTP verb function you want to call, along with the endpoint path. Then you can chain on as many `expect` functions as you want. In the next example, we call the `register` endpoint and expect to get back and HTTP status of code 200 (ok) along with the correct headers and body.
+
+**service.test.js**
+
+```JavaScript
+const request = require('supertest');
+const app = require('./service');
+
+test('register simple', async () => {
+  const email = 'test@email.com';
+  const password = 'toomanysecrets';
+  const register = await request(app).post('/api/auth').send({ email, password });
+
+  expect(register.headers['content-type']).toMatch('application/json; charset=utf-8');
+  expect(register.body).toMatchObject({ email });
+});
+```
+
+When we run this test it passes without error.
+
+```sh
+➜  npm run test
+
+ PASS  ./service.test.js
+  ✓ register simple returns the desired store (16 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        0.237 s, estimated 1 s
+```
+
+#### Basic Testing Methodology
+
+Testing code is no different from application code. When you are writing tests, you're simply write a program whose purpose is to test another program. Because of this, you should practise the same craftsmanship with your testing code. It should be well designed, performant, and maintainable. Here are some charactaristics of good tests:
+
+- Test only one thing
+- Don't repeat tests that are covered elsewhere
+- Naturally supported by the application code
+- Tests are readable
+- Tests can run in any order
+- Tests can run concurrently
+
+#### Creating Testing Utility Functions
+
+As your tests get more complex, you'll want to create utility functions so you don't repeatedly assert the same thing or copy the code necessary to setup a test. Let's rewrite the `register` test so we can reuse the registration function when we test other endpoints like login or logout.
+
+```JavaScript
+function getRandomName(prefix) {
+  return `${prefix}_${Math.random().toString(36).substring(2, 15)}`;
+}
+
+async function registerUser() {
+  const email = getRandomName('email');
+  const password = 'toomanysecrets';
+  const response = await request(app).post('/api/auth').send({ email, password });
+
+  return [response, email, password];
+}
+
+test('register', async () => {
+  const [register, email] = await registerUser();
+
+  expect(register.headers['content-type']).toMatch('application/json; charset=utf-8');
+  expect(register.body).toMatchObject({ email });
+});
+```
+
+This code is generalized so we can use different user email addresses for each test and simplifies it down to just the lines necessary to clearly represent the register test.
+
+Now we can reuse the utility functions to write a test that tries to register the same user twice, and also write a login test.
+
+```JavaScript
+test('register existing', async () => {
+  const [, email, password] = await registerUser();
+
+  const response = await request(app).post('/api/auth').send({ email, password });
+  expect(response.status).toBe(409);
+});
+
+test('login', async () => {
+  const [, email, password] = await registerUser();
+
+  const login = await request(app).put('/api/auth').send({ email, password });
+  validateAuth(login);
+
+  expect(login.headers['content-type']).toMatch('application/json; charset=utf-8');
+  expect(login.body).toMatchObject({ email });
+});
+```
+
+#### Testing with Cookies
+
+Our register test is missing a critical validation. It doesn't assert that the endpoint returned a cookie that contains the authentication token. We can fix it by creating a `validateAuth` utility function and calling it from the test.
+
+```JavaScript
+function validateAuth(response) {
+  expect(response).toBeDefined();
+  expect(response.status).toBe(200);
+  const cookie = response.headers['set-cookie'];
+  expect(cookie).toBeDefined();
+  const uuidRegex = /^token=[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}.*$/i;
+  const token = cookie.find((c) => c.match(uuidRegex));
+  expect(token).toBeDefined();
+}
+
+test('register', async () => {
+  const [register, email] = await registerUser();
+  validateAuth(register);
+
+  expect(register.headers['content-type']).toMatch('application/json; charset=utf-8');
+  expect(register.body).toMatchObject({ email });
+});
+```
+
+We can also test an endpoint that requires authentication by first regiersting a user and then passing the cookie along with the call to the `getMe` endpoint.
+
+```JavaScript
+test('get me', async () => {
+  const [register, email] = await registerUser();
+
+  const cookie = register.headers['set-cookie'];
+  const getMe = await request(app).get('/api/user/me').set('Cookie', cookie);
+  expect(getMe.status).toBe(200);
+  expect(getMe.headers['content-type']).toMatch('application/json; charset=utf-8');
+  expect(getMe.body).toMatchObject({ email });
+});
+```
+
+#### Coverage
+
+Determining how many lines of your application code are called by your testing code is called coverage. Generally, you want enough coverage to give you confidence that your code does what you think it does without having to manually test everything every time you change the code.
+
+You enable coverage with Jest by creating a file named `jest.config.json` with the following content.
+
+```JSON
+{
+  "collectCoverage": true,
+  "coverageThreshold": {
+    "global": {
+      "lines": 80
+    }
+  }
+}
+```
+
+Now when you run the tests we've created so far, you'll get a coverage report. The report tells us which lines are not covered and the total coverage percentage. Because we specified at leatt 80% of the lines must be covered, we get an error that we only cover 68.18%.
+
+```sh
+npm run test
+
+ PASS  ./service.test.js
+  ✓ register (72 ms)
+  ✓ register existing (54 ms)
+  ✓ get me (54 ms)
+
+------------|---------|----------|---------|---------|-------------------------
+File        | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+------------|---------|----------|---------|---------|-------------------------
+All files   |   68.88 |    33.33 |   66.66 |   68.18 |
+ service.js |   68.88 |    33.33 |   66.66 |   68.18 | 22-28,33-39,48,71,85-86
+------------|---------|----------|---------|---------|-------------------------
+Jest: "global" coverage threshold for lines (80%) not met: 68.18%
+```
+
+You can practise with Jest by continuing to write tests until you reach the desired target. Here's a [solution](https://github.com/webprogramming260/webprogramming/blob/main/instruction/webServices/backendTesting/exampleCode) with 100% coverage.
+
+#### VS Code Jest Extenstion
+
+You can use the VS Code Jest extension to visualise what tests are passing, automatically run tests when your code changes, and get inline feedback about failing tests.
+
+#### Test Driven Development
+
+The great thing about test driven development (TDD) is that you write tests first and then write your code based on the design represented by the tests. When your tests pass, you know your code is complete. Additionally, when you make later modifications to your code you can just run your tests again. If they pass, you can be confident that your code is still working wthout manually testing everything yourself. With systems that have hundreds of endpoints and hundreds of thousands of lines of code, TDD becomes a super important part of the development process.
+
 </details>
 
 <details>
