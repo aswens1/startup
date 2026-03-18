@@ -13,7 +13,6 @@ const authCookieName = 'token';
 let users = [];
 let scores = []; // high scores for leaderboard
 let stats = [];
-let games = [];
 
 // The service port. In production the front-end code is statically hosted by the service on the same port.
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
@@ -119,8 +118,11 @@ apiRouter.get('/leaderboard', verifyAuth, (req, res) => {
 });
 
 // get games
-apiRouter.get('/games', verifyAuth, (req, res) => {
-  const activeGames = games.filter(g => g.players < g.maxPlayers);
+apiRouter.get('/games', verifyAuth, async (req, res) => {
+
+  const allGames = await DB.getGames();
+
+  const activeGames = allGames.filter(g => g.players < g.maxPlayers);
   res.send(activeGames);
 });
 
@@ -166,14 +168,14 @@ apiRouter.post('/games', verifyAuth, async (req, res) => {
     colors: palette,
   };
 
-  games.push(game);
+  await DB.createGame(game);
   res.send(game);
 });
 
 // join game
-apiRouter.post('/games/:id/join', verifyAuth, (req, res) => {
+apiRouter.post('/games/:id/join', verifyAuth, async (req, res) => {
 
-  const game = games.find(g => g.id == req.params.id);
+  const game = await DB.getGameById(Number(req.params.id));
 
   if (!game) {
     return res.status(404).send({ msg: "Game not found" });
@@ -193,6 +195,7 @@ apiRouter.post('/games/:id/join', verifyAuth, (req, res) => {
     game.status = "Full";
   }
 
+  await DB.updateGame(game);
   res.send({ game, color: assignedColor });
 });
 

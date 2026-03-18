@@ -11,17 +11,20 @@ export function GameSelectionMenu() {
   const [games, setGames] = useState([]);
   const [selectedGameId, setSelectedGameId] = useState(null);
 
+  async function loadGames() {
+    const response = await fetch('/api/games', {
+      credentials: 'include',
+    });
+
+    const data = await response.json();
+    setGames(data);
+  }
+
   useEffect(() => {
-    async function loadGames() {
-      const response = await fetch('/api/games', {
-        credentials: 'include',
-      });
-
-      const data = await response.json();
-      setGames(data);
-    }
-
     loadGames();
+
+    const interval = setInterval(loadGames, 3000);
+    return () => clearInterval(interval);
   }, []);
 
   const joinGame = async () => {
