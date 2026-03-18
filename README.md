@@ -111,3 +111,10 @@ I've also implemented the service and endpoints. All functionality calls these e
 - **Backend service endpoints** - I have endpoints for `/auth/create`, `/auth/login`, `/auth/logout`, `/stats/:userName`, `/stats`, `/leaderboard`, `/games` (for getting and creating), and `/games/:id/join`.
 - **Frontend calls service endpoints** - Mocked functionality for login/register, logout, creating and joining games, and saving game stats have been replaced with calls to the server endpoints.
 - **Supports registration, login, logout, and restricted endpoint** - My app supports registration, login, logout, creating and joining games, and saving gameplay stats to the dashboard and the leaderboard.
+
+## 🚀 DB deliverable
+
+I reviewed and deployed the Simon database code to my project - found at [simon.8bitalley.click](https://simon.8bitalley.click).
+
+- **Stores data in MongoDB** - I did not complete this part of the deliverable.
+- **Stores credentials in MongoDB** - I did not complete this part of the deliverable.
