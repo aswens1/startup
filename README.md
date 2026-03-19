@@ -103,7 +103,7 @@ For demonstration purposes, the game timer is only set to 30 seconds.
 
 I reviewed and deployed the Simon service code to my project - found at [simon.8bitalley.click](https://simon.8bitalley.click).
 
-I've also implemented the service and endpoints. All functionality calls these endpoints in the service subdirectory - found at [startup.8bitalley.click](https://startup.8bitalley.click/)
+I've also implemented the service and endpoints, stored in the service subdirectory - found at [startup.8bitalley.click](https://startup.8bitalley.click/)
 
 - **Node.js/Express HTTP service** - I've installed Express with NPM, with the default port set to 4000.
 - **Static middleware for frontend** - Simple endpoints in `service/index`.
@@ -116,5 +116,7 @@ I've also implemented the service and endpoints. All functionality calls these e
 
 I reviewed and deployed the Simon database code to my project - found at [simon.8bitalley.click](https://simon.8bitalley.click).
 
-- **Stores data in MongoDB** - I did not complete this part of the deliverable.
-- **Stores credentials in MongoDB** - I did not complete this part of the deliverable.
+I've also added database functionality through MongoDB to my startup, store in the service subdirectory - found at [startup.8bitalley.click](https://startup.8bitalley.click/)
+
+- **Stores data in MongoDB** - User stats and game data are fully linked to MongoDB, and all that information is pulled and updated at various points throughout the app.
+- **Stores credentials in MongoDB** - Login and Register are fully linked to MongoDB, and user data is stored and pulled when someone signs up and logs in.
