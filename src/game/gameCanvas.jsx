@@ -122,7 +122,8 @@ export function GameCanvas() {
   const [statsUpdated, setStatsUpdated] = useState(false);
 
   useEffect(() => {
-    if (!gameOver || !winner || statsUpdated) return;
+    if (!gameOver || statsUpdated) return;
+    if (!winner) return;
 
     async function updateStats() {
       let pixelsPainted = 0;
@@ -141,16 +142,25 @@ export function GameCanvas() {
         streak: 0,
       };
 
-      await fetch(`/api/stats`, {
+      console.log("Sending stats: ", statsUpdate);
+
+      const response = await fetch(`/api/stats`, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify(statsUpdate),
       });
 
+      if (!response.ok) {
+        // Don't lock in `statsUpdated` if the server rejected the update.
+        throw new Error(`Failed to save stats (HTTP ${response.status})`);
+      }
+
       setStatsUpdated(true);
     }
-    updateStats();
+    updateStats().catch((err) => {
+      console.error("Stats update failed:", err);
+    });
   }, [gameOver, winner, playerColor, statsUpdated]);
 
   const goToMenu = () => {

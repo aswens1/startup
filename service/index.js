@@ -79,42 +79,51 @@ const verifyAuth = async (req, res, next) => {
 };
 
 // get stats for a user
-apiRouter.get('/stats/:userName', verifyAuth, (_req, res) => {
-  const userStats = stats.find((s) => s.userName === _req.params.userName);
+apiRouter.get('/stats/:userName', verifyAuth, async (req, res) => {
+  try {
+    const userStats = await DB.getStats(req.params.userName);
 
-  if (userStats) {
-    res.send(userStats);
-  } else {
+    if (userStats) {
+      res.send(userStats);
+      return;
+    }
+
     res.send({
-        userName: _req.params.userName,
-        pixels: 0,
-        gamesPlayed: 0,
-        wins: 0,
-        streak: 0,
+      userName: req.params.userName,
+      pixels: 0,
+      gamesPlayed: 0,
+      wins: 0,
+      streak: 0,
     });
+  } catch (err) {
+    console.error("Stats load error:", err);
+    res.status(500).send({ msg: "Failed to load stats" });
   }
 });
 
 // save/update stats
-apiRouter.post('/stats', verifyAuth, (req, res) => {
+apiRouter.post('/stats', verifyAuth, async (req, res) => {
+  try {
     const newStats = req.body;
-
-    const existing = stats.find((s) => s.userName === newStats.userName);
-
-    if (existing) {
-        existing.pixels += newStats.pixels;
-        existing.gamesPlayed += newStats.gamesPlayed;
-        existing.wins += newStats.wins;
-    } else {
-        stats.push(newStats)
-    }
-  res.send(newStats);
+    await DB.updateStats(newStats);
+    res.send({ msg: "Stats updated" });
+    return;
+  } catch (err) {
+    console.error("Stats error: ", err);
+    res.status(500).send({ msg: "Failed to save stats"});
+  }
 });
 
 // sets leaderboard
-apiRouter.get('/leaderboard', verifyAuth, (req, res) => {
-    const sorted = [...stats].sort((a, b) => b.pixels - a.pixels);
-    res.send(sorted);
+apiRouter.get('/leaderboard', verifyAuth, async (req, res) => {
+
+  try {
+    const leaderboard = await DB.getLeaderboard();
+    res.send(leaderboard);
+  } catch (err) {
+    console.error("Leaderboard error:", err);
+    res.status(500).send({ msg: "Failed to load leaderboard" });
+  }
 });
 
 // get games

@@ -6,7 +6,7 @@ const client = new MongoClient(url);
 const db = client.db('startup');
 const userCollection = db.collection('user');
 const gameCollection = db.collection('games');
-const scoreCollection = db.collection('score');
+const statsCollection = db.collection('stats');
 
 // This will asynchronously test the connection and exit the process if it fails
 (async function testConnection() {
@@ -56,6 +56,36 @@ async function updateGame(game) {
   await gameCollection.updateOne({ id: game.id }, { $set: game });
 }
 
+async function getStats(userName) {
+  return await statsCollection.findOne({ userName });
+}
+
+async function updateStats(stats) {
+  await statsCollection.updateOne(
+    { userName: stats.userName },
+
+    {
+      $inc: {
+      pixels: stats.pixels,
+      gamesPlayed: stats.gamesPlayed,
+      wins: stats.wins,
+      },
+      $set: {
+        streak: stats.streak,
+      }
+    },
+    { upsert: true }
+  );
+}
+
+async function getLeaderboard() {
+  return await statsCollection
+    .find({})
+    .sort({ pixels: -1 })
+    .limit(10)
+    .toArray();
+}
+
 module.exports = {
   getUser,
   getUserByToken,
@@ -66,4 +96,7 @@ module.exports = {
   getGames,
   getGameById,
   updateGame,
+  updateStats,
+  getStats,
+  getLeaderboard,
 };
