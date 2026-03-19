@@ -46,7 +46,16 @@ export function GameSelectionMenu() {
       )
     );
 
-    localStorage.setItem('currentGame', JSON.stringify({ id: selectedGameId, color, colors: game.colors }));
+    localStorage.setItem(
+      'currentGame',
+      JSON.stringify({
+        id: selectedGameId,
+        color,
+        colors: game.colors,
+        maxPlayers: game.maxPlayers,
+        playerCount: game.players?.length ?? 0,
+      })
+    );
     navigate(`/game/${selectedGameId}`);
   }
 

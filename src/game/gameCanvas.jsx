@@ -50,10 +50,44 @@ export function GameCanvas() {
     navigate('/gameMenu');
   };
 
-  // fake websocket data for controls bar
-  const [playerCount, setPlayerCount] = useState(3);
+  const [playerCount, setPlayerCount] = useState(0);
+  const [maxPlayers, setMaxPlayers] = useState(0);
   const [timeLeft, setTimeLeft] = useState(30); // 5 mins
   const [controlPercent, setControlPercent] = useState(27);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadGameInfo() {
+      try {
+        const response = await fetch(`/api/games/${gameId}`, {
+          credentials: 'include',
+        });
+
+        if (!response.ok) {
+          return;
+        }
+
+        const game = await response.json();
+        if (cancelled) return;
+
+        setPlayerCount(game.players?.length ?? 0);
+        setMaxPlayers(game.maxPlayers ?? 0);
+      } catch (err) {
+        // If this fails (e.g. offline), keep whatever we already have.
+        console.error("Failed to load game info", err);
+      }
+    }
+
+    // Load immediately, then poll so the count stays accurate.
+    loadGameInfo();
+    const interval = setInterval(loadGameInfo, 2000);
+
+    return () => {
+      cancelled = true;
+      clearInterval(interval);
+    };
+  }, [gameId]);
 
   // timer
   useEffect(() => {
@@ -252,7 +286,7 @@ export function GameCanvas() {
         {/* Player Count */}
         <div>
           <p className="text-sm uppercase tracking-wide opacity-60">Players</p>
-          <p className="text-lg font-semibold">{playerCount} / 4</p>
+          <p className="text-lg font-semibold">{playerCount} / {maxPlayers || 4}</p>
         </div>
 
         {/* Timer */}

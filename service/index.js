@@ -135,6 +135,21 @@ apiRouter.get('/games', verifyAuth, async (req, res) => {
   res.send(activeGames);
 });
 
+// get a single game (including full games)
+apiRouter.get('/games/:id', verifyAuth, async (req, res) => {
+  try {
+    const game = await DB.getGameById(Number(req.params.id));
+    if (!game) {
+      res.status(404).send({ msg: "Game not found" });
+      return;
+    }
+    res.send(game);
+  } catch (err) {
+    console.error("Game load error:", err);
+    res.status(500).send({ msg: "Failed to load game" });
+  }
+});
+
 // create games
 apiRouter.post('/games', verifyAuth, async (req, res) => {
 
