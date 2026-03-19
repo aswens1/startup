@@ -56,6 +56,10 @@ async function updateGame(game) {
   await gameCollection.updateOne({ id: game.id }, { $set: game });
 }
 
+async function deleteGameById(id) {
+  await gameCollection.deleteOne({ id });
+}
+
 async function getStats(userName) {
   return await statsCollection.findOne({ userName });
 }
@@ -96,6 +100,7 @@ module.exports = {
   getGames,
   getGameById,
   updateGame,
+  deleteGameById,
   updateStats,
   getStats,
   getLeaderboard,

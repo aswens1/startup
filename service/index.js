@@ -246,6 +246,24 @@ apiRouter.post('/games/:id/leave', verifyAuth, async (req, res) => {
   res.send(game);
 })
 
+// delete game after completion
+apiRouter.delete('/games/:id', verifyAuth, async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const existing = await DB.getGameById(id);
+    if (!existing) {
+      res.status(404).send({ msg: "Game not found" });
+      return;
+    }
+
+    await DB.deleteGameById(id);
+    res.status(204).end();
+  } catch (err) {
+    console.error("Game delete error:", err);
+    res.status(500).send({ msg: "Failed to delete game" });
+  }
+});
+
 // Default error handler
 app.use(function (err, req, res, next) {
   res.status(500).send({ type: err.name, message: err.message });

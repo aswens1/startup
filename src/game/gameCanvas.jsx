@@ -124,6 +124,7 @@ export function GameCanvas() {
 
   const [winner, setWinner] = useState(null);
   const [gameOver, setGameOver] = useState(false);
+  const [gameDeleted, setGameDeleted] = useState(false);
 
   // winner
 
@@ -152,6 +153,33 @@ export function GameCanvas() {
     setGameOver(true);
   
   }, [timeLeft, board, gameOver]);
+
+  useEffect(() => {
+    if (!gameOver || gameDeleted) return;
+    if (!winner) return;
+
+    async function deleteCompletedGame() {
+      try {
+        const response = await fetch(`/api/games/${gameId}`, {
+          method: 'DELETE',
+          credentials: 'include',
+        });
+
+        if (!response.ok && response.status !== 404) {
+          throw new Error(`Failed to delete game (HTTP ${response.status})`);
+        }
+
+        setGameDeleted(true);
+      } catch (err) {
+        console.error("Failed to delete completed game", err);
+      } finally {
+        // Either way, stop treating this as an active game locally.
+        localStorage.removeItem('currentGame');
+      }
+    }
+
+    deleteCompletedGame();
+  }, [gameOver, gameDeleted, winner, gameId]);
 
   const [statsUpdated, setStatsUpdated] = useState(false);
 
