@@ -8521,6 +8521,207 @@ The great thing about test driven development (TDD) is that you write tests firs
 
 ### Frontend Testing
 
+[Test driven development](https://www.freecodecamp.org/news/test-driven-development-what-it-is-and-what-it-is-not-41fa6bca02a2/) (TDD) is a proven method for accelerating applicaion creation, protecting agianst regression bugs, and demonstrating correctness. TDD for console based apps and server based cose is pretty straight forward. Web app frontend code is significantly more complex to test, and using automated tests to drive your UI development is even harder.
+
+The browser is required to execute UI code. This means you have to actually test the app in the browser. Additionally, every one of the major browsers behaves slightly differently, viewport sizes makes a big difference, all the code executes asynchronously, network disruptions are common, and there is a human factor. A human will interact with the browser in very unexpected ways. Clicking where they shouldn't, clicking rapidly, randomly refreshing, flushing cache, not flushing cache, leaving the app up for days on end, switching between tabs, opening the app multiple times, logging in on different tabs, logging out of one tab and using it on the other, etc. That doesn't even mention running all the different browsers on all the possible devices.
+
+You can't just not test your code. That means you have to manually test everything every time you change something, or let your users test everything. That's not good for long term success.
+
+People have been working on this problem for decades now. Solutions aren't perfect, but they are getting better. We have two solutions here, one for executing automated tests in the browser and one for testing on different browsers and devices.
+
+#### Automating the Browser - Playwright
+
+Deepe reading: [Playwright and VS Code](https://playwright.dev/docs/getting-started-VSCode)
+
+Companies that build web browsers understand the difficultly of testing applications in a browser better than anyone. They have to test every possible use of HTML, CSS, and JS that a user could think of. There is no way manual testing is going to work, so they started putting hooks in their browsers that let them be driven from automated external processes. [Selenium](https://www.selenium.dev/) was introduced in 2004 as the first popular tool to automate the browser. However, it's generally considered flaky and slow. Flakiness means a test fails in unpredicable, unreproducable ways. When you need thousands of tests to pass before you can deploy a new feature, even a little flakiness causes huge problems. If those tests take hours, you have even bigger problems.
+
+The market has a lot of alternatives to choose from when considering which automated browser framework to use. [State of JS](https://stateofjs.com/) includes stats on how popular these frameworks are. With frameworks coming and going all the time, on telling stat is the ability to retain users.
+
+#### Demonstration Application
+
+We're going to use [Playwright](https://playwright.dev/) for instruction purposes. Playwright has some major advantages: it's backed by Microsoft, integrates really well with VS Code, and runs as a Node.js process. It's also considered one of the least flaky frameworks.
+
+To show how it works, we'll use the [Login application](https://github.com/webprogramming260/webprogramming/blob/main/instruction/webServices/login/exampleCode/login) we used for the backend testing. The JSX for the app allows for the ability to provide an email and password for login or registration.
+
+```JSX
+<div>
+  <h1>Login</h1>
+  <div>
+    <label>Email:</label>
+    <input type='text' onChange={(e) => setEmail(e.target.value)} required />
+  </div>
+  <div>
+    <label>Password:</label>
+    <input type='password' onChange={(e) => setPassword(e.target.value)} required />
+  </div>
+  <button type='submit' disabled={!(email && password)} onClick={handleLogin}>
+    Login
+  </button>
+  <button type='button' disabled={!(email && password)} onClick={handleRegister}>
+    Register
+  </button>
+</div>
+```
+
+#### Installing Playwright
+
+When going through the installation steps, choose TypeScript, `tests` for the test directory, ignore the GitHub Actions workflow for now, and don't install any Playwright browsers.
+
+```sh
+npm init playwright@latest
+```
+
+This will update `package.json` with the `playwright` package, create a `playwright.config.ts` file, and create some sample tests in the `test` and `tests-examples` directoryies. This will also update your `.gitignore` file so you don't accidentally check in test coverage or report info.
+
+##### Install a Testing Browser
+
+Now replace the contents of the Playwright configuration file `playwright.config.ts` with the following:
+
+```JavaScript
+import { defineConfig, devices } from '@playwright/test';
+
+export default defineConfig({
+  testDir: './tests',
+  fullyParallel: true,
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 2 : 0,
+  workers: process.env.CI ? 1 : undefined,
+  reporter: 'html',
+  timeout: 5000,
+  use: {
+    baseURL: 'http://localhost:5173',
+    trace: 'on-first-retry',
+  },
+
+  /* Configure projects for major browsers */
+  projects: [
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'], viewport: { width: 800, height: 600 } },
+    },
+  ],
+
+  /* Run your local dev server before starting the tests */
+  webServer: {
+    command: 'npm run dev',
+    url: 'http://localhost:5173',
+    reuseExistingServer: !process.env.CI,
+    timeout: 5000,
+  },
+});
+```
+
+This simplifies the configuration to only use the Chromium browser driver and launches the Login application when the tests run.
+
+Next, you need to install the Playwright Chromium driver with the following command:
+
+```sh
+npx playwright install --with-deps chromium
+```
+
+Finally, modify `package.json` to include a script for running Playwright for your tests.
+
+```JSON
+"scripts": {
+  "dev": "vite",
+  "test": "playwright test"
+},
+```
+
+#### Running Your First Test
+
+The easiest way to run your first test is to start with the examples that came with the Playwright installation.
+
+```
+└── tests
+    └── example.spec.ts
+```
+
+Playwright will run any test found in the testing directory as defined by the `testDir` property in `playwright.config.ts`. You chose `tests` to be the testing directory during installation. Playwright follows the common convention of including `.spec.` in test names. You can also use `.test.` if you want to be consistent with your Jest tests.
+
+After reviewing the provided tests, replace the tests in `tests/example.spec.ts` with the following.
+
+```JavaScript
+import { test, expect } from '@playwright/test';
+
+test('has title', async ({ page }) => {
+  await page.goto('http://localhost:5173');
+  await expect(page.getByRole('heading')).toContainText('Login');
+});
+```
+
+This test navigates to the Login website and checks to make sure the resulting page has the title `Login`. You can run tests from your project directory with the following console command.
+
+```sh
+npm test
+
+Running 1 test using 1 worker
+  1 passed (1.4s)
+```
+
+You can validate the test is working by changing the expected text to 'Bad' instead of 'Login' and running the tests again, which should fail this time.
+
+#### Complete Test
+
+Now we can make a test that goes through the whole register/logout/login flow. Don't forget to start your backend running (by running `node service.js` in the `service` directory) so the endpoint calls from the frontend will work; otherwise, your tests will fail even if your frontend is perfect.
+
+```JavaScript
+import { test, expect } from '@playwright/test';
+
+function getRandomName(prefix) {
+  return `${prefix}_${Math.random().toString(36).substring(2, 15)}`;
+}
+
+test('complete flow', async ({ page }) => {
+  await page.goto('http://localhost:5173');
+  await expect(page.getByRole('heading')).toContainText('Login');
+
+  const userName = getRandomName('user');
+
+  // Register
+  await page.locator('input[type="text"]').fill(userName);
+  await page.locator('input[type="password"]').fill('toomanysecrets');
+  await page.getByRole('button', { name: 'Register' }).click();
+
+  await expect(page.getByRole('heading')).toContainText('Profile');
+  await expect(page.getByRole('main')).toContainText(`Logged in as: ${userName}`);
+
+  // Logout
+  await page.getByRole('button', { name: 'Logout' }).click();
+  await expect(page.getByRole('heading')).toContainText('Login');
+
+  // Duplicate registration
+  await page.locator('input[type="text"]').fill(userName);
+  await page.locator('input[type="password"]').fill('toomanysecrets');
+
+  page.once('dialog', async (dialog) => {
+    await expect(dialog.message()).toContain('Authentication failed');
+    dialog.dismiss().catch(() => {});
+  });
+  await page.getByRole('button', { name: 'Register' }).click();
+
+  // Login
+  await page.getByRole('button', { name: 'Login' }).click();
+
+  await expect(page.getByRole('heading')).toContainText('Profile');
+  await expect(page.getByRole('main')).toContainText(`Logged in as: ${userName}`);
+});
+```
+
+This is a simple example of the powerful functionality of Playwright. Explore its functionality and add more tests to your projects. Once you've gained some competency, you'll find you can write code faster and feel more confident when changing things around.
+
+#### VS Code Playwright Extension
+
+You can use the VS Code Playwright extension to record tests using the browser, visualize what tests are passing, automatically run tests whenever your code changes, and debug a test with a single click.
+
+#### Testing Various Devices - BrowserStack
+
+With the ability to run automated UI tests, we can now focus on testing on the multitude of various devices. There are several services that help with this. One is [BrowserStack](https://www.browserstack.com/), which lets you pick from a long list of physical devices that you can run interactively, or use when driving automated tests with Selenium.
+
+When you launch a device, it connects the browser interface to a physical device hosted in a data center. Then you can use the device to reproduce user reported problems, or validate that your implementation works on that specific device.
+
+BrowserStack offers free trials.
+
 </details>
 
 ## WebSocket
