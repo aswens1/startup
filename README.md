@@ -119,4 +119,4 @@ I reviewed and deployed the Simon database code to my project - found at [simon.
 I've also added database functionality through MongoDB to my startup, store in the service subdirectory - found at [startup.8bitalley.click](https://startup.8bitalley.click/)
 
 - **Stores data in MongoDB** - User stats and game data are fully linked to MongoDB, and all that information is pulled and updated at various points throughout the app.
-- **Stores credentials in MongoDB** - Login and Register are fully linked to MongoDB, and user data is stored and pulled when someone signs up and logs in.
+- **Stores credentials in MongoDB** - Login and Register are fully linked to MongoDB, and user data is stored and pulled when someone signs up and logs in and is then displayed on their stats dashboard and the leaderboard.
