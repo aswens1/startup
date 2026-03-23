@@ -8860,21 +8860,6 @@ socket.send('I am listening');
 
 7. Send some more messages and observe the communication back and forth without stopping on the breakpoints.
 
-</details>
-
-<details>
-
-<summary></summary>
-
-</details>
-
-<details>
-
-<summary></summary>
-
-</details>
-
-
 ## Security
 ## Assorted Topics
 
