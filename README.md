@@ -120,3 +120,13 @@ I've also added database functionality through MongoDB to my startup, store in t
 
 - **Stores data in MongoDB** - User stats and game data are fully linked to MongoDB, and all that information is pulled and updated at various points throughout the app.
 - **Stores credentials in MongoDB** - Login and Register are fully linked to MongoDB, and user data is stored and pulled when someone signs up and logs in and is then displayed on their stats dashboard and the leaderboard.
+
+## 🚀 WebSocket deliverable
+
+I reviewed and deployed the Simon WebSocket code to my project - found at [simon.8bitalley.click](https://simon.8bitalley.click).
+
+- [ ] **Backend listens for WebSocket connection** - I did not complete this part of the deliverable.
+- [ ] **Frontend makes WebSocket connection** - I did not complete this part of the deliverable.
+- [ ] **Data sent over WebSocket connection** - I did not complete this part of the deliverable.
+- [ ] **WebSocket data displayed** - I did not complete this part of the deliverable.
+- [ ] **Application is fully functional** - I did not complete this part of the deliverable.
