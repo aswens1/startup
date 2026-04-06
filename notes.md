@@ -9322,6 +9322,207 @@ Here is a list of common security practices you should include in your app.
 
 </details>
 
+<details>
+
+<summary>OWASP</summary>
+
+### OWASP
+
+Deeper reading: [OWASP 2021](https://owasp.org/www-project-top-ten/)
+
+The Open Web Application Security Project (OWASP) is a non-profit research entity that manages the Top Ten list of the most important web app security risks. Understanding, and periodically reviewing, the list will help you keep your web apps secure. 
+
+Here is a discussion of the entries in the list, with examples and suggested mitigations.
+
+#### A01 - Broken Access Control
+
+Deeper reading: [synk Learn broken access control](https://learn.snyk.io/lessons/broken-access-control/javascript/)
+
+Broken access control happens when the app doesn't properly enforce permissions on users. This could mean that a non-admin user can do things that only an admin user should be able to do, or admin accounts are improperly secured. While browser app code can restrict access by disabling UI for navigating to sensitive functionality, the ultimate responsibility for enforcing access control rests upon the app service.
+
+As an example, consider an app where the UI only provides navigation to the administrator application settings if the user is an administrator. However, the attacker can simply dchange the URL to point to the app settings URL and gain access. Plus, unless the service endpoints reject requests to obtain and update the app settings, any restrictions that the UI provides are meaningless.
+
+Mitigations include:
+
+- Strict access enforcement at service level
+- Clearly defined roles and elevation paths
+
+#### A02 - Cryptographic Failures
+
+Cryptographic failures happen when sensitive data is accessible either without encryption, with weak encryption protocols, or when cryptographic protections are ignored.
+
+Sending any unencrypted data over a public network connections lets an attacker capture the data. Even private, internal, network connections, or data that is stored without encryption, is susceptible to exploitation once an attacker gains access to the internal system.
+
+Examples of ineffective cryptographic methods include hashing algorithms like MD5 or SHA-1 that are trivial to crack with modern hardware and tools.
+
+Another cryptographic failure happens when apps don't validate the provided web certificate when establishing a network connection. This is a case of falsely assuming that if the protocol is secure than the entity represented by the protocol is acceptable.
+
+Mitigations include:
+
+- Use strong encryption for ALL data. Includes external, internal, in transit, and rest data
+- Updating encryption algorithms as older algorithms become compromised
+- Properly using cryptographic safeguards
+
+#### A03 - Injection
+
+Deeper reading: [Snyk Learn SQL Injection](https://learn.snyk.io/lessons/sql-injection/javascript/)
+
+Injection exploits happen when an attacker is allowed to supply data that is then injected into a context where it violates the expected use of the user input. For example, consider an input field that is only expected to contain a user's password. Instead, the attacker provides a SQL database command in the password input.
+
+**Supplies password**
+
+```SQL
+`p@ssword!` DROP TABLE db; --;
+```
+
+The application then uses a template SQL query to validate the user's password.
+
+**Template query**
+
+```SQL
+SELECT user FROM db WHERE password='${password}' LIMIT 1;
+```
+
+When the supplied input is injectd into the template an unintended query results. Notice that this query will delete the entire database table.
+
+**Resulting query**
+
+```SQL
+SELECT user FROM db WHERE password='p@ssword!'; DROP TABLE db; -- ` LIMIT 1
+```
+
+Mitigations include:
+
+- Santizing input
+- Use database prepared statements
+- Restricting execution rights
+- Limit output
+
+#### A04 - Insecure Design
+
+Deeper reading: [Snyk Learn Insecure Design](https://learn.snyk.io/lessons/insecure-design/javascript/)
+
+Insecure design broadly refers to architectural flaws that are unique for individual systems, rather than implementation errors. This happens when the app team doesn't focus on security when designing a system, or doesn't continuously reevaluate the app's security.
+
+Insecure design exploits are based on unexpected uses of the business logic that controls the functionality of the app. For example, if the app allows for trial accounts to be easily created, then an attacker could create a denial of service attack by creating millions of accounts and utilizing the maximum allowable usage.
+
+Mitigations include:
+
+- Integration testing
+- Strict access control
+- Security education
+- Security design pattern usages
+- Scenario reviews
+
+#### A05 - Security Misconfiguration
+
+Security misconfiguration attacks exploit the configuration of the app. Some examples include using default passwords, not updating software, exposing configuration settings, or enable unsecured remote configuration.
+
+For example, some third party utilities (like logging systems) will expose a public administration interface that has a default user name and password. Unless that configuration is changed, an attacker will be able to access all the critical logging info for your app.
+
+Mitigations include:
+
+- Configuration review
+- Setting defaults to disable all access
+- Automated configuration audits
+- Requiring multiple layers of access for remote configuration
+
+#### A06 - Vulnerable and Outdated Components
+
+Deeper reading: [Snyk Learn Vulnerable and Outdated Components](https://learn.snyk.io/lessons/vulnerable-and-outdated-components/javascript/)
+
+The longer an app is deployed, the more likely it is that the attack surface and corresponding exploits will increase. This is primarily due to the cost of maintaining an app and keeping it up do date to mitigate newly discovered exploits.
+
+Outdated components often accumulate as third party packages are used by the app. Over time, the packages are updated in order to address security concerns. Sometimes the packages stop being supported. When this happens, your app becomes vulnerable. Consider what happens when a request to install NPM packages displays the following warning:
+
+```sh
+➜  npm install
+
+up to date, audited 1421 packages in 3s
+
+7 high severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+```
+
+The app developer is warned that the components are vulnerable, but when faced with the choie of taking the time to update packages, and potentially break the app, or meeting deliverable deadlines, the developer is tempted to ignore the warning and continue without addressing the possible problem.
+
+Mitigations include:
+
+- Keeping a manifest of your software stack, including versions
+- Reviewing security bulletins
+- Regularly updated software
+- Require components to be up to date
+- Replacing unsupported software
+
+#### A07 - Indentification and Authentication Failures
+
+Identification and authentication failures include any situation where a user's identity can be impersonated or assumed by an attacker. For example, if an attacker can repeatedly attempt to guess a user's password, then eventually they will succeed. Additionally, if passwords are exposed outside the app, or are stored inside the app with weak cryptographic protection, they are susceptible to attack.
+
+Another example of an identification failure would be a weak password recovery process that doesn't properly verify the user. Common practises such as asking for well known security questions (like mother's maiden name) from a user fall into this category.
+
+Mitigations include:
+
+- Rate limiting requests
+- Properly managing credentials
+- Multifactor authentication
+- Authentication recovery
+
+#### A08 - Software and Data Integrity Failure
+
+Software and data integrity failures represent attacks that allow external software, processes, or data to compromise your app. Modern web apps extensively use open source and commercially produced packages to provide key functionality. Using these packages without conducting a security autid, gives them an unknown amount of control over your app. Likewise, using a third party processing workflow, or blindly accessing external data, opens you up to attacks.
+
+Consider the use of a third party continuous delivery (CD) pipeline for deploying your app to a cloud provider. If the CD providor is penetrated by an attacker, then they also gain access to your production cloud environment.
+
+Another example is the use of an NPM package that is controlled by an attacker. Once the package has gained general acceptance, the attacker can subtly change the package to capture and deliver sensitive information.
+
+Mitigations include:
+
+- Only using trusted package repositories
+- Using your own private vetted repository
+- Audit all updates to third party packages and data sources
+
+#### A09 - Security Logging and Monitoring Failures
+
+Deeper reading: [Snyk Learn Logging Vulnerabilities](https://learn.snyk.io/lessons/logging-vulnerabilities/javascript/)
+
+Proper systems monitoring, loggin, and alerting is critical to increasing security. One of the first things an attacker will do after penetrating your app is to delete or alter any logs that might reveal the attacker's presence. A secure system will store logs that are accessible, immutable, and contain adequate information to detect an intrusion, and conduct post-mortem analysis.
+
+An attacker might also try to create a smoke screen in the monitoring system to hide the true attack. This might consist of a barrage of periodic ineffective attacks that hide the insertion of a slightly different effective one.
+
+Mitigations include:
+
+- Real time log processing
+- Automated alerts for metric threshold violations
+- Periodic log reviews
+- Visual dashboards for key indicators
+
+#### A10 - Server Side Request Forgery (SSRF)
+
+Deeper reading: [Snyk Learn SSRF](https://learn.snyk.io/lessons/ssrf-server-side-request-forgery/javascript/)
+
+This category of attack causes the app service to make unintended internal requests that utilize the service's elevated privelages to expose internal data or services.
+
+For example, if your service exposed an endpoint that let a user retrieve an external profile image based on a supplied URL, an attacker could change the URL to point to a location that is normally only available to the service internally.
+
+The following command would theoretically return the internal AWS service metadata that includes the administrative access token.
+
+```sh
+curl https://yourdomain.click/user/image?imgUrl=http://169.254.169.254/latest/meta-data/iam/security-credentials/Admin-Role
+```
+
+Mitigations include:
+
+- Santizing returned data
+- Not returning data
+- Whitelisting accessible domains
+- Rejecting HTTP redirects
+
+</details>
+
 ## Assorted Topics
 
 
