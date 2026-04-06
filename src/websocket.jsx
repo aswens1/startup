@@ -11,6 +11,5 @@ export function getSocket() {
             console.error('WebSocket error: ', err)
         }
     }
+    return socket;
 }
-
-return socket;
