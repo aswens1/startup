@@ -9525,6 +9525,272 @@ Mitigations include:
 
 ## Assorted Topics
 
+<details>
+
+<summary>TypeScript</summary>
+
+### TypeScript
+
+Deeper reading: [TypeScript in 5 minutes](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
+
+TypeScript adds static type checking to JS. This provides type checking while you are writing the code to prevent mistakes like using a string when a number is expected. Consider the following simple JS code example.
+
+```JavaScript
+function increment(value) {
+  return value + 1;
+}
+
+let count = 'one';
+console.log(increment(count));
+```
+
+When this code executes, the console will log `one1` because the count variable was accidentally initialized with a string instead of a number.
+
+#### Possible Types
+
+The following table defines the most common types. If you don't explicitly provide a type, it defaults to `any`. This means that it can represent any possible type. Usually you want to avoid using `any` because it defeats one of the main purposes for using TypeScript.
+
+| Type | Description |
+| --- | --- |
+| `string` | represents textual data |
+| `number` | represent numerical values, including integers and floating-point numbers |
+| `boolean` | represents `true` or `false` |
+| `bigint` | represents large integers beyond the `number` type limit |
+| `null` | represents an explicitly empty value |
+| `undefined` | represents a variable that has been declared but not defined a value |
+| `any` | a dynamic type that disables type checking |
+
+#### Using Types
+
+With TS, you explicitly define the types, and as JS is transpiled (with something like Babel) an error will generate long before the code is seen by the user. To provice type safety to our increment function above, it would look like this:
+
+```ts
+function increment(value: number): number {
+  return value + 1;
+}
+
+let count: number = 'one';
+console.log(increment(count));
+```
+
+With TS enabled, VS Code will analyize the code and give you an error about the invalid type conversion.
+
+In addition to defining types for function parameters, you can define the types of objects. For example, when defining a *Bid* class, you can define object types with the `type` keyword, or by implicitly creating an object property.
+
+```ts
+type Product = {
+  imageUrl: string;
+  name: string;
+};
+
+export class Bid {
+  product: Product;
+  state: {
+    quote: string;
+    price: number;
+  };
+
+  constructor(product: Product) {
+    this.product = product;
+    this.state = {
+      quote: 'loading...',
+      price: 0,
+    };
+  }
+}
+```
+
+You can also specify the type of a React function style component's properties with an inline object definition.
+
+```ts
+function Clicker(props: { initialCount: number }) {
+  const [count, updateCount] = React.useState(props.initialCount);
+
+  return <div onClick={() => updateCount(1 + count)}>Click count: {count}</div>;
+}
+```
+
+#### Interfaces
+
+Because it's so common to define object property types, TS introduced the first use of the `interface` keyword to define a collection of parameters and types that an object must have to satisfy the interface type. For example, a Book interface might look like this:
+
+```ts
+interface Book {
+  title: string;
+  id: number;
+}
+```
+
+You can then create an object and pass it to a function that requires the interface.
+
+```ts
+function catalog(book: Book) {
+  console.log(`Cataloging ${book.title} with ID ${book.id}`);
+}
+
+const myBook = { title: 'Essentials', id: 2938 };
+catalog(myBook);
+```
+
+#### Beyond Type Checking
+
+TS also provides other benefits, like warning you of potential uses of an uninitialized variable. Here's an example of when a function may return null, but the code fails to check if that's the case.
+
+![typescriptUninitialized](picturesForNotes/typescriptUninitialized.jpg)
+
+You can correct the issue with a simple `if` block.
+
+```ts
+const containerEl = document.querySelector<HTMLElement>('#picture');
+if (containerEl) {
+  const width = containerEl.offsetWidth;
+}
+```
+
+Notice that the return type is coerced for the `querySelector` call. This is required because the assumed return type for that function is the base call `Element`, but we know that our query will return the subclass `HTMLElement` so we need to cast that to the subclass with the `querySelector<HTMLElement>()` syntax.
+
+##### Unions
+
+TS introduces the ability to define the possible values for a new type. This is useful for things like defining an enumerable or possible types.
+
+With plain JS, you might create an enumerable with a class.
+
+```JavaScript
+export class AuthState {
+  static Unknown = new AuthState('unknown');
+  static Authenticated = new AuthState('authenticated');
+  static Unauthenticated = new AuthState('unauthenticated');
+
+  constructor(name) {
+    this.name = name;
+  }
+}
+```
+
+With TS, you can define this by declaring a new type and defining what its possible values are.
+
+```ts
+type AuthState = 'unknown' | 'authenticated' | 'unauthenticated';
+
+let auth: AuthState = 'authenticated';
+```
+
+You can also use unions to specify all the possible types that a variable can represent.
+
+```ts
+function square(n: number | string) {
+  if (typeof n === 'string') {
+    console.log(`{$n}^2`);
+  } else {
+    console.log(n * n);
+  }
+}
+```
+
+##### Enum
+
+TS also supports enumerations. This adds the benefit of using symbols instead of strings for values.
+
+```ts
+enum AuthState {
+  Authenticated = 'authenticated',
+  Unauthenticated = 'unauthenticated',
+}
+
+let auth: AuthState = AuthState.Authenticated;
+```
+
+#### Using TypeScript
+
+##### Experimenting
+
+If you want to experiment with TS, you can easily use [CodePen](https://codepen.io/) or the official [TypeScript Playground](https://www.typescriptlang.org/play). The TS playground has the advantage of showing you inline errors what the resulting JS will be.
+
+##### TypeScript with Vite
+
+Vite automatically supports the use of TS. This means you can simply write your components with TS.
+
+**app.tsx**
+
+```tsx
+import React, { JSX } from 'react';
+import ReactDOM from 'react-dom/client';
+
+interface Props {
+  greeting: string;
+  count?: number;
+}
+
+function App({ greeting, count = 3 }: Props): JSX.Element {
+  return (
+    <div>
+      {Array.from({ length: count }).map((_, index: number) => (
+        <h1 key={index}>{greeting}, World!</h1>
+      ))}
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App greeting='hello' />);
+```
+
+##### TypeScript with Node.js
+
+Node LTS version 22 introduced experimental use of TS with the expectation of it being enabled by default in future versions.
+
+**index.ts**
+
+```ts
+function add(a: number, b: number | string): number {
+  if (typeof b === 'string') {
+    b = parseInt(b, 10);
+  }
+  return a + b;
+}
+
+const x: number = 3;
+const result: number = add(x, '3');
+
+console.log(result);
+```
+
+The following will run the above code with Node.js but it will display several warning messages.
+
+```sh
+node --experimental-transform-types index.ts
+
+6
+```
+
+Node LTS verion 24 handles TS right out of the box.
+
+```sh
+node index.ts
+
+6
+```
+
+##### Installing Type Bundles
+
+Some NPM packages put their type info in different packages. For example, to install the Node and React types you would run the following:
+
+```sh
+npm install -D @types/node
+npm install -D @types/react
+```
+
+##### TypeScript with an Existing App
+
+If you want to convert an existing application, then install the NPM `typescrupt` pacakge to your dev dependencies.
+
+```sh
+npm install -D typescript
+```
+
+This will only include the TS package when you are developing and won't distribute it with a production bundle.
+
+</details>
 
 ``` HTML
 <details>
