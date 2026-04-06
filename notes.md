@@ -9792,6 +9792,139 @@ This will only include the TS package when you are developing and won't distribu
 
 </details>
 
+<details>
+
+<summary>Performance Monitoring</summary>
+
+### Performance Monitoring
+
+The performance of your app plays a huge role in determining user satisfaction.
+
+![performanceLatencyImpact - WPEngine](picturesForNotes/performanceLatencyImpact.jpg)
+
+To prevent losing users, you want your app to load in about one second. This means you need to consistently measure and improve the responsiveness of your app. 
+
+The main things you want to monitor include:
+
+1. Browser application latency
+2. Network latency
+3. Service endpoint latency
+
+For the context in these notes, latency is the delay that your user experiences before a request is satisfied.
+
+#### Browser Application Latency
+
+Browser app latency is impacted by the speed of the user's device, the amount of data that needs to be processed, and the time complexity of the processing algorithm.
+
+When a user requests your app in a browser, the browser will request your `index.html` page first. This is followed by requests for any files that `index.html` links to, like JS, CSS, video, and image files. Once your JS is loaded, it will start making requests to services. This includes any endpoints that you provide as well as ones provided by third parties. Each of these requests takes time for the browser to load and render. A page with lots of large images and service calls will take longer than a page that only loads text from a single HTML file.
+
+You can reduce the impact of file size, and HTTP requests in general, by doing one or more of the following:
+
+1. Use compression when transfering files over HTTP
+2. Reduce the quality of images/video to the lowest acceptable level
+3. Minify JS and CSS. This removes all whitespace and creates smaller variable names
+4. Use HTTP/2 or HTTP/3 so your HTTP headers are compressed and the communication protocol is more efficient
+
+You can also reduce the number of requests you make by combining the responses from multiple endpoint requests into a single request. This eliminates duplicated fields, but also decreases the overhead associated with each request.
+
+#### Network Latency
+
+You pay a latency price for every network request you make. For this reason, you want to avoid making unnecessary or large requests.
+
+Network latency is impacted by the amount of data that you send, the amount of data a user can receive per second (bandwidth), and the distance the data has to travel.
+
+If the user has a low bandwidth connection that can only receive data at rates lower than 1 megabit per second, you need to be careful and reduce the number of bytes that you send to that user. Global latency is also a problem for users. If your app is hosted in San Francisco, and is used by someone in Nairobi, then there will be an additional latency of 100 to 400 milliseconds for each request.
+
+You can mitigate the impact of global latency by hosting your app files in data centers that are close to the users you are trying to serve. Apps that are seeking to reach a global audience will often host their apps from dozens of places around the world.
+
+#### Service Endpoint Latency
+
+Service endpoint latency is impacted by the number of requests that are made and the amount of time it takes to process each request.
+
+When a web app makes a request to a service endpoint, there is usually some functionality in the app that is blocked until the endpoint returns. For example, if the user requests the scores for a game, the app will delay rendering until those scores are returned.
+
+You want to reduce the latency of your endpoints as much as possible. Ideally, you want to keep the endpoint latency to less than 10 milliseconds (ms). This may seem like a very short time, but an app will usually make dozens of endpoint requests to render a component. If each of those endpoints take 10ms, then you are looking at 100 to 200 ms. When you add network latency to the app's processing time, and then add the time it takes for the browser to render it, you can easily exceed the deired 1 second load time.
+
+#### Performance Tools
+
+Deeper reading: [Chrome Performance Tools](https://developer.chrome.com/docs/devtools/performance/)
+
+##### Chrome Network Tab
+
+You can see the network requests made by your app and the time necessary for each request by using the browser's debugging tools. This will show you what files and endpoints are requested and how long they are taking. If you sort by `time` or `size`, it'll be clearer what areas need attention. Make sure you clear your cache before running tests so that you can see what the real latency is and not just the time it takes to load from the browser's cache.
+
+##### Simulating Real Users
+
+The network tools in the Chrome debugger also allows you to simulate low bandwidth connections by throttling your network. For example, you can simulate a 3G network connection that you find on a low end mobile phone.
+
+Throttling while testing is really useful since web developers often have high end computers and significant network bandwidth. This means you aren't having the same experience as your users, and will be surprised when they don't use your app because it's so slow.
+
+##### Chrome Lighthouse
+
+You can also use Chrome debugging Lighthouse tools to run an analysis of your app. This will give you an average performance rating based on the initial load time, longest content paint, and time before the user can interact with the page.
+
+##### Chrome Performance Tab
+
+When you're ready to dig into your app's frontend performance, make sure to experiment with the Chrome debugger's performance tab. It breaks down the details of your app based on discrete intervals of time so you can isolate when things are running slow.
+
+You start profiling performance by pressing the record button and then interacting with your app. Chrome will record memory usage, screenshots, and timing information. You can press the stop recording button and review the collected data.
+
+##### Global Speed Tests
+
+You also want to test your app from different locations around the world. There are many online providors that will run these tests for you. One such website is [Pindom.com](https://tools.pingdom.com/). Another tool that lets you run tests from multiple locations at once is [DotComTools](https://www.dotcom-tools.com/).
+
+</details>
+
+<details>
+
+<summary>UX Design</summary>
+
+### UX Design
+
+</details>
+
+<details>
+
+<summary>Search Engine Optimization</summary>
+
+### Search Engine Optimization
+
+</details>
+
+<details>
+
+<summary>Device APIs</summary>
+
+### Device APIs
+
+</details>
+
+<details>
+
+<summary>Progressive Web Applications</summary>
+
+### Progressive Web Applicatins
+
+</details>
+
+<details>
+
+<summary>Simon PWA</summary>
+
+### Simon PWA
+
+</details>
+
+<details>
+
+<summary>Wrap Up</summary>
+
+### Wrap Up
+
+</details>
+
+
+
 ``` HTML
 <details>
 
