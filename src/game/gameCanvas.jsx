@@ -2,8 +2,11 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { GameEngine } from "./gameEngine";
 import { CaptureMode } from "./modes/captureMode";
+// import { getSocket } from "../websocket";
 
 export function GameCanvas() {
+
+  // const socket = getSocket();
 
   const userName = localStorage.getItem('userName');
 

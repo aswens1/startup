@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 
@@ -12,6 +12,8 @@ import { Leaderboard } from './leaderboard/leaderboard.jsx';
 import { GameSelectionMenu } from './selectMenu/selectMenu.jsx';
 import { Landing } from './landing/landing.jsx';
 import { Dashboard } from './dashboard/dashboard.jsx';
+
+import { getSocket } from './websocket.jsx';
 
 function NavDropdown({ label, isAuthenticated }) {
   const [open, setOpen] = React.useState(false);
@@ -67,6 +69,10 @@ export default function App() {
   const isAuthenticated = authState === AuthState.Authenticated;
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    getSocket();
+  }, []);
 
   function logout() {
 
