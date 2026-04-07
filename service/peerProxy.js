@@ -4,6 +4,9 @@ function peerProxy(httpServer) {
   // Create a websocket object
   const socketServer = new WebSocketServer({ server: httpServer });
 
+  const gridSize = 20;
+  const gameBoards = {};
+
   socketServer.on('connection', (socket) => {
     console.log('WebSocket client connected');
     socket.isAlive = true;
@@ -12,18 +15,42 @@ function peerProxy(httpServer) {
     socket.on('message', function message(data) {
       const message = JSON.parse(data);
 
-      socketServer.clients.forEach((client) => {
-        if (client.readyState === WebSocket.OPEN) {
+      // board exists
+      if (!gameBoards[message.gameId]) {
+        gameBoards[message.gameId] = Array(gridSize)
+        .fill(null)
+        .map(() => Array(gridSize).fill(null));
+      }
 
-          client.send(JSON.stringify({
-            type: 'PIXEL_UPDATED',
-            gameId: message.gameId,
-            row: message.row,
-            col: message.col,
-            color: message.color,
-          }));
-        }
-      });
+      const board = gameBoards[message.gameId];
+
+      // join
+      if (message.type === 'JOIN_GAME') {
+        socket.send(JSON.stringify({
+          type: 'FULL_BOARD',
+          gameId: message.gameId,
+          board: board,
+        }));
+        return;
+      }
+
+      if (message.type === 'CLAIM_PIXEL') {
+        board[message.row][message.col] = message.color;
+
+        socketServer.clients.forEach((client) => {
+          if (client.readyState === WebSocket.OPEN) {
+  
+            client.send(JSON.stringify({
+              type: 'PIXEL_UPDATED',
+              gameId: message.gameId,
+              row: message.row,
+              col: message.col,
+              color: message.color,
+            }));
+          }
+        });
+      }
+
     });
 
     // Respond to pong messages by marking the connection alive

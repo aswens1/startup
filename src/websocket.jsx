@@ -1,7 +1,7 @@
 let socket = null;
 
 export function getSocket() {
-    if (!socket) {
+    if (!socket || socket.readyState === WebSocket.CLOSED) {
 
         console.log('Attempting WebSocket connection...');
 
@@ -10,11 +10,6 @@ export function getSocket() {
         
         socket.onopen = () => {
             console.log('WebSocket connected');
-
-            socket.send(JSON.stringify({
-                type: 'TEST',
-                message: 'Hello from client'
-            }));
         };
 
         socket.onclose = () => {

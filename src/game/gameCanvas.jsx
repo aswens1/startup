@@ -11,9 +11,21 @@ export function GameCanvas() {
   const userName = localStorage.getItem('userName');
 
   const gridSize = 20;
-  const engine = useMemo(() => new GameEngine(CaptureMode), []);
 
   const { gameId } = useParams();
+
+  // join game socket
+  useEffect(() => {
+    if (!socket) return;
+
+    socket.send(JSON.stringify({
+      type: 'JOIN_GAME',
+      gameId,
+    }));
+  }, [gameId]);
+
+  const engine = useMemo(() => new GameEngine(CaptureMode), []);
+
   const navigate = useNavigate();
 
   const [board, setBoard] = useState(
@@ -36,6 +48,11 @@ export function GameCanvas() {
     if (gameOver) return;
     if (!playerColor) return;
 
+    if (socket.readyState !== WebSocket.OPEN) {
+      console.log('Socket not ready');
+      return;
+    }
+
     socket.send(JSON.stringify({
       type: 'CLAIM_PIXEL',
       gameId,
@@ -45,12 +62,19 @@ export function GameCanvas() {
     }));
   };
 
+  // web socket for moves
   useEffect(() => {
-    const socket = getSocket();
 
     const handleMessage = (event) => {
       const message = JSON.parse(event.data);
 
+      // load full board when joining
+      if (message.type === 'FULL_BOARD' && message.gameId === gameId) {
+        setBoard(message.board);
+        return;
+      }
+
+      // live gameplay
       if (message.type === 'PIXEL_UPDATED' && message.gameId === gameId) {
         setBoard(prev => {
           const newBoard = prev.map(row => [...row]);
@@ -158,7 +182,6 @@ export function GameCanvas() {
   const [gameDeleted, setGameDeleted] = useState(false);
 
   // winner
-
   useEffect(() => {
     if (timeLeft > 0) return;
     if (gameOver) return;
