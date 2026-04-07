@@ -6,6 +6,7 @@ function peerProxy(httpServer) {
 
   const gridSize = 20;
   const gameBoards = {};
+  const gameStartedAnyway = {};
 
   socketServer.on('connection', (socket) => {
     console.log('WebSocket client connected');
@@ -30,7 +31,22 @@ function peerProxy(httpServer) {
           type: 'FULL_BOARD',
           gameId: message.gameId,
           board: board,
+          startedAnyway: Boolean(gameStartedAnyway[message.gameId]),
         }));
+        return;
+      }
+
+      if (message.type === 'START_ANYWAY') {
+        gameStartedAnyway[message.gameId] = true;
+
+        socketServer.clients.forEach((client) => {
+          if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify({
+              type: 'GAME_STARTED_ANYWAY',
+              gameId: message.gameId,
+            }));
+          }
+        });
         return;
       }
 

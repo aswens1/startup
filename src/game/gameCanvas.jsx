@@ -46,6 +46,7 @@ export function GameCanvas() {
 
   const handleClick = (row, col) => {
     if (gameOver) return;
+    if (waitingForPlayers) return;
     if (!playerColor) return;
 
     if (socket.readyState !== WebSocket.OPEN) {
@@ -71,6 +72,14 @@ export function GameCanvas() {
       // load full board when joining
       if (message.type === 'FULL_BOARD' && message.gameId === gameId) {
         setBoard(message.board);
+        if (message.startedAnyway) {
+          setStartedAnyway(true);
+        }
+        return;
+      }
+
+      if (message.type === 'GAME_STARTED_ANYWAY' && message.gameId === gameId) {
+        setStartedAnyway(true);
         return;
       }
 
@@ -109,6 +118,10 @@ export function GameCanvas() {
   const [maxPlayers, setMaxPlayers] = useState(0);
   const [timeLeft, setTimeLeft] = useState(30); // 5 mins
   const [controlPercent, setControlPercent] = useState(27);
+  const [startedAnyway, setStartedAnyway] = useState(false);
+  const [winner, setWinner] = useState(null);
+  const [gameOver, setGameOver] = useState(false);
+  const [gameDeleted, setGameDeleted] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -144,16 +157,24 @@ export function GameCanvas() {
     };
   }, [gameId]);
 
+  const waitingForPlayers =
+    !gameOver &&
+    !startedAnyway &&
+    (maxPlayers ?? 0) > 0 &&
+    (playerCount ?? 0) > 0 &&
+    playerCount < maxPlayers;
+
   // timer
   useEffect(() => {
     if (gameOver) return;
+    if (waitingForPlayers) return;
 
     const interval = setInterval(() => {
       setTimeLeft(prev => (prev > 0 ? prev - 1 : 0));
     }, 1000);
     
     return () => clearInterval(interval);
-  }, []);
+  }, [gameOver, waitingForPlayers]);
 
   function formatTime(seconds) {
     const mins = Math.floor(seconds / 60);
@@ -176,10 +197,6 @@ export function GameCanvas() {
     
     setControlPercent(Math.round((owned / total) * 100));
   }, [board, playerColor]);
-
-  const [winner, setWinner] = useState(null);
-  const [gameOver, setGameOver] = useState(false);
-  const [gameDeleted, setGameDeleted] = useState(false);
 
   // winner
   useEffect(() => {
@@ -370,6 +387,49 @@ export function GameCanvas() {
           Leave Game
         </button>
       </aside>
+
+    {/* waiting screen overlay */}
+
+      {waitingForPlayers && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 w-[400px] text-center">
+            <h2 className="text-3xl font-bold mb-4">
+              Waiting for more players...
+            </h2>
+
+            <div className="flex flex-col items-center gap-4 mb-6">
+              <p className="text-lg">
+                {playerCount} / {maxPlayers} joined
+              </p>
+
+              <p className="text-base opacity-80">
+                This will start automatically when the lobby is full.
+              </p>
+            </div>
+
+            <div className="flex gap-4">
+              <button
+                onClick={() => {
+                  setStartedAnyway(true);
+                  if (socket?.readyState === WebSocket.OPEN) {
+                    socket.send(JSON.stringify({ type: 'START_ANYWAY', gameId }));
+                  }
+                }}
+                className="flex-1 bg-black text-white hover:bg-gray-800 rounded py-2"
+              >
+                Start anyway
+              </button>
+
+              <button
+                onClick={leaveGame}
+                className="flex-1 bg-gray-300 hover:bg-gray-400 rounded py-2"
+              >
+                Leave Game
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     {/* winning screen overlay */}
 
