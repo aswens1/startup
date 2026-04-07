@@ -60,7 +60,7 @@ export function GameCanvas() {
       }
     };
 
-    socket.addEventListenter('message', handleMessage);
+    socket.addEventListener('message', handleMessage);
 
     return () => {
       socket.removeEventListener('message', handleMessage);
