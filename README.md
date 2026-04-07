@@ -116,7 +116,7 @@ I've also implemented the service and endpoints, stored in the service subdirect
 
 I reviewed and deployed the Simon database code to my project - found at [simon.8bitalley.click](https://simon.8bitalley.click).
 
-I've also added database functionality through MongoDB to my startup, store in the service subdirectory - found at [startup.8bitalley.click](https://startup.8bitalley.click/)
+I've also added database functionality through MongoDB to my startup, stored in the service subdirectory - found at [startup.8bitalley.click](https://startup.8bitalley.click/)
 
 - **Stores data in MongoDB** - User stats and game data are fully linked to MongoDB, and all that information is pulled and updated at various points throughout the app.
 - **Stores credentials in MongoDB** - Login and Register are fully linked to MongoDB, and user data is stored and pulled when someone signs up and logs in and is then displayed on their stats dashboard and the leaderboard.
@@ -125,8 +125,10 @@ I've also added database functionality through MongoDB to my startup, store in t
 
 I reviewed and deployed the Simon WebSocket code to my project - found at [simon.8bitalley.click](https://simon.8bitalley.click).
 
-- [ ] **Backend listens for WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Frontend makes WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Data sent over WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **WebSocket data displayed** - I did not complete this part of the deliverable.
-- [ ] **Application is fully functional** - I did not complete this part of the deliverable.
+I've also added WebSocket functionality, stored in the service subdirectory and a helper file in the src subdirectory - found at [startup.8bitalley.click](https://startup.8bitalley.click/)
+
+- **Backend listens for WebSocket connection** - I implemented a WebSocket server on the backend that listens for and handles client connections.
+- **Frontend makes WebSocket connection** - The frontend connects to a persistent WebSocket server when the user joins a game.
+- **Data sent over WebSocket connection** - The frontend sends messages to the server through the WebSocket when players override the 'waiting for more players' screen and when they click pixels.
+- **WebSocket data displayed** - Incoming WebSocket messages are displayed via the colour of the pixel being changed when their opponent clicks a pixel.
+- **Application is fully functional** - The application supports real-time multiplayer gameplay with synched states across users.
