@@ -45,6 +45,28 @@ export function GameCanvas() {
     }));
   };
 
+  useEffect(() => {
+    const socket = getSocket();
+
+    const handleMessage = (event) => {
+      const message = JSON.parse(event.data);
+
+      if (message.type === 'PIXEL_UPDATED' && message.gameId === gameId) {
+        setBoard(prev => {
+          const newBoard = prev.map(row => [...row]);
+          newBoard[message.row][message.col] = message.color;
+          return newBoard;
+        });
+      }
+    };
+
+    socket.addEventListenter('message', handleMessage);
+
+    return () => {
+      socket.removeEventListener('message', handleMessage);
+    };
+  }, [gameId]);
+
   const leaveGame = async () => {
     try {
       await fetch(`/api/games/${gameId}/leave`, {
