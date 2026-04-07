@@ -229,7 +229,6 @@ apiRouter.post('/games/:id/join', verifyAuth, async (req, res) => {
 });
 
 // leave game
-
 apiRouter.post('/games/:id/leave', verifyAuth, async (req, res) => {
   const user = await findUser('token', req.cookies[authCookieName]);
   const game = await DB.getGameById(Number(req.params.id));
