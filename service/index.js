@@ -336,5 +336,4 @@ const httpService = app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
-console.log('Setting up WebSocket server...');
 peerProxy(httpService);

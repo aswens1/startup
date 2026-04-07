@@ -12,7 +12,7 @@ function peerProxy(httpServer) {
     console.log('WebSocket client connected');
     socket.isAlive = true;
 
-    // Forward messages to everyone except the sender
+    // Forward messages to everyone
     socket.on('message', function message(data) {
       const message = JSON.parse(data);
 
