@@ -268,50 +268,50 @@ export function GameCanvas() {
 
   // WEBSOCKET MOCK -> place random pixel every 2 secs
 
-  const [botColor, setBotColor] = useState(null);
+  // const [botColor, setBotColor] = useState(null);
 
-  const botIntervalRef = useRef(null);
+  // const botIntervalRef = useRef(null);
 
-  useEffect(() => {
-    if (gameOver || !botColor) return;
+//   useEffect(() => {
+//     if (gameOver || !botColor) return;
     
-    botIntervalRef.current = setInterval(() => {
-      placeRandomBotPixel();
-    }, 1000); //every 1 sec
+//     botIntervalRef.current = setInterval(() => {
+//       placeRandomBotPixel();
+//     }, 1000); //every 1 sec
 
-    return () => {
-      clearInterval(botIntervalRef.current);
-    };
-  }, [gameOver, botColor]);
+//     return () => {
+//       clearInterval(botIntervalRef.current);
+//     };
+//   }, [gameOver, botColor]);
 
-  useEffect(() => {
-    if (playerColor) {
-      setBotColor(getBotColor(playerColor));
-}
-  }, [playerColor]);
+//   useEffect(() => {
+//     if (playerColor) {
+//       setBotColor(getBotColor(playerColor));
+// }
+//   }, [playerColor]);
 
   
-  function placeRandomBotPixel() {
-    if (gameOver || !botColor) return;
-    const randomRow = Math.floor(Math.random() * gridSize);
-    const randomCol = Math.floor(Math.random() * gridSize);
+  // function placeRandomBotPixel() {
+  //   if (gameOver || !botColor) return;
+  //   const randomRow = Math.floor(Math.random() * gridSize);
+  //   const randomCol = Math.floor(Math.random() * gridSize);
 
-    const color = botColor;
+  //   const color = botColor;
 
-    setBoard(prev => engine.handleMove(prev, randomRow, randomCol, color));
-  }
+  //   setBoard(prev => engine.handleMove(prev, randomRow, randomCol, color));
+  // }
 
-  function getBotColor(playerColor) {
-    const currentGame = JSON.parse(localStorage.getItem('currentGame'));
+  // function getBotColor(playerColor) {
+  //   const currentGame = JSON.parse(localStorage.getItem('currentGame'));
 
-    if (!currentGame || !currentGame.colors) return null;  
+  //   if (!currentGame || !currentGame.colors) return null;  
   
-    const available = currentGame.colors.filter(color => color !== playerColor);
+  //   const available = currentGame.colors.filter(color => color !== playerColor);
   
-    if (available.length === 0) return null;
+  //   if (available.length === 0) return null;
   
-    return available[Math.floor(Math.random() * available.length)];
-  }
+  //   return available[Math.floor(Math.random() * available.length)];
+  // }
 
   return (
     <>
