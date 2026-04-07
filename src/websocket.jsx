@@ -10,6 +10,11 @@ export function getSocket() {
         
         socket.onopen = () => {
             console.log('WebSocket connected');
+
+            socket.send(JSON.stringify({
+                type: 'TEST',
+                message: 'Hello from client'
+            }));
         };
 
         socket.onclose = () => {
@@ -18,6 +23,12 @@ export function getSocket() {
 
         socket.onerror = (err) => {
             console.error('WebSocket error: ', err)
+        };
+
+        socket.onmessage = (event) => {
+            const msg = JSON.parse(event.data);
+
+            console.log('Server says: ', msg);
         }
     }
     return socket;

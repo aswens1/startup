@@ -2,11 +2,11 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { GameEngine } from "./gameEngine";
 import { CaptureMode } from "./modes/captureMode";
-// import { getSocket } from "../websocket";
+import { getSocket } from "../websocket";
 
 export function GameCanvas() {
 
-  // const socket = getSocket();
+  const socket = getSocket();
 
   const userName = localStorage.getItem('userName');
 
@@ -34,9 +34,15 @@ export function GameCanvas() {
 
   const handleClick = (row, col) => {
     if (gameOver) return;
-
     if (!playerColor) return;
-    setBoard(prev => engine.handleMove(prev, row, col, playerColor));
+
+    socket.send(JSON.stringify({
+      type: 'CLAIM_PIXEL',
+      gameId,
+      row,
+      col,
+      color: playerColor,
+    }));
   };
 
   const leaveGame = async () => {
