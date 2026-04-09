@@ -10214,6 +10214,130 @@ Legal walls only protect the app vendor and provides little to no value to the u
 
 ### Search Engine Optimization
 
+Deeper reading: [Google Search Central](https://developers.google.com/search)
+
+Once Google became the main search engine for the internet, a new industry was created to help websites get the top search result spots. Modifying your app for search results is called search engine optimization (SEO). While SEO has nothing to do with the functionality of your app, it has everything to do with it's success. You can save millions of dollars in marketing if your app appears in the top search ranking for common user searches.
+
+There are several factors that contribute to your search rank, including:
+
+1. Content
+
+2. Authoritative links
+
+3. Structure and organziation
+
+4. Metadata
+
+5. Performance and usability
+
+#### Content
+
+Search engines pay a lot of attention to the value an app provides. One of the ways you can provide significant value is to host interesting, current, easily accessible content. For example, if your app is about the game Simon, then you should include a history of the game, strategies for playing the game, current news about competitions, and biographies of the world's best players. The key is that there is lots of interesting content that it kept current.
+
+You want to make sure you provide both textual and video content. Also make sure that the content is available without authentication or payment.
+
+#### Authoritative Links
+
+The success of the Google Page Rank algorithm is founded on determining how authoritative an app is. The more websites that point to your app the higher its search ranking will be. If you can get an influencer to link your content, or get links from other authoritative apps, you will see a significant bump in your ranking.
+
+You also want to be an authority yourself. This includes links from other apps that you own, and internal app links. Making sure that you have multiple paths to key content from within your app will help the Google crawler find the content and value its authority.
+
+#### Structure and Organization
+
+You need to properly use HTML elements to correctly define and organize your app. The Google search crawler is an automated bot. This means it will not spend a lot of effort trying to guess what you meant with the `div` element, when they actually represent a `title` or `a` element. Leveraging semantic meaning of HTML will help the crawler navigate your content.
+
+Make sure your content isn't hidden behind JS interactions. When the crawler hits a URL, the important content should be rendered. The crawler should not have to interact with the app before the content is injected.
+
+Key HTML elements include the `title` and `heading` elements. The title and heading elements should contain text that clearly defines the value of your content, and include keywords that you want in the search index.
+
+#### Metadata
+
+HTML defeines several elements and attributes that search crawlesr specifically target. This includes the `description`, `robots`, social media open graph (`og`), and the image alt attributes.
+
+If you were creating a description for Simon, you would include something like the following description meta element on the home page of your app.
+
+```HTML
+<meta name="description" content="Game play, news, rankings, tips, and instruction for Simon." />
+```
+
+The robots meta element instructs the crawler how to specifically index a given page. The image al attribute tells the crawler the keywords for a given image.
+
+The open graph (`og`) meta tags are used by social media websites to give a preview of your app. Crawlers consider info like this as a reflection that the app is modern and more interesting to users.
+
+```HTML
+<meta property="og:title" content="Play Simon online" />
+<meta property="og:description" content="News, rankings, instruction, and competitive online play for Simon." />
+<meta property="og:image" content="https://simon.cs260.click/simon.png" />
+```
+
+##### Sitemap
+
+A sitemap is a textual file that you distribute with your app. It describes the major content pieces of your app and aids in search crawler navigation. If you have a small app, then a sitemap is probably not necessary. If you have hundreds or thousands of content pages, then you want to build a sitemap and submit it to the Google Search Console.
+
+Here's an example of a sitemap file with a single entry.
+
+```XML
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://simon.cs260.click/news/2022-world-champion.html</loc>
+    <lastmod>2023-01-17</lastmod>
+  </url>
+</urlset>
+```
+
+##### Robots.txt
+
+The `robots.txt` file tells the crawler what parts of your app is off limits. Here's an example file:
+
+```YAML
+# cs260.com/robots.txt
+# Tell Google not to crawl the game play path,
+# because it won't be useful in Google Search results.
+User-agent: googlebot
+Disallow: /play/
+```
+
+To include a robot.txt file for your app, you simply create the file with the specific name `robots.txt` and serve it from the root of your domain.
+
+#### Performance and Usability
+
+In addition to authority, Google wants to rank results by quality. That means it will check how performant your app is and how good the UX is. This includes measurements such as the time it takes for the first byte to load, how long it takes to render the page, and how well your app works on mobile devices.
+
+#### Tools
+
+##### Google Search
+
+You want to frequently do a Google search for your app domain to see how much of it is being indexed. You can do this by querying Google with your domain name prefixed with `site:`. For example, here is the current result for `site:simon.cs260.click`.
+
+![seoGoogle](picturesForNotes/seoGoogleSearch.jpg)
+
+This shows that Google is not indexing any pages from the domain.
+
+##### PageSpeed Insights
+
+PageSpeed insights is similar to the Chrome browser debugging tool Lighthouse, but it lets you run it from a webpage. Using a tool like Insights is useful because performance and usability are key factors in determining your search ranking. The better the rating you get from PageSpeed Insights, the better your search ranking will be. 
+
+Here is the result of examining `simon.cs260.click`. This shows that it's performing well, but not optimal for SEO.
+
+![SpeedInsights](picturesForNotes/seoPageSpeedInsights.jpg)
+
+If we dig into the SEO section of the report, we see that there is no Robots.txt file and the description meta element is missing.
+
+![SpeedInsightsSEO](picturesForNotes/seoPageSpeedInsightsSeo.jpg)
+
+##### Google Search Console
+
+The [Google Search Console](https://search.google.com/search-console/about) contains many tools to help you understand how your app is being indexed and why. This includes info about your website's performance, what pages are indexed, your mobile usability, and information about the overall user experience.
+
+![GSC](picturesForNotes/seoGoogleSearchConsole.jpg)
+
+To get started with the Google Search Console, you need to add a DNS `TXT` record to your app's domain DNS information. This is similar to when you added an `A` or `CNAME` record when you first set up your DNS info with the AWS Route 53 service,
+
+![GSC verify](picturesForNotes/seoGoogleSearchConsoleVerify.jpg)
+
+Once your ownership is verified, the Google Search Console will start tracking stats for oyur domain. Check often to gain insight on how you can import your search ranking.
+
 </details>
 
 <details>
