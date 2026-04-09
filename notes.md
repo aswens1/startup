@@ -10346,6 +10346,125 @@ Once your ownership is verified, the Google Search Console will start tracking s
 
 ### Device APIs
 
+Every year, browsers mature and increase the features they provide. Sometimes these features are exposed as APIs (application programming interfaces) that allow a web app to interact with the user through the browser, operating system, or device features. For example, your app could take advantage of location services that tell you where yur user is physically located, or read a user's contacts in order to allow them to share information with their peers. As these APIs become standard across all browsers, they enable web apps to behave more and more like historical native device apps.
+
+#### Respecting Privacy
+
+Most device APIs require the user to consent to your app's use of the API, but as long as your app is providing value and not just trying to invade their privacy, this usually isn't a problem. For example, a good use of location services would be a restaurant finder app that suggests nearby venus. A bad example of using location services would be a Sudoku game that sold your home adress to advertisers. In some governmental jurisdictions, cases like that would be illegal.
+
+#### Location API
+
+Deeper reading: [MDN Location API](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API/Using_the_Geolocation_API)
+
+The location API provides the GPS location of the device. Like the notification API, the user will be prompted for permission to access their location. After permission is granted, then the `navigator.geolocation` API will return the user's location.
+
+The following React component will display the location once it loads.
+
+```JSX
+import React from 'react';
+
+export function Location() {
+  const [position, updatePosition] = React.useState({ lat: 0, long: 0 });
+
+  React.useEffect(() => {
+    console.log('updating pos');
+    navigator.geolocation.getCurrentPosition((p) => {
+      updatePosition({ lat: p.coords.latitude, long: p.coords.longitude });
+    });
+  }, []);
+
+  return (
+    <div>
+      {position.lat !== 0 && (
+        <div>
+          <h1>Your location</h1>
+          <div>Latitude: {position.lat}</div>
+          <div>Longitude: {position.long}</div>
+          <div>
+            <iframe
+              title='map'
+              width='600'
+              height='300'
+              src={`https://www.openstreetmap.org/export/embed.html?bbox=${position.long + 0.001},${
+                position.lat + 0.001
+              },${position.long - 0.001},${position.lat - 0.001}&amp;layer=mapnik`}
+            ></iframe>
+          </div>
+        </div>
+      )}
+      {position.lat === 0 && <div>Location unknown</div>}
+    </div>
+  );
+}
+```
+
+You can try this by creating a simple React app and adding a new component file named `location.js` that contains the above code. Then, include the Location component inside the `App.js` file.
+
+```jsx
+import { Location } from './location';
+
+function App() {
+  return (
+    <div className='App'>
+      <header className='App-header'>
+        <Location></Location>
+      </header>
+    </div>
+  );
+}
+```
+
+#### Notification API
+
+Deeper reading: [MDN Notification API]()
+
+As an example of integrating your web app with the device, we can look at the notifiction API.
+
+The following React code has a function to register the user's permission to display notifications, and a function to send notifications. The state representing the user's permission is initialized with the Notification API `permission` property. The state property can be `default` (not set), `granted`, or `denied`.
+
+The rest of the code controls the UI for the display state, buttons, and message input.
+
+```jsx
+function Notifier() {
+  const [acceptanceState, updateAcceptanceState] = React.useState(Notification.permission);
+  const [msg, updateMsg] = React.useState('');
+
+  function register() {
+    Notification.requestPermission().then((response) => {
+      updateAcceptanceState(response);
+    });
+  }
+
+  function notify() {
+    new Notification('You are notified', {
+      body: msg,
+    });
+    updateMsg('');
+  }
+
+  return (
+    <div className='component'>
+      <p>User's acceptance of notifications: {acceptanceState}</p>
+      {acceptanceState === 'default' && <button onClick={() => register()}>Register</button>}
+      {acceptanceState === 'granted' && (
+        <div>
+          <input type='text' value={msg} onChange={(e) => updateMsg(e.target.value)} placeholder='msg here'></input>
+          <button disabled={msg === ''} onClick={() => notify()}>
+            Notify
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+#### Other APIs
+
+Other interesting device APIs include the [Contact Picker](https://developer.mozilla.org/en-US/docs/Web/API/Contact_Picker_API), [Bluetooth](https://developer.mozilla.org/en-US/docs/Web/API/Bluetooth/requestDevice), and [File System](https://developer.mozilla.org/en-US/docs/Web/API/File_System_Access_API).
+
+Before your get too excited about using any devide APIs, make sure you check the browser support for the API so you can make sure you properly serve your target market. If a specific device is not supported on some device or browser, oyu can always hide that functionality for those users while still providing it for others.
+
 </details>
 
 <details>
