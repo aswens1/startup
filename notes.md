@@ -9881,6 +9881,331 @@ You also want to test your app from different locations around the world. There 
 
 ### UX Design
 
+Properly considering the user experience (UX) design of your app will make all the different in your success. Focusing first on technology, cost, or revenue tends to lead to an unsatisfying user experience. Instead, consider why someone is using your app, how they want to interact, how visually appealing it is, and how easi it is to get something done.
+
+#### Design as a Story
+
+It's useful to think of UX as a story. Consider the background plot, the user entering the stage, interacting with other actors, and getting the audience to applaud. At first this may sound strange, but apps are not used in a vacuum. There is always a reason someone is using your app. If you can clearly define the background plot, then the experience will better match the user's expectations. Likewise, if you know what satisfies the audience, you can build the app experience around delivering that result.
+
+Consider the tourism app for the [City of Philadelphia](https://www.visitphilly.com/). They know that people visit the site because they want to have an experience in Philadelphia. The app immediately provides a time relevent proposal for the experience. All the navigation options for having a successful experience (food, events, deals, trip planning, etc) are immediately accessible. Just looking at the initial image conveys the excitement of engaging in the app.
+
+#### Simplicity
+
+Google broke all the web app design rules when they released their homepage in 1998.
+
+![Google design](picturesForNotes/designSimplicityGoogle.jpg)
+
+Previously, a lot of app designers just piled everything they could into the initial view of the app. This included ads, navigation options, hyperlinks, and oclour choices. Here's a competitor around the same time period.
+
+![Lycos design](picturesForNotes/designSimplicityLycos.jpg)
+
+The point of this example is to show that simplicity attracts a user's attention and engages them in the app experience. Building off of Google's positive reaction, a lot of other apps started to do the same. Here is the initial experience when first visiting [FaceBook's](facebook.com) app. It simply states the purpose of the app and invites the user to create an account.
+
+![Facebook design](picturesForNotes/designSimplicityFB.jpg)
+
+Simplicity can also be visually stimulating with [beautiful imagery](https://nomadictribe.com/) and simple navigation options.
+
+![Nomadic Tribe design](picturesForNotes/designSimplicityNomadic.jpg)
+
+You can also include a lot of content. You just need to keep things focused on a single purpose, kike creating an account, viewing images, or beginning your travel experince. Here is an example of [Pinterest's](https://pinterest.com) landing page. Even though there are a lot of images on the viewpoint, they work towards the same goal of demonstrating the app.
+
+![Pinterest design](picturesForNotes/designSimplicityPinterest.jpg)
+
+#### Consistency
+
+There is a tension that exists with web apps between being consistent with how other apps work and being unique so that your experience stands out. You want to avoid being so different that a user has a hard time using your app. This can be avoided by using the standard conventions that a user expects to find on a web app. The picture below shows the `standard layout` and navigation controls of an app.
+
+![Holy Grail](picturesForNotes/designConsistencyHolyGrail.jpg)
+
+The `standard layout` will shift as new trands in app fashion try to make things look fresh. If you follow current trends, users are more likely to engage in your app.
+
+An easy way to build an app that uses current design trends is to use a web framework that provides standard layouts, colours, and iconography. Here's an example of a template app built using a framework with only a few minutes of work.
+
+![Framework](picturesForNotes/designConsistencyFramework.jpg)
+
+#### Affordance, Signifiers, and Feedback
+
+Interactions between the interface and the user are a common point of failure when aligning the mental model of a user and the app designer. Interactions are often described in terms of affordance, signifiers, and feedback. An affordance is a relationship between an object and a person (what an object can do - like a button "affords" clicking). A signifier is the visual cure that tells the user where and how to act (like the colour or shadow of the button). Feedback informs the user that the action has completed with a given result.
+
+![affordance](picturesForNotes/affordance.gif)
+
+#### Navigation
+
+A user should never get lost in your app. To help orient your user, you want to carefully design the flow of the app and provide the proper navigation controls.
+
+| Navigation Controls | Description |
+| --- | --- |
+| App controls | User settings, payment, help controls |
+| Device controls | Device specific controls like back, next, home |
+| Breadcrumb | A path of the user's walk through the app |
+| Common actions | Direct links to locations based on the current view |
+
+##### Application Map
+
+The first step in building your app should be to design the app map that has all the views you will present to the user. This helps clarify the functional pieces of the app and their relationship to each other. For example, if you're building a music player you might start with a landing page that displays some marketing info and lets the user create an account or login. If the user is already logged in, they start with a dashboard that shows recent or suggested songs. From there, they can either search the music catalogue, navigate to a collection of songs based on a playlist/album/artist, or go to a specific song.
+
+![app map](picturesForNotes/designSitemap.png)
+
+If your map starts to look like government bureaucracy, then you should problem reconsider the functionality. A convoluted app map is a strong indicator that the UX will also be convoluted.
+
+##### Device Controls
+
+With a consice map in place, you can design navigational controls that let the user successfully use the app. To begin, you want to make sure the nav controls provided by the device are completely supported. When your app is hosted in a browser, the previous and next buttons should take the user through a stack of visited views. If it's on a mobile device, the conventions of the device should work properly. For example, on an Android device swiping left and right should navigate the app views backwards or forwards.
+
+##### Breadcrumb
+
+You always want to indicate where the user is, where they came from, and where they can go. You can do this with a `breadcrumb` control that lists the path the user took to get to where they are. 
+
+`Dasboard > Beatles > Abbey Road > Come Together`
+
+A breadcrumb quickly orients the user and lets them jump up the navigational path.
+
+##### Common Actions
+
+You also want to anticipate where a user would commonly go based on the view they are in. For example, if they are playing a song by one artist, it's common that they will want to view related artists. Therefore you want to provide a navigational link that will take them to a search view with a prepopulated query for related artists.
+
+Commonly accessed views should always be accessible from a standard location. For example, the user settings should always be on the top right, and the breadcrumb on the top left. (These get swapped if using a right to left language).
+
+You want to partition a large app into functional areas and place links for each area in the navigation bar at the top of the app. For example, if we added the ability to create music to our music app, you would want links that switched between listening and creating music.
+
+#### Colours
+
+One of the first things you should consider as you design your app is the colour scheme you use. This usually involves picking a primary, secondary, and focus colour.
+
+There are a lot of tools out there that help you make a colour scheme. These will let you chose a monochromatic, adjacent, or triadic colour scheme. You can then spin and adjust a colour wheel until you get what you're looking for. With your scheme selected, you can export the colours directly into CSS rulesets.
+
+Some free tools include [Paletton](https://paletton.com/) and [Adobe](https://color.adobe.com/create/color-wheel).
+
+With you core colours selected, you can use different shades of the colours to reduce the starkness of the limited colours without turning your app into a rainbow.
+
+Make sure you stick with your colour scheme and consider it when picking font colours and images.
+
+#### Typography
+
+A good font will make your app easy on your user's eyes and increase attention span. Since fonts have been around since the Gutenberg Press, there is some serious history. Here are the attributes of a font.
+
+![anatomy of font](picturesForNotes/designTypographyAnatomy.jpg)
+
+You can classify them into the following groups:
+
+| Font Class | Example | Meaning |
+| --- | --- | --- |
+| Sans Serif | ![sans serif](picturesForNotes/designFontSanSerif.jpg) | only major strokes |
+| Serif | ![serif](picturesForNotes/designFontSerif.jpg) | minor strokes off the major strokes |
+| Monospace | ![monospace](picturesForNotes/designFontMonoSpace.jpg) | all letters have the same size |
+| Handwriting | ![handwriting](picturesForNotes/designFontHandwriting.jpg) | cursive strokes |
+
+When picking fonts, you usually want to restrict the number to three or less. You also want to use them consistently. For example, it's common to use a sans serif font for buttons, nav links, and body texts. Serif fonts are used for paragraph headings. Monospaced fonts are for coding examples or text that needs alignment.
+
+If you want royalty free fonts that you can use in your app, check out [Google's open collection](https://fonts.google.com/about) of fonts.
+
+#### Iconography
+
+Users recognize standard icons, so you can reduce the learning curve for your app if you use standard web icons to identify common funcionality. For example, most users will immediately identify the following as the menu, sharing, and close actions.
+
+![examples](picturesForNotes/designIconExamples.jpg)
+
+Icons not only exploit user recognition, but also save limited display space, and provide a visually pleasing alternative to text. The important thing is that you choose a set that includes standard icons and you use them for their intended purpose. Icons become an anti-pattern when they are used to represent something that is contrary to their common useage.
+
+![icon google](picturesForNotes/designIconGoogle.jpg)
+
+There are a lot of standard icon packages you can choose from. This includes packages like [Font Awesome](https://fontawesome.com/), [Bootstrap Icons](https://icons.getbootstrap.com/), [Material Icons](http://google.github.io/material-design-icons/), [Flat Color Icons](https://github.com/icons8/flat-color-icons), and [Ant Design Icons](https://github.com/ant-design/ant-design-icons).
+
+#### Text
+
+You want to be consistent in the size of text you use as well as the number of characters displayed on a line. Commonly, there are 5 different categories of text sizes used by an app. This includes the following.
+
+##### UX Optimized Font Sizes
+
+| Element | Best Practise Sizing |
+| --- | --- |
+| **Page Title** (H1) | **72px** (large but not overwhelming) |
+| **Main Titles** (H2) | **42px** (prominent but readable) |
+| **Subtitles** (H3) | **32px** |
+| **Section Titles** (H4) | **26px** |
+| **Smaller Titles** (H5) | **22px** |
+| **Smallest Titles** (H6) | **18px** |
+| **Body Text** (P) | **18px** (optimal readability) |
+| **Secondary Text** | **16px** |
+| **Form Labels and Input** | **18px** (matches body for usability) |
+| **Button Text** | **18px** |
+
+These are just suggestions, but they serve as a good place to start. If you are using an app framework then they will have default text sizes defined. It's important to be consistent with the sizing. Titles should not be one size for a particular view and a different size on another one. Inconsistency confuses the user and makes the app feel haphazardly designed.
+
+###### Limiting Line Length
+
+Limiting the number of characters displayed on a line makes it easier to read paragraphs of text. The browser will automatically wrap text based on the viewport width, but having a line spread across a 4K monitor that is hundreds of characters long will make yoru app look clunky and drive the user crazy as they try to find the next line in a long paragraph.
+
+Instead, you want to specify a max width for your paragraphs. Usually between 60 to 80 characters. You can set this with the `max-width` property set to something like `35em`. The `em` unit is approimately the width of the `m` character in the font, so about half of an `m` is about the average charactr width.
+
+##### Internationalization
+
+Designing a global international app requires careful consideration from the beginning. Attempting to internationalize a complex mature app after it has a domestic presence is hard.
+
+One of the most important aspects to consider is the translation of textual content and the ability of the user to select their desired langauge.
+
+Successful translation also requires the text to be rendered properly. Several languages are read from right to left, so the content and app itself needs to be displayed in that orientation.
+
+This also applies for displaying dates, times, numbers, and currency. These all vary between countries. This includes cuntry specific currency symbols (¥, $, €, or ฿), the order of date fields (MM/DD/YY or DD/MM/YY), and numerical separators (1,000.50 or 1.000,50).
+
+Iconography can also be a concern. An owl in the USA represents wisdom, but in some Asian countries is symbolizes stupidity. Icons that carry religious representations can be even more disruptive.
+
+Proper international design requires thought across the full tech stack. If data isn't properly passed, stored, and renered at every level of the stack it will fail to properly work globally. For example, dates and times should always be stored in a format that properly represents timezones (like ISO 8601) and rendered based on the user's location. That way when users do things like global calendaring or traveling between countries the data isn't corrupted.
+
+##### Space
+
+Introducing space around your app content helps create focus and lessen the effort a user has to exert in order to interpret the presented information.
+
+![whitespace](picturesForNotes/designWhitespace.jpg)
+
+The following example uses whitespace to focus on the brand, imagery, and call to action.
+
+![prototype](picturesForNotes/designWhitespacePrototypr.jpg)
+
+Here is another example, where whitespace brings the user's attention to specific text that teases the user and leads them down to the explanatory text, following by actions to learn more.
+
+![sofa](picturesForNotes/designWhitespaceSofa.jpg)
+
+The same content with the whitespace removed, while extreme, demonstrates the power that whitespace has.
+
+![sofa condensed](picturesForNotes/designWhitespaceSofaCondensed.jpg)
+
+##### Interaction
+
+Making your app interactive is a powerful way to engage the user and increase retention. Interaction can be as simple as gathering and displaying the user's name or avatar, or as complex as letting the user completely drive the app based on the choices they make.
+
+Interaction makes the app come alive and invests the user in the result of their efforts.
+
+##### Images
+
+Pictures can save a thousand words. Including images in your app can convey a deeper understanding, make it more visually appealing, and draw a user into the app. 
+
+Avoid using images that are only used as space fillers. Display space is too limited to waste on an image that doesn't add significant value. For example, the following image dominates the display of a technical article about CORS. However, it was only chosen because it matched the colour scheme of the app and the title contains the word `talk` in it. But the two people talking through a tin can has nothing to do with CORS. Now, the user has to scroll past the distracting image to get to the content. Instead, either omit the image, or include one that serves to clarify the purpose if CORS. That way your image is visually appealing and provides information that furthers the story you are trying to tell.
+
+![no value](picturesForNotes/designImageNoValue.jpg)
+
+##### Animation
+
+Animation can help make your app come alive. It also helps confirm choices, demonstrate progress, and focus attention.
+
+However, too much animation can physically make your users sick.
+
+##### Decision Fatigue
+
+You need to consider the impact of the choices you present to a user. [Hick's Law]() states that the time necessary to make a decision increases logarithmically with the number of choices presented. That doesn't mean you shouldn't provide choices to the user, but that you should limit the amount of choices at any given time.
+
+For example, the process of building a pizza has many steps. First you need to pick the location to order from, then the pizza size, cheese, meats, and veggies. Finally, you need to provide payment. Each of the choices requires a lot of input from the user, and so limiting the number of choices displayed at one time will help reduce decision fatigue and you'll have a better chance of them completing the ordering process.
+
+![build a pizza](picturesForNotes/designDecisionFatiguePizza.gif)
+
+##### Device Aware
+
+Modern devices allow a web app to interact in many sophisticated ways. This includes abilities like installing to the device's desktop, deterimining the device's geographical location, displaying notifications, detecting the acceleration of the device, using the camera, and accessing the user's contacts. The more seamlessly the app is integrated with the device, the more intuitive and useful the app will be.
+
+##### Device Size and Orientation
+
+Properly reorienting and altering the functionality of the app interface based on the size and orientation of the display is especially important on mobile devices. When a device is rotated, the app should automatically reorient itselff and move around to maximise available space. 
+
+##### Performance
+
+Deeper reading:
+- [Google site performance](https://www.youtube.com/watch?v=OpMfx_Zie2g)
+- [MDN Performance](https://developer.mozilla.org/en-US/docs/Web/Performance)
+
+Application performance is an important part of your design that's often overlooked until it's too late. Your app can be visually stunning, have intuitive navigation, and amazing interactivity, but if it takes minutes to load or react to a user's actions, it will completely fail. Multiple studies have analyzed the relationship between performance and user retention. One [study](https://www.thinkwithgoogle.com/marketing-strategies/app-and-mobile/mobile-page-speed-new-industry-benchmarks/) showed that as load times increase from 1 second to 5 seconds, it cause 90% more users to bounce or leave the app.
+
+You need to set up performance goals for your app and consistently monitor how your app is doing. Generally, you want you app to load in under a second. However, with modern single page apps, it can take several seconds to do the initial load. You can mitigate the appearance of a slow app by giving the impression of progress by partially loading some content or displaying a loading animation.
+
+The Chrome debugging tools provide a lot of help for diagnosing your app performance. The network tab will show you the size of your app files and the amount of time it takes to transfer them.
+
+You can use the Chrome debugging Lighthouse tool to run an analysis of your app. This will give you an average performance rating based on initial load time, longest content paint, and time before the user can interact with the page.
+
+##### Short Circuit
+
+Sometimes, factors like network latency will impact the performance of your app or make it partially unavailable. You want to consider how you can make a meaningful experience for oyur users even when you can't provide full functionality. For example, your app may rely on a third party service for processing payment before they can access the app. Rather than deny the user access when the payment service is down, you could collect the payment information and try to process it later. In the meantime, the user is allowed to continue working. Later on, if the payment processing fails, then you handle the problem just as if their credit card was cancelled after accepting payment.
+
+This ability to provide an alternative path is sometimes called short circuit or fallback functionality. It removes barriers from your app that otherwise would turn away customers, and they are usually not hard to implement. You just need to consider each function piece of your app and provide an alternative if that functionality is not available.
+
+##### Accessibility
+
+Deeper reading: [MDN Accessibility](https://developer.mozilla.org/en-US/docs/Web/Accessibility)
+
+Your app needs to appeal to a diverse population of users. This means you need to design for users with different accessibility nees, including users with visual, physical, or auditory impairments.
+
+You can help users with visual impairments by considering colour blindness when selecting your colour scheme, providing high contrast themes, and supporting screen readers. Video and audio transcripts, along with visual animation, help users that need audio assistance. Providing keyboard shortcuts and making sure input elements are accessible in the proper order will help users with different physical abilities.
+
+| Ability | Application Features |
+| --- | --- |
+| Visual | High contrast themes, colour selection, screen readers |
+| Audio | Closed captions, textual alternatives, visual animation |
+| Physical | Keyboard navigation, element ordering |
+
+Many of the accessibility tools that users employ require your HTML to be well structured and has attributes that support [WAI-ARIA](https://developer.mozilla.org/en-US/docs/Learn/Accessibility/WAI-ARIA_basics) standards. Make sure you understand the proper use of elements and aria when you design a product application.
+
+##### Legal
+
+Applications must consider applicable regulation and the possibility of legal action. For example, by violatings GDPR, [Amazon was fines $887M](https://www.cnbc.com/2021/07/30/amazon-hit-with-fine-by-eu-privacy-watchdog-.html) in 2021 for violating the privacy of its customers. In another case, [Domino's Pizza](https://www.cnbc.com/2019/10/07/dominos-supreme-court.html) was found to be violating the American's with Disabilities Act (ADA) because a blind man could not order a pixxa by using a screen reader.
+
+Central to the core of many legal codes is the concept of Personally Identifiable Information (PII). While the strict interpretation of what PII is differs by industry, it's generally related to any data that can be directly ascribed to an identifiable individual.
+
+Every industry and local has different legal constraints. You should be aware of the major legislations that impact your app. Here are some laws that impact apps in within the jurisdiction of the USA.
+
+###### HIPAA
+
+The Health Insurace Portability and Accountability Act (HIPAA) stipulates the management of medical records. It includes provisions that give control to the individual with regards to access and sharing of records. It specifically restricts how relatives, courts, and insurance companies may obtain medical records.
+
+###### FERPA
+
+The Family Educational Rights and Privacy Act (FERPA) defines how student data can be stored, shared, and accessed. FERPA defines the concept of an `educational record` and then specifies who can view and contribute to that record.
+
+###### ADA
+
+The Americans with Disabilities Act (ADA) seeks to prohibit discrimination against individuals with diverse accessibility needs. The act was originally intended to cover physical environments, but recent case law has extended the interpretation of the law to cover electronic access.
+
+###### GDPR
+
+The General Data Protection Regulation (GDPR) impacts all apps that are used by members of the EU. The main purpose of the GDPR is to protect the privacy of users. Among other things, GDPR requires applications to get approval from the user before their data can be stored or shared. It also requires the app to provide the ability to delete all the user's data and to be able to transfer their data to competing applications.
+
+##### Walls
+
+There are many types of walls that hinder a user's experience with an app. Some walls are caused by poor design or business decisions, and others are a result of unavoidable external pressures like government regulation or security concerns. 
+
+If you can learn to recognize the UX walls, then there is a good change you can remove them or decrease their negative impact.
+
+###### Complexity
+
+As apps mature, it's common for them to grow in complexity as more features are introduced.
+
+The following image is from GitHub. An important action that a developer needs to do is create a Personal Access Token in order to work with repositories. However, GitHub has buried the UI for creating the token somewhere in their setting (account, user, and repository) pages. Assuming you are able to find the right setting page, you are then confronted with dozens of setting categories. After clicking through all the options, as user will wonder why such an important activity is buried so deeply in the app.
+
+![github walls](picturesForNotes/designWallsComplexity.png)
+
+###### Payment
+
+Some walls, like receiving payment, are unavoidable for the success of the application. However, consideration should be made to move the wall to the point it is required. Before a user hits a payment wall, they should have the opportunity to see the value of what they are purchasing. Even better is if the user is able to invest a significant effort and content to the application before the payment is required. For example, the app may allow the user to create a limited number of documents before they have to enter payment info.
+
+Once payment is required, the process for entering payment needs to be as effortless as possible. The best option is to have them not enter any information at all, and instead use an associated credential like Apple Pay or Google Wallet to authorize payment based on the already authenticated user. Beyond that, a single tet box that accepts, and authorizes, a credit card number is better than doxens of text boxes that must be completed before payment is made. You also want to remember payment information so that you don't need to repeatedly ask the user for input. This enables you to provide your app as a subscription service, or to execute single click purchases for future payments.
+
+###### Application Failure
+
+Application failure is a reality that any good app design needs to address. An app that has a reputation of repeatedly presenting the user with a failure wall will have a hard time retaining users. The most basic solution to handling a failure is to present a maessage to the user apologizing for what went wrong. The user will be slightly less annoyed if you can explain what went wrong, provide a possible remidy, or explain the expected duration of the failure.
+
+Alternative solutions for handling failure include providing fallback functionality, automatically notifying the user when the failure has been resolved, or providing a status page where the user can go to see what is being done to resolve the problem.
+
+Proactive solutions include designing an app that has multiple redundant regional deployments that automatically failover when one region experiences problems, or desigining the app so that it can run offline with cached data.
+
+###### Security
+
+Security walls occur when you have to interact with the user to authenticate them. The security walls present should be proportional to the value of the resource you are trying to secure. A banking app should have strong security walls that provide actual protection for the user's data. An app that gives away free kitten videos should have minimal security walls, if any.
+
+You need to consider both the frequency and complexity of your security wall. If the user feels that the security wall is too onerous for the value that the app is providing, they will find another solution. Likewise, if the user feels that there isn't enough security, then they will not trust you with their data.
+
+A [CAPTCHA]() is a common way to verify that a user is human. While this may be necessary for the success of your app, it's an example of a wall that provides no value to the user and will always lesson the app experience. This is especially true for a difficult CAPTCHA like typing in unreadable text, or entering the number of mosquitos displayed in a jungle picture.
+
+###### Legal
+
+Legal walls only protect the app vendor and provides little to no value to the user. GDPR inspired cookie notifications are one example of this. Another common example is an application that requires the acceptance of terms and conditions before you can use the app. You want to minimize the impact of legal walls as much as possible since they lessen the user's experience and encourage the user to question why a legal consent is required in the first place.
+
 </details>
 
 <details>
@@ -9936,3 +10261,5 @@ You also want to test your app from different locations around the world. There 
 ```JavaScript
 
 ```
+
+![](picturesForNotes)
